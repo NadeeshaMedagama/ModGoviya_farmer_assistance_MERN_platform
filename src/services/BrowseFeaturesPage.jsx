@@ -21,6 +21,8 @@ import {
     Play,
     CheckCircle
 } from 'lucide-react';
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
 
 const BrowseFeaturesPage = () => {
     const [activeCategory, setActiveCategory] = useState('all');
@@ -202,33 +204,10 @@ const BrowseFeaturesPage = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Header - Navigation */}
-            <nav className="bg-white shadow-sm border-b border-gray-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center h-16">
-                        <div className="flex items-center">
-                            <button onClick={() => handleNavClick('/')} className="text-2xl font-bold text-green-600 cursor-pointer hover:text-green-700">
-                                ModGoviya
-                            </button>
-                            <div className="ml-6 flex items-center text-sm text-gray-500">
-                                <button onClick={() => handleNavClick('/')} className="hover:text-gray-700 cursor-pointer">
-                                    Home
-                                </button>
-                                <ChevronRight size={16} className="mx-2" />
-                                <span className="text-gray-900">Browse Features</span>
-                            </div>
-                        </div>
-                        <button
-                            onClick={() => handleNavClick('/cropmanage')}
-                            className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
-                        >
-                            Get Started
-                        </button>
-                    </div>
-                </div>
-            </nav>
+            <Header />
 
             {/* Hero Section */}
-            <section className="relative bg-gradient-to-r from-green-600 to-emerald-600 py-20">
+            <section className="relative bg-gradient-to-r from-green-600 to-emerald-600 py-20 mt-20">
                 <div className="absolute inset-0 bg-black/10"></div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -394,48 +373,7 @@ const BrowseFeaturesPage = () => {
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-white py-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div>
-                            <div className="text-2xl font-bold text-green-400 mb-4">ModGoviya</div>
-                            <p className="text-gray-400">
-                                Empowering farmers with modern technology for sustainable agriculture.
-                            </p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold mb-4">Features</h3>
-                            <ul className="space-y-2 text-gray-400">
-                                <li><button onClick={() => handleNavClick('#')} className="hover:text-white cursor-pointer">Crop Management</button></li>
-                                <li><button onClick={() => handleNavClick('#')} className="hover:text-white cursor-pointer">Weather Forecast</button></li>
-                                <li><button onClick={() => handleNavClick('#')} className="hover:text-white cursor-pointer">Marketplace</button></li>
-                                <li><button onClick={() => handleNavClick('#')} className="hover:text-white cursor-pointer">Community</button></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold mb-4">Support</h3>
-                            <ul className="space-y-2 text-gray-400">
-                                <li><button onClick={() => handleNavClick('#')} className="hover:text-white cursor-pointer">Help Center</button></li>
-                                <li><button onClick={() => handleNavClick('#')} className="hover:text-white cursor-pointer">Contact Us</button></li>
-                                <li><button onClick={() => handleNavClick('#')} className="hover:text-white cursor-pointer">Training</button></li>
-                                <li><button onClick={() => handleNavClick('#')} className="hover:text-white cursor-pointer">API Docs</button></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold mb-4">Company</h3>
-                            <ul className="space-y-2 text-gray-400">
-                                <li><button onClick={() => handleNavClick('#')} className="hover:text-white cursor-pointer">About Us</button></li>
-                                <li><button onClick={() => handleNavClick('#')} className="hover:text-white cursor-pointer">Careers</button></li>
-                                <li><button onClick={() => handleNavClick('#')} className="hover:text-white cursor-pointer">Privacy Policy</button></li>
-                                <li><button onClick={() => handleNavClick('#')} className="hover:text-white cursor-pointer">Terms of Service</button></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                        <p>&copy; 2025 ModGoviya. All rights reserved.</p>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 };
