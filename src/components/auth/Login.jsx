@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
+import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -40,6 +42,7 @@ const LoginPage = () => {
     return (
         <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
             {/* Background with farming theme */}
+            <Header />
             <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{
@@ -115,7 +118,7 @@ const LoginPage = () => {
             </div>
 
             {/* Login Form Container */}
-            <div className="relative z-10 w-full max-w-md mx-4">
+            <div className="relative z-10 w-full max-w-[600px] mx-auto mt-24">
                 <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-white/20">
                     {/* Logo and Title */}
                     <div className="text-center mb-8">
@@ -263,6 +266,7 @@ const LoginPage = () => {
                         Empowering farmers through modern technology
                     </p>
                 </div>
+
             </div>
         </div>
     );
