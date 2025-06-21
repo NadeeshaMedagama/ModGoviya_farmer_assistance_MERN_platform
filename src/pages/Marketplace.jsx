@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Filter, MapPin, User, Phone, Mail, Star, Heart, Eye, Plus, Grid, List, ChevronDown, ShoppingCart, Shield, AlertTriangle } from 'lucide-react';
 import Footer from "../components/layout/Footer";
+import Header from "../components/layout/Header";
 
 const Marketplace = () => {
     const [viewMode, setViewMode] = useState('grid');
@@ -253,8 +254,10 @@ const Marketplace = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Header */}
+            <Header />
+
             <div className="bg-white shadow-sm border-b">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-24">
                     <div className="text-center mb-6">
                         <h1 className="text-4xl font-bold text-gray-900 mb-2">Farming Marketplace</h1>
                         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
