@@ -1,5 +1,25 @@
 import React, { useState } from 'react';
-import { Search, Filter, MapPin, User, Phone, Mail, Star, Heart, Eye, Plus, Grid, List, ChevronDown, ShoppingCart, Shield, AlertTriangle } from 'lucide-react';
+import { Search,
+    Filter,
+    MapPin,
+    User,
+    Phone,
+    Mail,
+    Star,
+    Heart,
+    Eye,
+    Plus,
+    Grid,
+    List,
+    Shield,
+    AlertTriangle,
+    Sprout,
+    Tractor,
+    Users,
+    TrendingUp,
+    Globe
+}
+    from 'lucide-react';
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 
@@ -255,20 +275,164 @@ const Marketplace = () => {
         <div className="min-h-screen bg-gray-50">
             {/* Header */}
             <Header />
+                    <div
+                        className="relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-emerald-800 w-full mt-8">
+                        {/* Background Pattern */}
+                        <div className="absolute inset-0 opacity-10 w-full">
+                            <div className="absolute inset-0 w-full" style={{
+                                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='7' cy='7' r='7'/%3E%3Ccircle cx='53' cy='7' r='7'/%3E%3Ccircle cx='7' cy='53' r='7'/%3E%3Ccircle cx='53' cy='53' r='7'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                            }}/>
+                        </div>
 
-            <div className="bg-white shadow-sm border-b">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-24">
-                    <div className="text-center mb-6">
-                        <h1 className="text-4xl font-bold text-gray-900 mb-2">Farming Marketplace</h1>
-                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                            Buy and sell farming tools, seeds, crops, fertilizers, and more. Connect with other farmers and sellers near you.
-                        </p>
+                        {/* Floating Elements */}
+                        <div className="absolute top-10 left-10 animate-float-slow">
+                            <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                                <Sprout className="h-6 w-6 text-green-200"/>
+                            </div>
+                        </div>
+                        <div className="absolute top-20 right-20 animate-float-delayed">
+                            <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                                <Tractor className="h-6 w-6 text-green-200"/>
+                            </div>
+                        </div>
+                        <div className="absolute bottom-10 left-20 animate-float-slow">
+                            <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                                <Users className="h-6 w-6 text-green-200"/>
+                            </div>
+                        </div>
+
+                        <div className="relative px-4 py-20 sm:px-6 lg:px-8">
+                            <div className="max-w-4xl mx-auto text-center">
+                                {/* Badge */}
+                                <div
+                                    className="inline-flex items-center bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-6 py-2 mb-8 animate-fade-in-up">
+                                    <Globe className="h-4 w-4 text-green-200 mr-2"/>
+                                    <span className="text-sm font-medium text-green-100">
+              Trusted Agricultural Platform
+            </span>
+                                </div>
+
+                                {/* Main Heading */}
+                                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in-up animation-delay-200">
+                                    Farming
+                                    <span
+                                        className="block bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
+              Marketplace
+            </span>
+                                </h1>
+
+                                {/* Subtitle */}
+                                <p className="text-xl md:text-2xl text-green-100 max-w-3xl mx-auto mb-8 leading-relaxed animate-fade-in-up animation-delay-400">
+                                    Buy and sell farming tools, seeds, crops, fertilizers, and more.
+                                    <span className="block mt-2 font-medium text-white">
+              Connect with other farmers and sellers near you.
+            </span>
+                                </p>
+
+                                {/* Feature Pills */}
+                                <div
+                                    className="flex flex-wrap justify-center gap-4 mb-12 animate-fade-in-up animation-delay-600">
+                                    <div
+                                        className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
+                                        <Shield className="h-4 w-4 text-green-200 mr-2"/>
+                                        <span className="text-sm font-medium text-white">Secure Trading</span>
+                                    </div>
+                                    <div
+                                        className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
+                                        <TrendingUp className="h-4 w-4 text-green-200 mr-2"/>
+                                        <span className="text-sm font-medium text-white">Best Prices</span>
+                                    </div>
+                                    <div
+                                        className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
+                                        <Users className="h-4 w-4 text-green-200 mr-2"/>
+                                        <span className="text-sm font-medium text-white">Local Network</span>
+                                    </div>
+                                </div>
+
+                                {/* CTA Buttons */}
+                                <div
+                                    className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-800">
+                                    <button
+                                        className="group bg-white text-green-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-50 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+              <span className="flex items-center justify-center">
+                Start Trading
+                <TrendingUp className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300"/>
+              </span>
+                                    </button>
+                                    <button
+                                        className="group bg-transparent text-white border-2 border-white/30 backdrop-blur-sm px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 hover:border-white/50 transform hover:scale-105 transition-all duration-300">
+              <span className="flex items-center justify-center">
+                Learn More
+                <Sprout className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform duration-300"/>
+              </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <style jsx>{`
+                            @keyframes fadeInUp {
+                                from {
+                                    opacity: 0;
+                                    transform: translateY(30px);
+                                }
+                                to {
+                                    opacity: 1;
+                                    transform: translateY(0);
+                                }
+                            }
+
+                            @keyframes float {
+                                0%, 100% {
+                                    transform: translateY(0px);
+                                }
+                                50% {
+                                    transform: translateY(-20px);
+                                }
+                            }
+
+                            .animate-fade-in-up {
+                                animation: fadeInUp 0.8s ease-out forwards;
+                            }
+
+                            .animation-delay-200 {
+                                animation-delay: 0.2s;
+                            }
+
+                            .animation-delay-400 {
+                                animation-delay: 0.4s;
+                            }
+
+                            .animation-delay-600 {
+                                animation-delay: 0.6s;
+                            }
+
+                            .animation-delay-800 {
+                                animation-delay: 0.8s;
+                            }
+
+                            .animation-delay-1000 {
+                                animation-delay: 1s;
+                            }
+
+                            .animate-float-slow {
+                                animation: float 6s ease-in-out infinite;
+                            }
+
+                            .animate-float-delayed {
+                                animation: float 6s ease-in-out infinite;
+                                animation-delay: 2s;
+                            }
+                        `}</style>
                     </div>
 
+            <div className="bg-white shadow-sm border-b">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-24 w-full">
                     {/* Search and Filters */}
                     <div className="flex flex-col lg:flex-row gap-4 items-center">
                         <div className="relative flex-1 max-w-2xl mx-auto lg:mx-0">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                            <Search
+                                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"/>
                             <input
                                 type="text"
                                 placeholder="Search by item name, location..."
@@ -283,7 +447,7 @@ const Marketplace = () => {
                                 onClick={() => setShowFilters(!showFilters)}
                                 className="flex items-center px-4 py-3 border border-gray-300 rounded-xl hover:bg-gray-50"
                             >
-                                <Filter className="w-5 h-5 mr-2" />
+                                <Filter className="w-5 h-5 mr-2"/>
                                 Filters
                             </button>
 
@@ -291,7 +455,7 @@ const Marketplace = () => {
                                 onClick={() => setShowPostForm(true)}
                                 className="flex items-center px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700"
                             >
-                                <Plus className="w-5 h-5 mr-2" />
+                                <Plus className="w-5 h-5 mr-2"/>
                                 Post Ad
                             </button>
                         </div>
@@ -350,7 +514,7 @@ const Marketplace = () => {
                         {/* Safety Tips */}
                         <div className="bg-yellow-50 rounded-xl p-6 border border-yellow-200">
                             <div className="flex items-center mb-3">
-                                <Shield className="w-5 h-5 text-yellow-600 mr-2" />
+                                <Shield className="w-5 h-5 text-yellow-600 mr-2"/>
                                 <h3 className="font-semibold text-yellow-800">Safety Tips</h3>
                             </div>
                             <ul className="text-sm text-yellow-700 space-y-2">
@@ -387,13 +551,13 @@ const Marketplace = () => {
                                     onClick={() => setViewMode('grid')}
                                     className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-green-100 text-green-600' : 'text-gray-400'}`}
                                 >
-                                    <Grid className="w-5 h-5" />
+                                    <Grid className="w-5 h-5"/>
                                 </button>
                                 <button
                                     onClick={() => setViewMode('list')}
                                     className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-green-100 text-green-600' : 'text-gray-400'}`}
                                 >
-                                    <List className="w-5 h-5" />
+                                    <List className="w-5 h-5"/>
                                 </button>
                             </div>
                         </div>
@@ -405,7 +569,7 @@ const Marketplace = () => {
                                 : 'grid-cols-1'
                         }`}>
                             {filteredProducts.map(product => (
-                                <ProductCard key={product.id} product={product} />
+                                <ProductCard key={product.id} product={product}/>
                             ))}
                         </div>
 
@@ -427,7 +591,7 @@ const Marketplace = () => {
                     onClose={() => setSelectedProduct(null)}
                 />
             )}
-            <Footer />
+            <Footer/>
         </div>
     );
 };
