@@ -9,6 +9,8 @@ import RegisterPage from './components/auth/RegisterPage';
 import FeaturesPage from "./pages/FeaturesPage";
 import Marketplace from "./pages/Marketplace";
 import CommunityPage from "./pages/CommunityPage";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./services/ContactUs";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
             <Route path="/features" element={<FeaturesPage />} />
             <Route path="/marketplace" element={<Marketplace />} />
             <Route path="/community" element={<CommunityPage />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<ContactUs />} />
 
           </Routes>
         </Router>
