@@ -6,7 +6,7 @@ import {
     Leaf,
     Globe,
 } from 'lucide-react';
-import { useLocation } from 'react-router-dom'; // Import useLocation
+import { useLocation, Link } from 'react-router-dom';
 
 const Header = () => {
     const location = useLocation(); // Get current location
@@ -62,6 +62,7 @@ const Header = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-20">
                     {/* Enhanced Logo */}
+                    <Link to="/">
                     <div className="flex items-center">
                         <div className="flex-shrink-0 flex items-center group cursor-pointer">
                             <div className="relative">
@@ -78,6 +79,7 @@ const Header = () => {
                             </div>
                         </div>
                     </div>
+                    </Link>
 
                     {/* Enhanced Desktop Navigation */}
                     <div className="hidden lg:block">
