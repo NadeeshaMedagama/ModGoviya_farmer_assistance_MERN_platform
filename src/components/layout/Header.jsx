@@ -88,6 +88,7 @@ const Header = () => {
                             <NavLink href="/features" active={isActive('/features')}>Features</NavLink>
                             <NavLink href="/marketplace" active={isActive('/marketplace')}>Marketplace</NavLink>
                             <NavLink href="/weather" active={isActive('/weather')}>Weather</NavLink>
+                            <NavLink href="/about" active={isActive('/about')}>About Us</NavLink>
                         </div>
                     </div>
 
@@ -186,6 +187,15 @@ const Header = () => {
                             onClick={() => setIsMenuOpen(false)}
                         >
                             Weather
+                        </a>
+                        <a
+                            href="/about"
+                            className={`flex items-center px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
+                                isActive('/about') ? 'text-emerald-600 bg-emerald-50 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'
+                            }`}
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            About Us
                         </a>
                         <a
                             href="/login"
