@@ -11,6 +11,7 @@ import Marketplace from "./pages/Marketplace";
 import CommunityPage from "./pages/CommunityPage";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./services/ContactUs";
+import StartTrading from "./services/StartTrading";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route path="/trade" element={<StartTrading />} />
 
           </Routes>
         </Router>
