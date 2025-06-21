@@ -15,6 +15,7 @@ import {
     Star
 } from 'lucide-react';
 import Footer from "../components/layout/Footer";
+import Header from "../components/layout/Header";
 
 const FeaturesPage = () => {
     const [hoveredFeature, setHoveredFeature] = useState(null);
@@ -112,7 +113,9 @@ const FeaturesPage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50 to-blue-50">
             {/* Hero Section */}
-            <div className="relative overflow-hidden bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600">
+            <Header />
+
+            <div className="relative overflow-hidden bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 pt-8">
                 <div className="absolute inset-0 bg-black/20"></div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
                     <div className="text-center">
