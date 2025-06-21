@@ -12,6 +12,7 @@ import CommunityPage from "./pages/CommunityPage";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./services/ContactUs";
 import StartTrading from "./services/StartTrading";
+import BrowseFeaturesPage from "./services/BrowseFeaturesPage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/trade" element={<StartTrading />} />
+            <Route path="/browse" element={<BrowseFeaturesPage />} />
 
           </Routes>
         </Router>
