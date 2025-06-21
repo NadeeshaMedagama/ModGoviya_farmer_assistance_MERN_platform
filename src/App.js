@@ -1,24 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
+import Home from './pages/Home';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import WeatherPage from './pages/WeatherPage';
+import CropManagement from "./pages/CropManagement";
+import Login from './components/auth/Login';
+import RegisterPage from './components/auth/RegisterPage';
+import FeaturesPage from "./pages/FeaturesPage";
+import Marketplace from "./pages/Marketplace";
+import CommunityPage from "./pages/CommunityPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/weather" element={<WeatherPage />} />
+            <Route path="/cropmanage" element={<CropManagement />} />
+            <Route path="/features" element={<FeaturesPage />} />
+            <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/community" element={<CommunityPage />} />
+
+          </Routes>
+        </Router>
   );
 }
 
