@@ -20,6 +20,7 @@ import {
     CloudSnow
 } from 'lucide-react';
 import Footer from "../components/layout/Footer";
+import Header from "../components/layout/Header";
 
 const WeatherPage = () => {
     const [location, setLocation] = useState('');
@@ -176,14 +177,16 @@ const WeatherPage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-yellow-50">
             {/* Header */}
-            <div className="bg-white shadow-lg border-b-4 border-green-500">
+            <Header />
+
+            <div className="bg-white shadow-lg border-b-4 border-green-500 pt-20">
                 <div className="max-w-7xl mx-auto px-4 py-6">
                     <div className="flex items-center justify-between">
                         <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
                             <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
                                 <Sprout className="w-6 h-6 text-white" />
                             </div>
-                            ModGoviya - {t.title}
+                              {t.title}
                         </h1>
                         <div className="flex items-center gap-4">
                             <select
