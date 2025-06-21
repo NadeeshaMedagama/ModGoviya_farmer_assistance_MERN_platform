@@ -13,6 +13,8 @@ import {
     AlertCircle,
     Shield
 } from 'lucide-react';
+import Footer from "../components/layout/Footer";
+import Header from "../components/layout/Header";
 
 const ContactUs = () => {
     const [formData, setFormData] = useState({
@@ -110,7 +112,8 @@ const ContactUs = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
             {/* Header Section */}
-            <div className="bg-gradient-to-r from-green-600 to-green-700 text-white py-16">
+            <Header />
+            <div className="bg-gradient-to-r from-green-600 to-green-700 text-white py-16 pt-28">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center">
                         <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
@@ -389,6 +392,7 @@ const ContactUs = () => {
                     <MessageCircle className="h-6 w-6 group-hover:animate-bounce" />
                 </button>
             </div>
+            <Footer />
         </div>
     );
 };
