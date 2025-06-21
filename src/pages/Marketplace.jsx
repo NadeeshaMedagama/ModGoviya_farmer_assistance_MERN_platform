@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Search,
     Filter,
     MapPin,
@@ -352,13 +353,14 @@ const Marketplace = () => {
                                 {/* CTA Buttons */}
                                 <div
                                     className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-800">
-                                    <button
+                                    <Link
+                                        to="/trade"
                                         className="group bg-white text-green-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-50 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
               <span className="flex items-center justify-center">
                 Start Trading
                 <TrendingUp className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300"/>
               </span>
-                                    </button>
+                                    </Link>
                                     <button
                                         className="group bg-transparent text-white border-2 border-white/30 backdrop-blur-sm px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 hover:border-white/50 transform hover:scale-105 transition-all duration-300">
               <span className="flex items-center justify-center">
