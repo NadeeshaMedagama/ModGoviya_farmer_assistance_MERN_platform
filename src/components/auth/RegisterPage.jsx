@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, User, Mail, Lock, Phone, MapPin, Sprout, Globe } from 'lucide-react';
+import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const RegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -81,6 +83,7 @@ const RegisterPage = () => {
     return (
         <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
             {/* Background with farming theme - same as login page */}
+            <Header />
             <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{
@@ -156,7 +159,7 @@ const RegisterPage = () => {
             </div>
 
             {/* Register Form Container */}
-            <div className="relative z-10 w-full max-w-md mx-4">
+            <div className="relative z-10 w-full max-w-[600px] mx-auto mt-24">
                 <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-white/20">
                     {/* Logo and Title */}
                     <div className="text-center mb-8">
@@ -446,11 +449,7 @@ const RegisterPage = () => {
                 </div>
 
                 {/* Footer */}
-                <div className="text-center mt-6">
-                    <p className="text-white/80 text-sm">
-                        Empowering farmers through modern technology
-                    </p>
-                </div>
+
             </div>
         </div>
     );
