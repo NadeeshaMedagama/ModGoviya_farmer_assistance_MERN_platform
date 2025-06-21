@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-    Menu,
-    X,
-    ChevronDown,
     ArrowRight,
     Package,
     Cloud,
@@ -14,23 +11,11 @@ import {
     Check,
     Star,
     MapPin,
-    Phone,
-    Mail,
-    Globe,
-    Facebook,
-    Twitter,
-    Instagram,
-    Linkedin
 } from 'lucide-react';
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 
 const ModGoviyaHomepage = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [currentLang, setCurrentLang] = useState('English');
-
-    const languages = ['English', 'සිංහල', 'தமிழ்'];
-
     const features = [
         {
             icon: Package,
@@ -120,15 +105,14 @@ const ModGoviyaHomepage = () => {
             {/* Header */}
             <Header />
 
-
             {/* Hero Section */}
             <section className="relative bg-gradient-to-r from-green-50 to-emerald-50 py-20">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-emerald-600/10"></div>
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
                     <div className="text-center">
                         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
                             Empowering Farmers with
-                            <span className="text-green-600 block">Modern Technology</span>
+                            <span className="text-green-600 block pt-2">Modern Technology</span>
                         </h1>
                         <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
                             Join thousands of farmers using ModGoviya to revolutionize their farming practices with
