@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useContext, useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
 import Header from "../layout/Header";
-import Footer from "../layout/Footer";
+import axios from 'axios';
+import AuthContext from '../../contexts/AuthContext';
 
 const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +12,9 @@ const LoginPage = () => {
         password: ''
     });
 
+    const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const handleInputChange = (e) => {
         setFormData({
             ...formData,
@@ -18,12 +22,19 @@ const LoginPage = () => {
         });
     };
 
-    const handleSubmit = () => {
-        // Handle login logic here
+    const handleSubmit = async () => {
         if (formData.email && formData.password) {
-            console.log('Login submitted:', formData);
-            // Here you would typically make an API call to your backend
-            // Example: await loginUser(formData);
+            try {
+                const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+                console.log('Login successful:', response.data);
+
+                login(response.data.token, response.data.userId);
+                navigate('/');
+
+            } catch (error) {
+                console.error('Login error:', error.response?.data?.message || error.message);
+                alert(error.response?.data?.message || 'Login failed. Please try again.');
+            }
         } else {
             alert('Please fill in all fields');
         }
