@@ -1,15 +1,56 @@
 import React, { useState } from 'react';
-import { Facebook, Twitter, Instagram, Linkedin, Phone, Mail, MapPin, Globe, Send, Check } from 'lucide-react';
+import {
+    Facebook,
+    Twitter,
+    Instagram,
+    Linkedin,
+    Phone,
+    Mail,
+    MapPin,
+    Globe,
+    Send,
+    Check
+}
+    from 'lucide-react';
+import axios from 'axios';
 
 const Footer = () => {
     const [email, setEmail] = useState('');
     const [isSubscribed, setIsSubscribed] = useState(false);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubscribe = () => {
-        if (email) {
-            setIsSubscribed(true);
-            setEmail('');
-            setTimeout(() => setIsSubscribed(false), 3000);
+    const handleSubscribe = async () => {
+        setError(null);     // Clear previous errors
+        if (!email) {
+            setError('Please enter an email address');
+            return;
+        }
+
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            setError('Please enter a valid email address');
+            return;
+        }
+
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const response = await axios.post('/api/subscribe', { email });
+
+            if (response.data.message === 'Subscription successful') {
+                setIsSubscribed(true);
+                setEmail('');
+                setTimeout(() => setIsSubscribed(false), 3000);
+            }
+        } catch (err) {
+            if (err.response) {
+                setError(err.response.data.message || 'Subscription failed');
+            } else {
+                setError('Network error. Please try again later.');
+            }
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -110,10 +151,15 @@ const Footer = () => {
                             />
                             <button
                                 onClick={handleSubscribe}
-                                disabled={isSubscribed}
+                                disabled={isSubscribed || isLoading}
                                 className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {isSubscribed ? (
+                                {isLoading ? (
+                                    <>
+                                        <span className="animate-spin">↻</span>
+                                        <span>Subscribing...</span>
+                                    </>
+                                ) : isSubscribed ? (
                                     <>
                                         <Check size={18} />
                                         <span>Subscribed!</span>
@@ -126,6 +172,11 @@ const Footer = () => {
                                 )}
                             </button>
                         </div>
+                        {error && (
+                            <p className="text-red-400 text-sm mt-2 text-center w-full col-span-2">
+                                {error}
+                            </p>
+                        )}
                     </div>
 
                     {/* Bottom Footer */}
