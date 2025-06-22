@@ -277,9 +277,11 @@ const FeaturesPage = () => {
                             Start Free Trial
                             <ArrowRight className="ml-2 w-5 h-5" />
                         </button>
-                        <button className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-green-600 transition-all duration-300">
+                        <Link
+                            to="/schedule"
+                              className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-green-600 transition-all duration-300">
                             Schedule Demo
-                        </button>
+                        </Link>
                     </div>
                     <div className="mt-8 text-green-100">
                         <p>✓ No credit card required  ✓ 30-day free trial  ✓ Cancel anytime</p>
