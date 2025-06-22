@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, Clock, User, Mail, Phone, Building, MapPin, CheckCircle, ArrowLeft, Globe, Video, Users } from 'lucide-react';
+import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const ScheduleDemo = () => {
     const [selectedDate, setSelectedDate] = useState('');
@@ -145,24 +147,12 @@ const ScheduleDemo = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
             {/* Header */}
-            <div className="bg-white shadow-sm border-b">
-                <div className="container mx-auto px-4 py-4">
-                    <div className="flex items-center justify-between">
-                        <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors">
-                            <ArrowLeft className="w-5 h-5 mr-2" />
-                            Back to Home
-                        </button>
-                        <div className="text-sm text-gray-500">
-                            Need help? Call us at (555) 123-4567
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Header />
 
             <div className="container mx-auto px-4 py-12">
                 <div className="max-w-6xl mx-auto">
                     {/* Page Header */}
-                    <div className="text-center mb-12">
+                    <div className="text-center mb-12 pt-20">
                         <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
                             Schedule Your Demo
                         </h1>
@@ -472,6 +462,7 @@ const ScheduleDemo = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
