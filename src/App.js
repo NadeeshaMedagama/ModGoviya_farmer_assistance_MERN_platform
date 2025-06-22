@@ -14,6 +14,7 @@ import ContactUs from "./services/ContactUs";
 import StartTrading from "./services/StartTrading";
 import BrowseFeaturesPage from "./services/BrowseFeaturesPage";
 import WatchDemoPage from "./services/WatchDemoPage";
+import ScheduleDemo from "./components/forum/ScheduleDemo";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/trade" element={<StartTrading />} />
             <Route path="/browse" element={<BrowseFeaturesPage />} />
             <Route path="/watchdemo" element={<WatchDemoPage />} />
+            <Route path="/schedule" element={<ScheduleDemo />} />
 
           </Routes>
         </Router>
