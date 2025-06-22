@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Sprout,
     Cloud,
@@ -138,9 +139,10 @@ const FeaturesPage = () => {
                                 Get Started Free
                                 <ArrowRight className="ml-2 w-5 h-5" />
                             </button>
-                            <button className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-green-600 transition-all duration-300">
+                            <Link to="/watchdemo"
+                                  className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-green-600 transition-all duration-300">
                                 Watch Demo
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
