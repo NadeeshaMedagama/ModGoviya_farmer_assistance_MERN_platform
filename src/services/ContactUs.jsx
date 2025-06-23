@@ -93,7 +93,20 @@ const ContactUs = () => {
 
         // Simulate API call
         try {
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            const response = await fetch('http://localhost:5000/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to submit form');
+            }
             setSubmitStatus('success');
             setFormData({
                 fullName: '',
@@ -103,6 +116,7 @@ const ContactUs = () => {
                 message: ''
             });
         } catch (error) {
+            console.error('Submission error:', error);
             setSubmitStatus('error');
         } finally {
             setIsSubmitting(false);
