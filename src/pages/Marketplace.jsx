@@ -317,7 +317,7 @@ const Marketplace = () => {
                                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in-up animation-delay-200">
                                     Farming
                                     <span
-                                        className="block bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
+                                        className="block bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent pb-2">
               Marketplace
             </span>
                                 </h1>
