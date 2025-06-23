@@ -36,7 +36,7 @@ const Footer = () => {
         setError(null);
 
         try {
-            const response = await axios.post('/api/subscribe', { email });
+            const response = await axios.post('http://localhost:5000/api/subscribe', { email });
 
             if (response.data.message === 'Subscription successful') {
                 setIsSubscribed(true);
