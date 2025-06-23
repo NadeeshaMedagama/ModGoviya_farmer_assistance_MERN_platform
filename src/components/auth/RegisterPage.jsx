@@ -75,7 +75,7 @@ const RegisterPage = () => {
 
         if (validateForm()) {
             try {
-                const response = await axios.post('/api/users/register', formData, {
+                const response = await axios.post('http://localhost:5000/api/users/register', formData, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -85,7 +85,7 @@ const RegisterPage = () => {
                 alert('Registration successful!');
 
                 localStorage.setItem('userInfo', JSON.stringify(response.data));
-                navigate('/');
+                navigate('/login');
             } catch (error) {
                 console.error('Registration error details:', {
                     error: error,
@@ -110,7 +110,7 @@ const RegisterPage = () => {
     const handleGoogleSuccess = async (credentialResponse) => {
         try {
             // Send the credential to your backend for verification
-            const response = await axios.post('/api/auth/google', {
+            const response = await axios.post('http://localhost:5000/api/auth/google', {
                 credential: credentialResponse.credential
             });
 
@@ -118,7 +118,7 @@ const RegisterPage = () => {
             alert('Registration successful!');
 
             localStorage.setItem('userInfo', JSON.stringify(response.data));
-            navigate('/');
+            navigate('/login');
         } catch (error) {
             console.error('Google registration failed:', error.response?.data?.message || error.message);
             alert(error.response?.data?.message || 'Google registration failed. Please try again.');
