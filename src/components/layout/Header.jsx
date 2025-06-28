@@ -5,8 +5,10 @@ import {
     ChevronDown,
     Leaf,
     Globe,
+    ShoppingCart
 } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
+import { useCart } from '../../contexts/CartContext';
 
 const Header = () => {
     const location = useLocation(); // Get current location
@@ -14,6 +16,7 @@ const Header = () => {
     const [currentLang, setCurrentLang] = useState('English');
     const [isScrolled, setIsScrolled] = useState(false);
     const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+    const { cart } = useCart();
 
     const languages = [
         { code: 'en', name: 'English', flag: '🇺🇸' },
@@ -63,22 +66,22 @@ const Header = () => {
                 <div className="flex justify-between items-center h-20">
                     {/* Enhanced Logo */}
                     <Link to="/">
-                    <div className="flex items-center">
-                        <div className="flex-shrink-0 flex items-center group cursor-pointer">
-                            <div className="relative">
-                                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                                    <Leaf className="text-white w-6 h-6" />
+                        <div className="flex items-center">
+                            <div className="flex-shrink-0 flex items-center group cursor-pointer">
+                                <div className="relative">
+                                    <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                        <Leaf className="text-white w-6 h-6" />
+                                    </div>
+                                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-80 animate-pulse"></div>
                                 </div>
-                                <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-80 animate-pulse"></div>
-                            </div>
-                            <div className="ml-4">
+                                <div className="ml-4">
                                 <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
                                     ModGoviya
                                 </span>
-                                <div className="text-xs text-gray-500 font-medium -mt-1">Agriculture Platform</div>
+                                    <div className="text-xs text-gray-500 font-medium -mt-1">Agriculture Platform</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </Link>
 
                     {/* Enhanced Desktop Navigation */}
@@ -126,6 +129,19 @@ const Header = () => {
                                 </div>
                             )}
                         </div>
+
+                        {/* Professional Cart Icon */}
+                        <Link
+                            to="/cart"
+                            className="relative p-2.5 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        >
+                            <ShoppingCart className="w-6 h-6" />
+                            {cart.items.length > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-emerald-600 to-green-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-200 group-hover:scale-110">
+                                    {cart.items.length > 99 ? '99+' : cart.items.length}
+                                </span>
+                            )}
+                        </Link>
 
                         {/* Enhanced Login Button */}
                         <a href="/login" className="hidden sm:block relative px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 group overflow-hidden">
@@ -197,6 +213,26 @@ const Header = () => {
                         >
                             About Us
                         </a>
+
+                        {/* Cart link in mobile menu */}
+                        <Link
+                            to="/cart"
+                            className={`flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
+                                isActive('/cart') ? 'text-emerald-600 bg-emerald-50 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'
+                            }`}
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            <span className="flex items-center">
+                                <ShoppingCart className="w-5 h-5 mr-3" />
+                                Cart
+                            </span>
+                            {cart.items.length > 0 && (
+                                <span className="bg-gradient-to-r from-emerald-600 to-green-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                    {cart.items.length > 99 ? '99+' : cart.items.length}
+                                </span>
+                            )}
+                        </Link>
+
                         <a
                             href="/login"
                             className="flex items-center justify-center px-4 py-3 mt-4 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-lg shadow-md"
