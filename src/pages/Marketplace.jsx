@@ -18,9 +18,11 @@ import { Search,
     Tractor,
     Users,
     TrendingUp,
-    Globe
+    Globe,
+    ShoppingCart
 }
     from 'lucide-react';
+import { useCart } from '../contexts/CartContext';
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 
@@ -33,11 +35,12 @@ const Marketplace = () => {
     const [sortBy, setSortBy] = useState('newest');
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showPostForm, setShowPostForm] = useState(false);
+    const { addToCart } = useCart();
 
     // Sample product data
     const products = [
         {
-            id: 1,
+            id: "685c3fe0d588773868905e5c",
             title: "Organic Tomato Seeds - Premium Quality",
             price: 150,
             category: "seeds",
@@ -51,7 +54,7 @@ const Marketplace = () => {
             contact: { phone: "+94 77 123 4567", email: "sunil@email.com" }
         },
         {
-            id: 2,
+            id: "685c3fe0d588773868905e5d",
             title: "Professional Farming Tractor - John Deere",
             price: 850000,
             category: "equipment",
@@ -65,7 +68,7 @@ const Marketplace = () => {
             contact: { phone: "+94 81 234 5678", email: "machinery@email.com" }
         },
         {
-            id: 3,
+            id: "685c3fe0d588773868905e5d",
             title: "Organic Fertilizer - NPK 10:10:10",
             price: 2500,
             category: "fertilizers",
@@ -250,13 +253,18 @@ const Marketplace = () => {
                             </div>
 
                             <div className="space-y-3">
-                                <button className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center">
-                                    <Phone className="w-4 h-4 mr-2" />
-                                    Contact Seller
+                                <button
+                                    onClick={() => {
+                                        addToCart(product.id);
+                                        onClose();
+                                    }}
+                                    className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center">
+                                    <ShoppingCart className="w-4 h-4 mr-2" />
+                                    Add to Cart
                                 </button>
                                 <div className="grid grid-cols-2 gap-2">
                                     <button className="border border-gray-300 hover:bg-gray-50 py-2 px-4 rounded-lg flex items-center justify-center">
-                                        <Mail className="w-4 h-4 mr-2" />
+                                        <Phone className="w-4 h-4 mr-2" />
                                         Email
                                     </button>
                                     <button className="border border-gray-300 hover:bg-gray-50 py-2 px-4 rounded-lg flex items-center justify-center">
@@ -276,103 +284,103 @@ const Marketplace = () => {
         <div className="min-h-screen bg-gray-50">
             {/* Header */}
             <Header />
-                    <div
-                        className="relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-emerald-800 w-full mt-8">
-                        {/* Background Pattern */}
-                        <div className="absolute inset-0 opacity-10 w-full">
-                            <div className="absolute inset-0 w-full" style={{
-                                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='7' cy='7' r='7'/%3E%3Ccircle cx='53' cy='7' r='7'/%3E%3Ccircle cx='7' cy='53' r='7'/%3E%3Ccircle cx='53' cy='53' r='7'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                            }}/>
-                        </div>
+            <div
+                className="relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-emerald-800 w-full mt-8">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 opacity-10 w-full">
+                    <div className="absolute inset-0 w-full" style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='7' cy='7' r='7'/%3E%3Ccircle cx='53' cy='7' r='7'/%3E%3Ccircle cx='7' cy='53' r='7'/%3E%3Ccircle cx='53' cy='53' r='7'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                    }}/>
+                </div>
 
-                        {/* Floating Elements */}
-                        <div className="absolute top-10 left-10 animate-float-slow">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
-                                <Sprout className="h-6 w-6 text-green-200"/>
-                            </div>
-                        </div>
-                        <div className="absolute top-20 right-20 animate-float-delayed">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
-                                <Tractor className="h-6 w-6 text-green-200"/>
-                            </div>
-                        </div>
-                        <div className="absolute bottom-10 left-20 animate-float-slow">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
-                                <Users className="h-6 w-6 text-green-200"/>
-                            </div>
-                        </div>
+                {/* Floating Elements */}
+                <div className="absolute top-10 left-10 animate-float-slow">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <Sprout className="h-6 w-6 text-green-200"/>
+                    </div>
+                </div>
+                <div className="absolute top-20 right-20 animate-float-delayed">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <Tractor className="h-6 w-6 text-green-200"/>
+                    </div>
+                </div>
+                <div className="absolute bottom-10 left-20 animate-float-slow">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <Users className="h-6 w-6 text-green-200"/>
+                    </div>
+                </div>
 
-                        <div className="relative px-4 py-20 sm:px-6 lg:px-8">
-                            <div className="max-w-4xl mx-auto text-center">
-                                {/* Badge */}
-                                <div
-                                    className="inline-flex items-center bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-6 py-2 mb-8 animate-fade-in-up">
-                                    <Globe className="h-4 w-4 text-green-200 mr-2"/>
-                                    <span className="text-sm font-medium text-green-100">
+                <div className="relative px-4 py-20 sm:px-6 lg:px-8">
+                    <div className="max-w-4xl mx-auto text-center">
+                        {/* Badge */}
+                        <div
+                            className="inline-flex items-center bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-6 py-2 mb-8 animate-fade-in-up">
+                            <Globe className="h-4 w-4 text-green-200 mr-2"/>
+                            <span className="text-sm font-medium text-green-100">
               Trusted Agricultural Platform
             </span>
-                                </div>
+                        </div>
 
-                                {/* Main Heading */}
-                                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in-up animation-delay-200">
-                                    Farming
-                                    <span
-                                        className="block bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent pb-2">
+                        {/* Main Heading */}
+                        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in-up animation-delay-200">
+                            Farming
+                            <span
+                                className="block bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent pb-2">
               Marketplace
             </span>
-                                </h1>
+                        </h1>
 
-                                {/* Subtitle */}
-                                <p className="text-xl md:text-2xl text-green-100 max-w-3xl mx-auto mb-8 leading-relaxed animate-fade-in-up animation-delay-400">
-                                    Buy and sell farming tools, seeds, crops, fertilizers, and more.
-                                    <span className="block mt-2 font-medium text-white">
+                        {/* Subtitle */}
+                        <p className="text-xl md:text-2xl text-green-100 max-w-3xl mx-auto mb-8 leading-relaxed animate-fade-in-up animation-delay-400">
+                            Buy and sell farming tools, seeds, crops, fertilizers, and more.
+                            <span className="block mt-2 font-medium text-white">
               Connect with other farmers and sellers near you.
             </span>
-                                </p>
+                        </p>
 
-                                {/* Feature Pills */}
-                                <div
-                                    className="flex flex-wrap justify-center gap-4 mb-12 animate-fade-in-up animation-delay-600">
-                                    <div
-                                        className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
-                                        <Shield className="h-4 w-4 text-green-200 mr-2"/>
-                                        <span className="text-sm font-medium text-white">Secure Trading</span>
-                                    </div>
-                                    <div
-                                        className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
-                                        <TrendingUp className="h-4 w-4 text-green-200 mr-2"/>
-                                        <span className="text-sm font-medium text-white">Best Prices</span>
-                                    </div>
-                                    <div
-                                        className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
-                                        <Users className="h-4 w-4 text-green-200 mr-2"/>
-                                        <span className="text-sm font-medium text-white">Local Network</span>
-                                    </div>
-                                </div>
+                        {/* Feature Pills */}
+                        <div
+                            className="flex flex-wrap justify-center gap-4 mb-12 animate-fade-in-up animation-delay-600">
+                            <div
+                                className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
+                                <Shield className="h-4 w-4 text-green-200 mr-2"/>
+                                <span className="text-sm font-medium text-white">Secure Trading</span>
+                            </div>
+                            <div
+                                className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
+                                <TrendingUp className="h-4 w-4 text-green-200 mr-2"/>
+                                <span className="text-sm font-medium text-white">Best Prices</span>
+                            </div>
+                            <div
+                                className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
+                                <Users className="h-4 w-4 text-green-200 mr-2"/>
+                                <span className="text-sm font-medium text-white">Local Network</span>
+                            </div>
+                        </div>
 
-                                {/* CTA Buttons */}
-                                <div
-                                    className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-800">
-                                    <Link
-                                        to="/trade"
-                                        className="group bg-white text-green-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-50 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                        {/* CTA Buttons */}
+                        <div
+                            className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-800">
+                            <Link
+                                to="/trade"
+                                className="group bg-white text-green-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-50 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
               <span className="flex items-center justify-center">
                 Start Trading
                 <TrendingUp className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300"/>
               </span>
-                                    </Link>
-                                    <Link to="/learnmore"
-                                        className="group bg-transparent text-white border-2 border-white/30 backdrop-blur-sm px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 hover:border-white/50 transform hover:scale-105 transition-all duration-300">
+                            </Link>
+                            <Link to="/learnmore"
+                                  className="group bg-transparent text-white border-2 border-white/30 backdrop-blur-sm px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 hover:border-white/50 transform hover:scale-105 transition-all duration-300">
               <span className="flex items-center justify-center">
                 Learn More
                 <Sprout className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform duration-300"/>
               </span>
-                                    </Link>
-                                </div>
-                            </div>
+                            </Link>
                         </div>
+                    </div>
+                </div>
 
-                        <style jsx>{`
+                <style jsx>{`
                             @keyframes fadeInUp {
                                 from {
                                     opacity: 0;
@@ -426,7 +434,7 @@ const Marketplace = () => {
                                 animation-delay: 2s;
                             }
                         `}</style>
-                    </div>
+            </div>
 
             <div className="bg-white shadow-sm border-b">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-24 w-full">
