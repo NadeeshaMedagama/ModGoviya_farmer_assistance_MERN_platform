@@ -120,8 +120,14 @@ const RegisterPage = () => {
             localStorage.setItem('userInfo', JSON.stringify(response.data));
             navigate('/login');
         } catch (error) {
-            console.error('Google registration failed:', error.response?.data?.message || error.message);
-            alert(error.response?.data?.message || 'Google registration failed. Please try again.');
+            console.error('Google registration failed:', error);
+            let errorMessage = 'Google registration failed. Please try again.';
+
+            if (error.response) {
+                errorMessage = error.response.data.message || errorMessage;
+            }
+
+            alert(errorMessage);
         }
     };
 
@@ -469,7 +475,7 @@ const RegisterPage = () => {
                                 onSuccess={handleGoogleSuccess}
                                 onError={handleGoogleError}
                                 useOneTap
-                                text="continue_with"
+                                text="signup_with"
                                 shape="rectangular"
                                 size="large"
                                 width="100%"
