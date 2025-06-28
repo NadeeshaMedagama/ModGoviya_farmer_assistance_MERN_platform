@@ -167,7 +167,7 @@ const Marketplace = () => {
             <div className="p-4">
                 <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.title}</h3>
                 <div className="flex items-center justify-between mb-2">
-                    <span className="text-2xl font-bold text-green-600">₹{product.price.toLocaleString()}</span>
+                    <span className="text-2xl font-bold text-green-600">Rs: {product.price.toLocaleString()}.00</span>
                     <div className="flex items-center">
                         <Star className="w-4 h-4 text-yellow-400 fill-current" />
                         <span className="text-sm text-gray-600 ml-1">{product.rating}</span>
@@ -224,7 +224,7 @@ const Marketplace = () => {
 
                         <div>
                             <div className="mb-4">
-                                <span className="text-3xl font-bold text-green-600">₹{product.price.toLocaleString()}</span>
+                                <span className="text-3xl font-bold text-green-600">Rs: {product.price.toLocaleString()}.00</span>
                                 <span className={`ml-3 px-3 py-1 text-sm font-medium rounded-full ${
                                     product.condition === 'new' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
                                 }`}>
@@ -508,14 +508,14 @@ const Marketplace = () => {
                                         placeholder="Min"
                                         value={priceRange[0]}
                                         onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])}
-                                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg"
+                                        className="w-24 px-2 py-2 border border-gray-300 rounded-lg"
                                     />
                                     <input
                                         type="number"
                                         placeholder="Max"
                                         value={priceRange[1]}
                                         onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 10000])}
-                                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg"
+                                        className="w-24 px-2 py-2 border border-gray-300 rounded-lg"
                                     />
                                 </div>
                             </div>
