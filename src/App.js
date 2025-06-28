@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CartProvider } from './contexts/CartContext';
 import WeatherPage from './pages/WeatherPage';
 import CropManagement from "./pages/CropManagement";
 import Login from './components/auth/Login';
@@ -16,10 +17,12 @@ import BrowseFeaturesPage from "./services/BrowseFeaturesPage";
 import WatchDemoPage from "./services/WatchDemoPage";
 import ScheduleDemo from "./components/forum/ScheduleDemo";
 import LearnMore from "./services/LearnMore";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
         <Router>
+          <CartProvider>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
@@ -36,8 +39,10 @@ function App() {
             <Route path="/watchdemo" element={<WatchDemoPage />} />
             <Route path="/schedule" element={<ScheduleDemo />} />
             <Route path="/learnmore" element={<LearnMore />} />
+            <Route path="/cart" element={<Cart />} />
 
           </Routes>
+            </CartProvider>
         </Router>
   );
 }
