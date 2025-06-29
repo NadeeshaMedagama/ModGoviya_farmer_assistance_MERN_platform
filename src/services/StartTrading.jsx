@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-    User,
     Mail,
     Phone,
     MapPin,
@@ -9,22 +8,15 @@ import {
     ArrowRight,
     Shield,
     CheckCircle,
-    Truck,
     Store,
     Users,
     TrendingUp,
-    Upload,
     Camera,
     FileText,
     Briefcase,
-    Globe,
     Lock,
     Sprout,
     Tractor,
-    AlertCircle,
-    Star,
-    Award,
-    Timer,
     ArrowLeft,
     Loader2
 } from 'lucide-react';
