@@ -9,7 +9,8 @@ import {
     MapPin,
     Globe,
     Send,
-    Check
+    Check,
+    Leaf
 }
     from 'lucide-react';
 import axios from 'axios';
@@ -60,13 +61,24 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
                     {/* Company Info */}
                     <div className="col-span-1 lg:col-span-2">
-                        <div className="flex items-center mb-6">
-                            <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-xl">M</span>
+                        <div className="flex-shrink-0 flex items-center group">
+                            <div className="relative">
+                                <div
+                                    className="w-10 h-10 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                    <Leaf className="text-white w-6 h-6"/>
+                                </div>
+                                <div
+                                    className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-80 animate-pulse"></div>
                             </div>
-                            <span className="ml-3 text-2xl font-bold">ModGoviya</span>
+                            <div className="ml-4">
+                                <span
+                                    className="ml-3 text-2xl font-bold">
+                                    ModGoviya
+                                </span>
+                                <div className="text-xs text-gray-300 font-medium -mt-1 mx-2">Agriculture Platform</div>
+                            </div>
                         </div>
-                        <p className="text-gray-300 mb-6 max-w-md">
+                        <p className="text-gray-300 mb-6 max-w-md my-3">
                             Empowering Sri Lankan farmers with modern technology and community support. Join us in
                             revolutionizing agriculture for a sustainable future.
                         </p>
@@ -90,11 +102,21 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold mb-6 text-green-400">Quick Links</h3>
                         <ul className="space-y-3">
-                            <li><a href="/" className="text-gray-300 hover:text-white transition-colors duration-200">Home</a></li>
-                            <li><a href="/features" className="text-gray-300 hover:text-white transition-colors duration-200">Features</a></li>
-                            <li><a href="/marketplace" className="text-gray-300 hover:text-white transition-colors duration-200">Marketplace</a></li>
-                            <li><a href="/weather" className="text-gray-300 hover:text-white transition-colors duration-200">Weather</a></li>
-                            <li><a href="/community" className="text-gray-300 hover:text-white transition-colors duration-200">Community</a></li>
+                            <li><a href="/"
+                                   className="text-gray-300 hover:text-white transition-colors duration-200">Home</a>
+                            </li>
+                            <li><a href="/features"
+                                   className="text-gray-300 hover:text-white transition-colors duration-200">Features</a>
+                            </li>
+                            <li><a href="/marketplace"
+                                   className="text-gray-300 hover:text-white transition-colors duration-200">Marketplace</a>
+                            </li>
+                            <li><a href="/weather"
+                                   className="text-gray-300 hover:text-white transition-colors duration-200">Weather</a>
+                            </li>
+                            <li><a href="/community"
+                                   className="text-gray-300 hover:text-white transition-colors duration-200">Community</a>
+                            </li>
                         </ul>
                     </div>
 
@@ -102,7 +124,7 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold mb-6 text-green-400">Resources</h3>
                         <ul className="space-y-3">
-                            <li><a href="/blog" className="text-gray-300 hover:text-white transition-colors duration-200">Blog</a></li>
+                        <li><a href="/blog" className="text-gray-300 hover:text-white transition-colors duration-200">Blog</a></li>
                             <li><a href="/guides" className="text-gray-300 hover:text-white transition-colors duration-200">Farming Guides</a></li>
                             <li><a href="/tutorials" className="text-gray-300 hover:text-white transition-colors duration-200">Tutorials</a></li>
                             <li><a href="/faq" className="text-gray-300 hover:text-white transition-colors duration-200">FAQ</a></li>
