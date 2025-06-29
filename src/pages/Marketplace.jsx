@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { Search,
     Filter,
@@ -25,6 +25,7 @@ import { Search,
 import { useCart } from '../contexts/CartContext';
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
+import axios from 'axios';
 
 const Marketplace = () => {
     const [viewMode, setViewMode] = useState('grid');
@@ -37,8 +38,41 @@ const Marketplace = () => {
     const [showPostForm, setShowPostForm] = useState(false);
     const { addToCart } = useCart();
 
+    const fetchProducts = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/products', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            return response.data; // Return the actual data
+        } catch (error) {
+            console.error('Error fetching products:', error.response?.data || error.message);
+            return []; // Return empty array if there's an error
+        }
+    };
+
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const loadProducts = async () => {
+            try {
+                setLoading(true);
+                const data = await fetchProducts();
+                setProducts(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadProducts();
+    }, []);
+
     // Sample product data
-    const products = [
+    /*const products = [
         {
             id: "685c3fe0d588773868905e5c",
             title: "Organic Tomato Seeds - Premium Quality",
@@ -47,21 +81,21 @@ const Marketplace = () => {
             location: "Colombo, Western Province",
             seller: "Sunil Fernando",
             rating: 4.8,
-            image: "https://images.unsplash.com/photo-1592921870789-04563d55041c?w=400",
+            image: "https://www.seedsnow.com/cdn/shop/products/700xAce_55_700x_4f5ac27f-34b0-41b2-b44b-37b2a473f03c.jpg?v=1681430406&width=460",
             description: "High-quality organic tomato seeds with 95% germination rate. Perfect for home gardens and commercial farming.",
             condition: "new",
             availability: "In Stock",
             contact: { phone: "+94 77 123 4567", email: "sunil@email.com" }
         },
         {
-            id: "685c3fe0d588773868905e5d",
+            id: "685c3fe0d588773868905e5b",
             title: "Professional Farming Tractor - John Deere",
             price: 850000,
             category: "equipment",
             location: "Kandy, Central Province",
             seller: "Agricultural Machinery Ltd",
             rating: 4.9,
-            image: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=400",
+            image: "https://img.agriexpo.online/images_ag/photo-m2/169379-10289839.jpg",
             description: "Well-maintained John Deere tractor, perfect for medium to large scale farming operations.",
             condition: "used",
             availability: "Available",
@@ -75,7 +109,7 @@ const Marketplace = () => {
             location: "Galle, Southern Province",
             seller: "Green Farm Solutions",
             rating: 4.7,
-            image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400",
+            image: "https://m.media-amazon.com/images/I/810hWHnYkvL.jpg",
             description: "100% organic NPK fertilizer suitable for all types of crops. 50kg bag.",
             condition: "new",
             availability: "In Stock",
@@ -89,7 +123,7 @@ const Marketplace = () => {
             location: "Kurunegala, North Western",
             seller: "Coconut Farmers Co-op",
             rating: 4.6,
-            image: "https://images.unsplash.com/photo-1520975954732-35dd22299614?w=400",
+            image: "https://m.media-amazon.com/images/I/41HgW4CyzKL.jpg",
             description: "Fresh coconuts directly from our plantation. Perfect for drinking and cooking.",
             condition: "new",
             availability: "Available",
@@ -103,7 +137,7 @@ const Marketplace = () => {
             location: "Matara, Southern Province",
             seller: "Tool Master",
             rating: 4.5,
-            image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400",
+            image: "https://m.media-amazon.com/images/I/71YkFLh57+L.jpg",
             description: "Complete set of hand tools including spades, hoes, pruning shears, and more.",
             condition: "new",
             availability: "In Stock",
@@ -117,13 +151,15 @@ const Marketplace = () => {
             location: "Anuradhapura, North Central",
             seller: "Livestock Traders",
             rating: 4.4,
-            image: "https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?w=400",
+            image: "https://static.vecteezy.com/system/resources/thumbnails/053/297/826/small/water-buffalo-grazing-peacefully-in-lush-green-field-photo.JPG",
             description: "Healthy water buffalo, excellent for plowing and dairy. Well-trained and docile.",
             condition: "used",
             availability: "Available",
             contact: { phone: "+94 25 678 9012", email: "livestock@email.com" }
         }
-    ];
+    ];*/
+
+
 
     const categories = [
         { id: 'all', name: 'All Categories', icon: '🌾' },
@@ -255,7 +291,7 @@ const Marketplace = () => {
                             <div className="space-y-3">
                                 <button
                                     onClick={() => {
-                                        addToCart(product.id);
+                                        addToCart(product._id);
                                         onClose();
                                     }}
                                     className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center">
@@ -381,59 +417,27 @@ const Marketplace = () => {
                 </div>
 
                 <style jsx>{`
-                            @keyframes fadeInUp {
-                                from {
-                                    opacity: 0;
-                                    transform: translateY(30px);
-                                }
-                                to {
-                                    opacity: 1;
-                                    transform: translateY(0);
-                                }
-                            }
+                    @keyframes fadeInUp {
+                        from {
+                            opacity: 0;
+                            transform: translateY(30px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
 
-                            @keyframes float {
-                                0%, 100% {
-                                    transform: translateY(0px);
-                                }
-                                50% {
-                                    transform: translateY(-20px);
-                                }
-                            }
+                    @keyframes float {
+                        0%, 100% {
+                            transform: translateY(0px);
+                        }
+                        50% {
+                            transform: translateY(-20px);
+                        }
+                    }
 
-                            .animate-fade-in-up {
-                                animation: fadeInUp 0.8s ease-out forwards;
-                            }
-
-                            .animation-delay-200 {
-                                animation-delay: 0.2s;
-                            }
-
-                            .animation-delay-400 {
-                                animation-delay: 0.4s;
-                            }
-
-                            .animation-delay-600 {
-                                animation-delay: 0.6s;
-                            }
-
-                            .animation-delay-800 {
-                                animation-delay: 0.8s;
-                            }
-
-                            .animation-delay-1000 {
-                                animation-delay: 1s;
-                            }
-
-                            .animate-float-slow {
-                                animation: float 6s ease-in-out infinite;
-                            }
-
-                            .animate-float-delayed {
-                                animation: float 6s ease-in-out infinite;
-                                animation-delay: 2s;
-                            }
-                        `}</style>
+                `}</style>
             </div>
 
             <div className="bg-white shadow-sm border-b">
@@ -514,7 +518,7 @@ const Marketplace = () => {
                                         type="number"
                                         placeholder="Max"
                                         value={priceRange[1]}
-                                        onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 10000])}
+                                        onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 1000000])}
                                         className="w-24 px-2 py-2 border border-gray-300 rounded-lg"
                                     />
                                 </div>
@@ -579,7 +583,7 @@ const Marketplace = () => {
                                 : 'grid-cols-1'
                         }`}>
                             {filteredProducts.map(product => (
-                                <ProductCard key={product.id} product={product}/>
+                                <ProductCard key={product._id} product={product}/>
                             ))}
                         </div>
 
