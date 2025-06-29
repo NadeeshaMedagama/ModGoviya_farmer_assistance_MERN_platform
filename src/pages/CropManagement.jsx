@@ -10,12 +10,8 @@ import {
     CheckCircle,
     Clock,
     Sprout,
-    Leaf,
-    Download,
-    Upload,
     MapPin,
     TrendingUp,
-    AlertCircle,
     Camera
 } from 'lucide-react';
 import Footer from "../components/layout/Footer";
