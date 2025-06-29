@@ -1,14 +1,14 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, {createContext, useContext, useState, useEffect} from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const CartContext = createContext();
 
 const token = localStorage.getItem('token');
 
-export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState({ items: [] });
+export const CartProvider = ({children}) => {
+    const [cart, setCart] = useState({items: []});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -54,11 +54,13 @@ export const CartProvider = ({ children }) => {
         try {
             setLoading(true);
             const response = await axios.put(`http://localhost:5000/api/cart/${itemId}`, {
-                quantity,
-            },
-            {headers: {
-                Authorization: `Bearer ${token}`
-            }});
+                    quantity,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
             setCart(response.data);
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to update cart');
@@ -68,16 +70,22 @@ export const CartProvider = ({ children }) => {
     };
 
     const removeFromCart = async (itemId) => {
-        try {
-            setLoading(true);
-            const response = await axios.delete(`/api/cart/${itemId}`);
-            setCart(response.data);
-        } catch (err) {
-            setError(err.response?.data?.message || 'Failed to remove from cart');
-        } finally {
-            setLoading(false);
+            try {
+                setLoading(true);
+                const response = await axios.delete(`http://localhost:5000/api/cart/${itemId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setCart(response.data);
+            } catch
+                (err) {
+                setError(err.response?.data?.message || 'Failed to remove from cart');
+            } finally {
+                setLoading(false);
+            }
         }
-    };
+    ;
 
     useEffect(() => {
         fetchCart();
