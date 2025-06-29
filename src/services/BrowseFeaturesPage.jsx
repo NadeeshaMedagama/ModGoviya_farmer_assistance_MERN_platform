@@ -17,7 +17,6 @@ import {
     Globe,
     Shield,
     Zap,
-    ChevronRight,
     Play,
     CheckCircle
 } from 'lucide-react';
