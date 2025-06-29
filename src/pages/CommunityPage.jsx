@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
     Search,
-    Filter,
     Plus,
     MessageCircle,
     ThumbsUp,
@@ -16,7 +15,6 @@ import {
     AlertTriangle,
     Star,
     MapPin,
-    Calendar,
     Eye,
     Flag,
     Share2,
