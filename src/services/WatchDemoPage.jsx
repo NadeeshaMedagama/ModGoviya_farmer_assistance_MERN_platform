@@ -5,7 +5,6 @@ import {
     Volume2,
     VolumeX,
     Maximize,
-    Calendar,
     Users,
     Star,
     ArrowRight,
@@ -15,12 +14,7 @@ import {
     Sprout,
     Cloud,
     ShoppingCart,
-    Bug,
-    BookOpen,
-    Bell,
-    Globe,
     Phone,
-    Mail,
     MessageCircle,
     Award,
     TrendingUp,
@@ -33,8 +27,7 @@ import Header from "../components/layout/Header";
 const WatchDemoPage = () => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
-    const [currentTime, setCurrentTime] = useState(0);
-    const [duration, setDuration] = useState(0);
+    const [duration] = useState(0);
     const [selectedDemo, setSelectedDemo] = useState(0);
     const [activeFeature, setActiveFeature] = useState(0);
     const videoRef = useRef(null);
