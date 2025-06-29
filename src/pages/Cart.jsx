@@ -108,7 +108,7 @@ const Cart = () => {
                                                             </button>
                                                         </div>
                                                         <span className="text-lg font-bold text-green-600">
-                              ₹{(item.product.price * item.quantity).toLocaleString()}
+                              Rs: {(item.product.price * item.quantity).toLocaleString()}
                             </span>
                                                     </div>
                                                 </div>
@@ -128,18 +128,18 @@ const Cart = () => {
                                     <div className="flex justify-between">
                                         <span className="text-gray-600">Subtotal</span>
                                         <span className="font-medium">
-                      ₹{calculateTotal().toLocaleString()}
+                      Rs: {calculateTotal().toLocaleString()}
                     </span>
                                     </div>
                                     <div className="flex justify-between">
                                         <span className="text-gray-600">Shipping</span>
-                                        <span className="font-medium">₹0</span>
+                                        <span className="font-medium">Rs: 0</span>
                                     </div>
                                     <div className="border-t border-gray-200 pt-4 mt-4">
                                         <div className="flex justify-between">
                                             <span className="font-bold text-gray-900">Total</span>
                                             <span className="font-bold text-green-600">
-                        ₹{calculateTotal().toLocaleString()}
+                        Rs: {calculateTotal().toLocaleString()}
                       </span>
                                         </div>
                                     </div>
