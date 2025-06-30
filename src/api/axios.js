@@ -70,4 +70,22 @@ api.interceptors.response.use(
     }
 );
 
+export const registerUser = async (formData) => {
+    const data = new FormData();
+
+    // Append all form fields
+    for (const key in formData) {
+        if (key === 'specialization') {
+            formData[key].forEach(spec => data.append('specialization', spec));
+        } else if (formData[key] !== null && formData[key] !== undefined) {
+            data.append(key, formData[key]);
+        }
+    }
+    return api.post('/register/register', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+};
+
 export default api;
