@@ -336,12 +336,16 @@ const ContactUs = () => {
                             <div className="p-6 border-b border-gray-100">
                                 <h3 className="text-xl font-bold text-gray-900">Visit Our Office</h3>
                             </div>
-                            <div className="h-64 bg-gray-100 flex items-center justify-center">
-                                <div className="text-center text-gray-500">
-                                    <MapPin className="h-12 w-12 mx-auto mb-2 text-gray-400" />
-                                    <p className="text-sm">Interactive Map</p>
-                                    <p className="text-xs">Kotikawatta, Colombo</p>
-                                </div>
+                            <div className="h-64">
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    frameBorder="0"
+                                    style={{border: 0}}
+                                    src={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.2871487030147!2d79.912978474101!3d6.975408517748765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2597c8dde7e47%3A0x341e7e820c46d3ed!2sUniversity%20of%20Kelaniya!5e0!3m2!1sen!2slk!4v1751313197404!5m2!1sen!2slk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`}
+                                    allowFullScreen
+                                >
+                                </iframe>
                             </div>
                         </div>
 
@@ -350,7 +354,7 @@ const ContactUs = () => {
                             <h3 className="text-xl font-bold text-gray-900 mb-6">Connect With Us</h3>
 
                             <div className="grid grid-cols-2 gap-4">
-                                <a
+                            <a
                                     href="#"
                                     className="flex items-center justify-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors group"
                                 >
