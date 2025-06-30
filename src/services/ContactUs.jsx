@@ -342,7 +342,7 @@ const ContactUs = () => {
                                     height="100%"
                                     frameBorder="0"
                                     style={{border: 0}}
-                                    src={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.2871487030147!2d79.912978474101!3d6.975408517748765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2597c8dde7e47%3A0x341e7e820c46d3ed!2sUniversity%20of%20Kelaniya!5e0!3m2!1sen!2slk!4v1751313197404!5m2!1sen!2slk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`}
+                                    src={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.2871487030147!2d79.912978474101!3d6.975408517748765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2597c8dde7e47%3A0x341e7e820c46d3ed!2sUniversity%20of%20Kelaniya!5e0!3m2!1sen!2slk!4v1751313197404!5m2!1sen!2slk"></iframe>`}
                                     allowFullScreen
                                 >
                                 </iframe>
