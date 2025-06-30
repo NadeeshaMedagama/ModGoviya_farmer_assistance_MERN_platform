@@ -18,6 +18,7 @@ import WatchDemoPage from "./services/WatchDemoPage";
 import ScheduleDemo from "./components/forum/ScheduleDemo";
 import LearnMore from "./services/LearnMore";
 import Cart from "./pages/Cart";
+import GetStartedPage from "./services/GetStartedPage";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             <Route path="/schedule" element={<ScheduleDemo />} />
             <Route path="/learnmore" element={<LearnMore />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/getstart" element={<GetStartedPage />} />
 
           </Routes>
             </CartProvider>
