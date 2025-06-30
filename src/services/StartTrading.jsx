@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     Mail,
     Phone,
@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import {registerUser} from "../api/axios";
 
 const StartTrading = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -206,14 +207,22 @@ const StartTrading = () => {
                 isVerified: false
             };
 
+            const response = await registerUser(userData);
+
+            if (response.data.success) {
+
             // In a real app, you would send this to your backend API
-            console.log('Registering user:', userData);
+                console.log('Registering user:', userData);
+                alert(response.data.message);
 
             // Simulate API delay
-            await new Promise(resolve => setTimeout(resolve, 2000));
+                await new Promise(resolve => setTimeout(resolve, 2000));
 
             // Show success message
-            alert('Registration successful! Please check your email for verification instructions.');
+                alert('Registration successful! Please check your email for verification instructions.');
+            } else {
+                throw new Error(response.data.message || 'Registration failed');
+            }
 
         } catch (error) {
             console.error('Registration error:', error);
