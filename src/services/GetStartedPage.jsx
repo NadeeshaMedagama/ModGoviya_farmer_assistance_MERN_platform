@@ -51,6 +51,8 @@ const GetStartedPage = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const provinces = [
         'Western Province', 'Central Province', 'Southern Province',
@@ -171,6 +173,7 @@ const GetStartedPage = () => {
         if (!validateStep(4)) return;
 
         setIsLoading(true);
+        setIsSubmitting(true);
 
         try {
             const response = await fetch('http://localhost:5000/api/farmers/register', {
@@ -203,6 +206,7 @@ const GetStartedPage = () => {
 
                 // Handle successful registration
                 console.log('User registered successfully', data);
+                setSubmitStatus('success');
                 // Redirect or show success message
 
             } catch (jsonError) {
@@ -219,8 +223,50 @@ const GetStartedPage = () => {
             }));
         } finally {
             setIsLoading(false);
+            setIsSubmitting(false);
         }
     };
+
+    if (submitStatus === 'success') {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center px-4">
+                <div className="max-w-2xl mx-auto text-center">
+                    <div className="bg-white rounded-3xl shadow-2xl p-12 border border-green-100">
+                        <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8">
+                            <CheckCircle size={40} className="text-white" />
+                        </div>
+                        <h1 className="text-4xl font-bold text-gray-900 mb-6">Message Sent Successfully!</h1>
+                        <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                            Thank you for contacting our admissions team. We've received your inquiry and will respond within 24 hours during business days.
+                        </p>
+                        <div className="bg-green-50 rounded-2xl p-6 mb-8">
+                            <h3 className="text-lg font-semibold text-green-800 mb-2">What happens next?</h3>
+                            <ul className="text-green-700 space-y-2 text-left">
+                                <li className="flex items-center">
+                                    <CheckCircle size={16} className="mr-2 text-green-600" />
+                                    You'll receive an email confirmation shortly
+                                </li>
+                                <li className="flex items-center">
+                                    <CheckCircle size={16} className="mr-2 text-green-600" />
+                                    An admissions counselor will review your inquiry
+                                </li>
+                                <li className="flex items-center">
+                                    <CheckCircle size={16} className="mr-2 text-green-600" />
+                                    We'll contact you with personalized guidance
+                                </li>
+                            </ul>
+                        </div>
+                        <button
+                            onClick={() => setSubmitStatus(null)}
+                            className="bg-gradient-to-r from-blue-600 to-purple-700 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+                        >
+                            Send Another Message
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     const renderStep1 = () => (
         <div className="space-y-6">
