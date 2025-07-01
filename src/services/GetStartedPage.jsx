@@ -22,6 +22,8 @@ import {
     Map,
     Calendar
 } from 'lucide-react';
+import Footer from "../components/layout/Footer";
+import Header from "../components/layout/Header";
 
 const GetStartedPage = () => {
     const [formData, setFormData] = useState({
@@ -647,26 +649,7 @@ const GetStartedPage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
             {/* Header */}
-            <div className="bg-white shadow-sm border-b">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center py-4">
-                        <Link to="/" className="flex items-center space-x-2">
-                            <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg flex items-center justify-center">
-                                <Sprout className="w-6 h-6 text-white" />
-                            </div>
-                            <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                                ModGoviya
-                            </span>
-                        </Link>
-                        <div className="text-sm text-gray-600">
-                            Already have an account?{' '}
-                            <Link to="/login" className="text-green-600 hover:text-green-700 font-medium">
-                                Sign In
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Header />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -844,60 +827,7 @@ const GetStartedPage = () => {
             </div>
 
             {/* Footer */}
-            <div className="bg-gray-900 text-white py-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div>
-                            <div className="flex items-center space-x-2 mb-4">
-                                <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg flex items-center justify-center">
-                                    <Sprout className="w-5 h-5 text-white" />
-                                </div>
-                                <span className="text-xl font-bold">ModGoviya</span>
-                            </div>
-                            <p className="text-gray-400 text-sm">
-                                Empowering farmers with modern technology for sustainable agriculture.
-                            </p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold mb-4">Platform</h3>
-                            <ul className="space-y-2 text-sm text-gray-400">
-                                <li><Link to="/features" className="hover:text-white">Features</Link></li>
-                                <li><Link to="/pricing" className="hover:text-white">Pricing</Link></li>
-                                <li><Link to="/demo" className="hover:text-white">Demo</Link></li>
-                                <li><Link to="/api" className="hover:text-white">API</Link></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold mb-4">Support</h3>
-                            <ul className="space-y-2 text-sm text-gray-400">
-                                <li><Link to="/help" className="hover:text-white">Help Center</Link></li>
-                                <li><Link to="/contact" className="hover:text-white">Contact Us</Link></li>
-                                <li><Link to="/community" className="hover:text-white">Community</Link></li>
-                                <li><Link to="/tutorials" className="hover:text-white">Tutorials</Link></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold mb-4">Company</h3>
-                            <ul className="space-y-2 text-sm text-gray-400">
-                                <li><Link to="/about" className="hover:text-white">About</Link></li>
-                                <li><Link to="/blog" className="hover:text-white">Blog</Link></li>
-                                <li><Link to="/careers" className="hover:text-white">Careers</Link></li>
-                                <li><Link to="/press" className="hover:text-white">Press</Link></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-                        <p className="text-gray-400 text-sm">
-                            © 2024 ModGoviya. All rights reserved.
-                        </p>
-                        <div className="flex space-x-6 mt-4 md:mt-0">
-                            <Link to="/privacy" className="text-gray-400 hover:text-white text-sm">Privacy Policy</Link>
-                            <Link to="/terms" className="text-gray-400 hover:text-white text-sm">Terms of Service</Link>
-                            <Link to="/cookies" className="text-gray-400 hover:text-white text-sm">Cookie Policy</Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Footer />
         </div>
     );
 };
