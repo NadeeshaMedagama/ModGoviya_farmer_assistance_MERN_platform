@@ -173,11 +173,7 @@ const GetStartedPage = () => {
         setIsLoading(true);
 
         try {
-            // Simulate API call to register user
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
-            // Here you would make the actual API call to your backend
-            const response = await fetch('/api/auth/register', {
+            const response = await fetch('http://localhost:5000/api/farmers/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -185,16 +181,42 @@ const GetStartedPage = () => {
                 body: JSON.stringify(formData),
             });
 
-            if (response.ok) {
+            // First get the response text to handle both HTML and JSON cases
+            const responseText = await response.text();
+
+            try {
+                // Try to parse as JSON
+                const data = responseText ? JSON.parse(responseText) : {};
+
+                if (!response.ok) {
+                    // Handle validation errors from the server
+                    if (data.errors) {
+                        const serverErrors = {};
+                        data.errors.forEach(err => {
+                            serverErrors[err.param] = err.msg;
+                        });
+                        setErrors(serverErrors);
+                        throw new Error('Validation failed');
+                    }
+                    throw new Error(data.message || 'Registration failed');
+                }
+
                 // Handle successful registration
-                console.log('User registered successfully');
-                // Redirect to dashboard or welcome page
-            } else {
-                throw new Error('Registration failed');
+                console.log('User registered successfully', data);
+                // Redirect or show success message
+
+            } catch (jsonError) {
+                // If JSON parsing fails, handle as HTML response
+                console.error('Failed to parse JSON:', jsonError);
+                throw new Error('Server returned an unexpected response');
             }
+
         } catch (error) {
             console.error('Registration error:', error);
-            setErrors({ submit: 'Registration failed. Please try again.' });
+            setErrors(prev => ({
+                ...prev,
+                submit: error.message || 'Registration failed. Please try again.'
+            }));
         } finally {
             setIsLoading(false);
         }
