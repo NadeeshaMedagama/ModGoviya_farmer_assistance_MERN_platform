@@ -1,0 +1,185 @@
+{
+  "header": {
+    "home": "Home",
+    "features": "Features",
+    "marketplace": "Marketplace",
+    "weather": "Weather",
+    "about": "About Us",
+    "login": "Login",
+    "cart": "Cart",
+    "agriculturePlatform": "Agriculture Platform"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "view": "View",
+    "close": "Close",
+    "submit": "Submit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "continue": "Continue",
+    "finish": "Finish",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout",
+    "help": "Help",
+    "support": "Support",
+    "contact": "Contact"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "rememberMe": "Remember Me",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone Number"
+  },
+  "home": {
+    "hero": {
+      "title": "Empowering Farmers with",
+      "subtitle": "Modern Technology",
+      "description": "Join thousands of farmers using ModGoviya to revolutionize their farming practices with smart tools, weather insights, and community support.",
+      "getStarted": "Get Started",
+      "browseFeatures": "Browse Features"
+    },
+    "featuresSection": {
+      "title": "Everything You Need to Succeed",
+      "subtitle": "Discover powerful tools designed specifically for modern farmers"
+    },
+    "features": {
+      "cropManagement": {
+        "title": "Crop Management",
+        "description": "Track and manage your crops with advanced digital tools"
+      },
+      "weather": {
+        "title": "Live Weather Forecast",
+        "description": "Get accurate weather updates for better crop planning"
+      },
+      "marketplace": {
+        "title": "Farming Marketplace",
+        "description": "Buy and sell farming products directly with other farmers"
+      },
+      "community": {
+        "title": "Community Forum",
+        "description": "Connect with fellow farmers and share knowledge"
+      },
+      "scheduler": {
+        "title": "Task Scheduler",
+        "description": "Never miss important farming activities with smart reminders"
+      },
+      "tips": {
+        "title": "Modern Farming Tips",
+        "description": "Access latest farming techniques and best practices"
+      }
+    },
+    "benefits": {
+      "interface": "Simple and mobile-friendly interface",
+      "language": "Regional language support",
+      "local": "Built with local farmers in mind",
+      "device": "Access from any device"
+    },
+    "testimonials": {
+      "ravi": {
+        "name": "Ravi Perera",
+        "location": "Anuradhapura",
+        "text": "ModGoviya helped me plan my crops better and increased my yield by 30%!"
+      },
+      "kamala": {
+        "name": "Kamala Dissanayake",
+        "location": "Kurunegala",
+        "text": "The weather forecasts are so accurate. I can protect my crops from unexpected rain."
+      },
+      "sunil": {
+        "name": "Sunil Fernando",
+        "location": "Polonnaruwa",
+        "text": "The marketplace feature helped me sell my harvest directly to buyers at better prices."
+      }
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "subtitle": "Get started in just a few simple steps"
+    },
+    "steps": {
+      "register": {
+        "title": "Register",
+        "description": "Create your account in just a few minutes"
+      },
+      "manage": {
+        "title": "Manage Crops",
+        "description": "Add your crops and track their progress"
+      },
+      "connect": {
+        "title": "Connect Community",
+        "description": "Join our farmer community and share knowledge"
+      },
+      "grow": {
+        "title": "Grow Success",
+        "description": "Achieve better yields and higher profits"
+      }
+    },
+    "whyChoose": {
+      "title": "Why Choose ModGoviya?",
+      "description": "Built specifically for Sri Lankan farmers with local needs in mind"
+    },
+    "welcome": "Welcome to ModGoviya",
+    "tagline": "Your Complete Agriculture Platform",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "features": "Features",
+    "about": "About"
+  },
+  "marketplace": {
+    "title": "Marketplace",
+    "products": "Products",
+    "categories": "Categories",
+    "price": "Price",
+    "quantity": "Quantity",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "outOfStock": "Out of Stock",
+    "inStock": "In Stock"
+  },
+  "weather": {
+    "title": "Weather",
+    "currentWeather": "Current Weather",
+    "forecast": "Forecast",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "windSpeed": "Wind Speed",
+    "precipitation": "Precipitation",
+    "sunrise": "Sunrise",
+    "sunset": "Sunset"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "total": "Total",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "update": "Update",
+    "clear": "Clear Cart",
+    "items": "items"
+  }
+} 
