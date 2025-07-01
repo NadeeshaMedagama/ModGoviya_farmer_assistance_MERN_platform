@@ -14,8 +14,11 @@ import {
 } from 'lucide-react';
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import { useTranslation } from 'react-i18next';
 
 const ModGoviyaHomepage = () => {
+    const { t } = useTranslation();
+
     const features = [
         {
             icon: Package,
@@ -50,29 +53,29 @@ const ModGoviyaHomepage = () => {
     ];
 
     const benefits = [
-        "Simple and mobile-friendly interface",
-        "Regional language support",
-        "Built with local farmers in mind",
-        "Access from any device"
+        t('home.benefits.interface'),
+        t('home.benefits.language'),
+        t('home.benefits.local'),
+        t('home.benefits.device')
     ];
 
     const testimonials = [
         {
-            name: "Ravi Perera",
-            location: "Anuradhapura",
-            text: "ModGoviya helped me plan my crops better and increased my yield by 30%!",
+            name: t('home.testimonials.ravi.name'),
+            location: t('home.testimonials.ravi.location'),
+            text: t('home.testimonials.ravi.text'),
             rating: 5
         },
         {
-            name: "Kamala Dissanayake",
-            location: "Kurunegala",
-            text: "The weather forecasts are so accurate. I can protect my crops from unexpected rain.",
+            name: t('home.testimonials.kamala.name'),
+            location: t('home.testimonials.kamala.location'),
+            text: t('home.testimonials.kamala.text'),
             rating: 5
         },
         {
-            name: "Sunil Fernando",
-            location: "Polonnaruwa",
-            text: "The marketplace feature helped me sell my harvest directly to buyers at better prices.",
+            name: t('home.testimonials.sunil.name'),
+            location: t('home.testimonials.sunil.location'),
+            text: t('home.testimonials.sunil.text'),
             rating: 5
         }
     ];
@@ -80,23 +83,23 @@ const ModGoviyaHomepage = () => {
     const steps = [
         {
             number: "01",
-            title: "Register",
-            description: "Create your account in just a few minutes"
+            title: t('home.steps.register.title'),
+            description: t('home.steps.register.description')
         },
         {
             number: "02",
-            title: "Manage Crops",
-            description: "Add your crops and track their progress"
+            title: t('home.steps.manage.title'),
+            description: t('home.steps.manage.description')
         },
         {
             number: "03",
-            title: "Connect Community",
-            description: "Join our farmer community and share knowledge"
+            title: t('home.steps.connect.title'),
+            description: t('home.steps.connect.description')
         },
         {
             number: "04",
-            title: "Grow Success",
-            description: "Achieve better yields and higher profits"
+            title: t('home.steps.grow.title'),
+            description: t('home.steps.grow.description')
         }
     ];
 
@@ -111,22 +114,21 @@ const ModGoviyaHomepage = () => {
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
                     <div className="text-center">
                         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                            Empowering Farmers with
-                            <span className="text-green-600 block pt-2">Modern Technology</span>
+                            {t('home.hero.title')}
+                            <span className="text-green-600 block pt-2">{t('home.hero.subtitle')}</span>
                         </h1>
                         <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                            Join thousands of farmers using ModGoviya to revolutionize their farming practices with
-                            smart tools, weather insights, and community support.
+                            {t('home.hero.description')}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Link to="/cropmanage"
                                   className="bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 transition-colors flex items-center justify-center">
-                                Get Started
+                                {t('home.hero.getStarted')}
                                 <ArrowRight className="ml-2" size={20}/>
                             </Link>
                             <Link to="/browse"
                                 className="border-2 border-green-600 text-green-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-50 transition-colors">
-                                Browse Features
+                                {t('home.hero.browseFeatures')}
                             </Link>
                         </div>
                     </div>
@@ -138,10 +140,10 @@ const ModGoviyaHomepage = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                            Everything You Need to Succeed
+                            {t('home.featuresSection.title')}
                         </h2>
                         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                            Discover powerful tools designed specifically for modern farmers
+                            {t('home.featuresSection.subtitle')}
                         </p>
                     </div>
 
@@ -166,10 +168,10 @@ const ModGoviyaHomepage = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                            How It Works
+                            {t('home.howItWorks.title')}
                         </h2>
                         <p className="text-xl text-gray-600">
-                            Get started in just a few simple steps
+                            {t('home.howItWorks.subtitle')}
                         </p>
                     </div>
 
@@ -194,10 +196,10 @@ const ModGoviyaHomepage = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div>
                             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                                Why Choose ModGoviya?
+                                {t('home.whyChoose.title')}
                             </h2>
                             <p className="text-xl text-gray-600 mb-8">
-                                Built specifically for Sri Lankan farmers with local needs in mind
+                                {t('home.whyChoose.description')}
                             </p>
                             <div className="space-y-4">
                                 {benefits.map((benefit, index) => (
