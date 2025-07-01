@@ -9,20 +9,17 @@ import {
 } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext';
+import { useLanguage } from '../../contexts/LanguageContext';
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
     const location = useLocation(); // Get current location
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [currentLang, setCurrentLang] = useState('English');
     const [isScrolled, setIsScrolled] = useState(false);
     const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
     const { cart } = useCart();
-
-    const languages = [
-        { code: 'en', name: 'English', flag: '🇺🇸' },
-        { code: 'si', name: 'සිංහල', flag: '🇱🇰' },
-        { code: 'ta', name: 'தமிழ்', flag: '🇱🇰' }
-    ];
+    const { currentLanguage, changeLanguage, languages, getCurrentLanguageInfo } = useLanguage();
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -32,7 +29,12 @@ const Header = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const currentLanguage = languages.find(lang => lang.name === currentLang) || languages[0];
+    // Update i18n language when currentLanguage changes
+    useEffect(() => {
+        i18n.changeLanguage(currentLanguage);
+    }, [currentLanguage, i18n]);
+
+    const currentLanguageInfo = getCurrentLanguageInfo();
 
     const NavLink = ({ href, children, active = false, onClick }) => (
         <a
@@ -54,6 +56,11 @@ const Header = () => {
     // Helper function to check if a path is active
     const isActive = (path) => {
         return location.pathname === path;
+    };
+
+    const handleLanguageChange = (languageCode) => {
+        changeLanguage(languageCode);
+        setIsLangDropdownOpen(false);
     };
 
     return (
@@ -78,7 +85,7 @@ const Header = () => {
                                 <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
                                     ModGoviya
                                 </span>
-                                    <div className="text-xs text-gray-500 font-medium -mt-1">Agriculture Platform</div>
+                                    <div className="text-xs text-gray-500 font-medium -mt-1">{t('header.agriculturePlatform')}</div>
                                 </div>
                             </div>
                         </div>
@@ -87,11 +94,11 @@ const Header = () => {
                     {/* Enhanced Desktop Navigation */}
                     <div className="hidden lg:block">
                         <div className="flex items-center space-x-1">
-                            <NavLink href="/" active={isActive('/')}>Home</NavLink>
-                            <NavLink href="/features" active={isActive('/features')}>Features</NavLink>
-                            <NavLink href="/marketplace" active={isActive('/marketplace')}>Marketplace</NavLink>
-                            <NavLink href="/weather" active={isActive('/weather')}>Weather</NavLink>
-                            <NavLink href="/about" active={isActive('/about')}>About Us</NavLink>
+                            <NavLink href="/" active={isActive('/')}>{t('header.home')}</NavLink>
+                            <NavLink href="/features" active={isActive('/features')}>{t('header.features')}</NavLink>
+                            <NavLink href="/marketplace" active={isActive('/marketplace')}>{t('header.marketplace')}</NavLink>
+                            <NavLink href="/weather" active={isActive('/weather')}>{t('header.weather')}</NavLink>
+                            <NavLink href="/about" active={isActive('/about')}>{t('header.about')}</NavLink>
                         </div>
                     </div>
 
@@ -104,8 +111,8 @@ const Header = () => {
                                 className="flex items-center space-x-2 px-3 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                             >
                                 <Globe className="w-4 h-4 text-gray-600" />
-                                <span className="text-sm font-medium text-gray-700">{currentLanguage.flag}</span>
-                                <span className="hidden sm:block text-sm font-medium text-gray-700">{currentLanguage.name}</span>
+                                <span className="text-sm font-medium text-gray-700">{currentLanguageInfo.flag}</span>
+                                <span className="hidden sm:block text-sm font-medium text-gray-700">{currentLanguageInfo.name}</span>
                                 <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${isLangDropdownOpen ? 'rotate-180' : ''}`} />
                             </button>
 
@@ -114,12 +121,9 @@ const Header = () => {
                                     {languages.map((lang) => (
                                         <button
                                             key={lang.code}
-                                            onClick={() => {
-                                                setCurrentLang(lang.name);
-                                                setIsLangDropdownOpen(false);
-                                            }}
+                                            onClick={() => handleLanguageChange(lang.code)}
                                             className={`w-full flex items-center space-x-3 px-4 py-2 text-left hover:bg-gray-50 transition-colors duration-150 ${
-                                                currentLang === lang.name ? 'bg-emerald-50 text-emerald-700' : 'text-gray-700'
+                                                currentLanguage === lang.code ? 'bg-emerald-50 text-emerald-700' : 'text-gray-700'
                                             }`}
                                         >
                                             <span className="text-lg">{lang.flag}</span>
@@ -145,7 +149,7 @@ const Header = () => {
 
                         {/* Enhanced Login Button */}
                         <a href="/login" className="hidden sm:block relative px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 group overflow-hidden">
-                            <span className="relative z-10">Login</span>
+                            <span className="relative z-10">{t('header.login')}</span>
                             <div className="absolute inset-0 bg-gradient-to-r from-emerald-700 to-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
                         </a>
 
@@ -175,7 +179,7 @@ const Header = () => {
                             }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            Home
+                            {t('header.home')}
                         </a>
                         <a
                             href="/features"
@@ -184,7 +188,7 @@ const Header = () => {
                             }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            Features
+                            {t('header.features')}
                         </a>
                         <a
                             href="/marketplace"
@@ -193,7 +197,7 @@ const Header = () => {
                             }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            Marketplace
+                            {t('header.marketplace')}
                         </a>
                         <a
                             href="/weather"
@@ -202,7 +206,7 @@ const Header = () => {
                             }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            Weather
+                            {t('header.weather')}
                         </a>
                         <a
                             href="/about"
@@ -211,7 +215,7 @@ const Header = () => {
                             }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            About Us
+                            {t('header.about')}
                         </a>
 
                         {/* Cart link in mobile menu */}
@@ -224,7 +228,7 @@ const Header = () => {
                         >
                             <span className="flex items-center">
                                 <ShoppingCart className="w-5 h-5 mr-3" />
-                                Cart
+                                {t('header.cart')}
                             </span>
                             {cart.items.length > 0 && (
                                 <span className="bg-gradient-to-r from-emerald-600 to-green-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
@@ -238,7 +242,7 @@ const Header = () => {
                             className="flex items-center justify-center px-4 py-3 mt-4 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-lg shadow-md"
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            Login
+                            {t('header.login')}
                         </a>
                     </div>
                 </div>
