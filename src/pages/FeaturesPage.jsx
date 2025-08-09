@@ -17,98 +17,100 @@ import {
 } from 'lucide-react';
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
+import { useTranslation } from 'react-i18next';
 
 const FeaturesPage = () => {
     const [hoveredFeature, setHoveredFeature] = useState(null);
+    const { t } = useTranslation();
 
     const features = [
         {
             id: 1,
             icon: Sprout,
-            title: "Crop Management",
-            description: "Comprehensive crop tracking with planting schedules, harvest dates, and health monitoring for maximum yield optimization.",
-            benefits: ["Track multiple crops", "Health monitoring", "Yield prediction"],
+            title: t('home.features.cropManagement.title'),
+            description: t('home.features.cropManagement.description'),
+            benefits: [t('features.benefits.trackMultiple', { defaultValue: 'Track multiple crops' }), t('features.benefits.healthMonitoring', { defaultValue: 'Health monitoring' }), t('features.benefits.yieldPrediction', { defaultValue: 'Yield prediction' })],
             color: "from-green-400 to-emerald-600"
         },
         {
             id: 2,
             icon: Cloud,
-            title: "Weather Forecast",
-            description: "Real-time weather data with 7-day forecasts, rainfall predictions, and severe weather alerts tailored for your location.",
-            benefits: ["Hourly updates", "Storm alerts", "Irrigation planning"],
+            title: t('home.features.weather.title'),
+            description: t('home.features.weather.description'),
+            benefits: [t('features.benefits.hourlyUpdates', { defaultValue: 'Hourly updates' }), t('features.benefits.stormAlerts', { defaultValue: 'Storm alerts' }), t('features.benefits.irrigationPlanning', { defaultValue: 'Irrigation planning' })],
             color: "from-blue-400 to-cyan-600"
         },
         {
             id: 3,
             icon: ShoppingCart,
-            title: "Farming Marketplace",
-            description: "Connect with local buyers and sellers for seeds, tools, equipment, and fresh produce with secure transaction support.",
-            benefits: ["Local connections", "Secure payments", "Quality assurance"],
+            title: t('home.features.marketplace.title'),
+            description: t('home.features.marketplace.description'),
+            benefits: [t('features.benefits.localConnections', { defaultValue: 'Local connections' }), t('features.benefits.securePayments', { defaultValue: 'Secure payments' }), t('features.benefits.qualityAssurance', { defaultValue: 'Quality assurance' })],
             color: "from-purple-400 to-indigo-600"
         },
         {
             id: 4,
             icon: Calendar,
-            title: "Task Scheduler",
-            description: "Smart scheduling system with automated reminders for planting, watering, fertilizing, and harvesting activities.",
-            benefits: ["Smart reminders", "Task automation", "Calendar sync"],
+            title: t('home.features.scheduler.title'),
+            description: t('home.features.scheduler.description'),
+            benefits: [t('features.benefits.smartReminders', { defaultValue: 'Smart reminders' }), t('features.benefits.taskAutomation', { defaultValue: 'Task automation' }), t('features.benefits.calendarSync', { defaultValue: 'Calendar sync' })],
             color: "from-orange-400 to-red-600"
         },
         {
             id: 5,
             icon: Bug,
-            title: "Pest & Disease Control",
-            description: "AI-powered pest identification through image upload with treatment recommendations and prevention strategies.",
-            benefits: ["AI identification", "Treatment plans", "Prevention tips"],
+            title: t('features.pest.title', { defaultValue: 'Pest & Disease Control' }),
+            description: t('features.pest.description', { defaultValue: 'AI-powered pest identification through image upload with treatment recommendations and prevention strategies.' }),
+            benefits: [t('features.benefits.aiIdentification', { defaultValue: 'AI identification' }), t('features.benefits.treatmentPlans', { defaultValue: 'Treatment plans' }), t('features.benefits.preventionTips', { defaultValue: 'Prevention tips' })],
             color: "from-red-400 to-pink-600"
         },
         {
             id: 6,
             icon: Users,
-            title: "Community Forum",
-            description: "Connect with fellow farmers, share experiences, ask questions, and learn from agricultural experts worldwide.",
-            benefits: ["Expert advice", "Peer support", "Knowledge sharing"],
+            title: t('home.features.community.title'),
+            description: t('home.features.community.description'),
+            benefits: [t('features.benefits.expertAdvice', { defaultValue: 'Expert advice' }), t('features.benefits.peerSupport', { defaultValue: 'Peer support' }), t('features.benefits.knowledgeSharing', { defaultValue: 'Knowledge sharing' })],
             color: "from-teal-400 to-green-600"
         },
         {
             id: 7,
             icon: BookOpen,
-            title: "Farming Resources",
-            description: "Access comprehensive guides, modern farming techniques, organic methods, and latest agricultural research.",
-            benefits: ["Expert articles", "Video tutorials", "Research updates"],
+            title: t('features.resources.title', { defaultValue: 'Farming Resources' }),
+            description: t('features.resources.description', { defaultValue: 'Access comprehensive guides, modern farming techniques, organic methods, and latest agricultural research.' }),
+            benefits: [t('features.benefits.expertArticles', { defaultValue: 'Expert articles' }), t('features.benefits.videoTutorials', { defaultValue: 'Video tutorials' }), t('features.benefits.researchUpdates', { defaultValue: 'Research updates' })],
             color: "from-amber-400 to-orange-600"
         },
         {
             id: 8,
             icon: Bell,
-            title: "Smart Notifications",
-            description: "Intelligent alert system for weather changes, task reminders, marketplace deals, and community updates.",
-            benefits: ["Custom alerts", "Priority filtering", "Multi-channel delivery"],
+            title: t('features.notifications.title', { defaultValue: 'Smart Notifications' }),
+            description: t('features.notifications.description', { defaultValue: 'Intelligent alert system for weather changes, task reminders, marketplace deals, and community updates.' }),
+            benefits: [t('features.benefits.customAlerts', { defaultValue: 'Custom alerts' }), t('features.benefits.priorityFiltering', { defaultValue: 'Priority filtering' }), t('features.benefits.multiChannel', { defaultValue: 'Multi-channel delivery' })],
             color: "from-pink-400 to-rose-600"
         },
         {
             id: 9,
             icon: Globe,
-            title: "Multi-language Support",
-            description: "Full platform support in Sinhala, Tamil, and English to serve Sri Lankan farming communities effectively.",
-            benefits: ["3 languages", "Cultural adaptation", "Local context"],
+            title: t('features.multilang.title', { defaultValue: 'Multi-language Support' }),
+            description: t('features.multilang.description', { defaultValue: 'Full platform support in Sinhala, Tamil, and English to serve Sri Lankan farming communities effectively.' }),
+            benefits: [t('features.benefits.threeLanguages', { defaultValue: '3 languages' }), t('features.benefits.culturalAdaptation', { defaultValue: 'Cultural adaptation' }), t('features.benefits.localContext', { defaultValue: 'Local context' })],
             color: "from-indigo-400 to-purple-600"
         },
         {
             id: 10,
             icon: BarChart3,
-            title: "Analytics & Insights",
-            description: "Detailed reports on crop performance, productivity trends, weather patterns, and financial analytics.",
-            benefits: ["Performance metrics", "Trend analysis", "ROI tracking"],
+            title: t('features.analytics.title', { defaultValue: 'Analytics & Insights' }),
+            description: t('features.analytics.description', { defaultValue: 'Detailed reports on crop performance, productivity trends, weather patterns, and financial analytics.' }),
+            benefits: [t('features.benefits.performanceMetrics', { defaultValue: 'Performance metrics' }), t('features.benefits.trendAnalysis', { defaultValue: 'Trend analysis' }), t('features.benefits.roiTracking', { defaultValue: 'ROI tracking' })],
             color: "from-cyan-400 to-blue-600"
         }
     ];
 
     const stats = [
-        { number: "50K+", label: "Active Farmers" },
-        { number: "95%", label: "Crop Success Rate" },
-        { number: "24/7", label: "Support Available" },
-        { number: "10+", label: "Languages Supported" }
+        { number: "50K+", label: t('features.stats.activeFarmers', { defaultValue: 'Active Farmers' }) },
+        { number: "95%", label: t('features.stats.cropSuccess', { defaultValue: 'Crop Success Rate' }) },
+        { number: "24/7", label: t('features.stats.support', { defaultValue: 'Support Available' }) },
+        { number: "10+", label: t('features.stats.languages', { defaultValue: 'Languages Supported' }) }
     ];
 
     return (
@@ -122,28 +124,27 @@ const FeaturesPage = () => {
                     <div className="text-center">
                         <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 mb-8">
                             <Star className="w-5 h-5 text-yellow-300" />
-                            <span className="text-white font-medium">Trusted by 50,000+ Farmers</span>
+                            <span className="text-white font-medium">{t('features.hero.trusted', { defaultValue: 'Trusted by 50,000+ Farmers' })}</span>
                         </div>
                         <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-                            Powerful Features for
+                            {t('features.hero.heading1', { defaultValue: 'Powerful Features for' })}
                             <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-                Modern Farming
+                {t('features.hero.heading2', { defaultValue: 'Modern Farming' })}
               </span>
                         </h1>
                         <p className="text-xl text-green-100 max-w-3xl mx-auto mb-8">
-                            Discover comprehensive tools and services designed to revolutionize your farming experience
-                            with cutting-edge technology and community support.
+                            {t('features.hero.subtitle', { defaultValue: 'Discover comprehensive tools and services designed to revolutionize your farming experience with cutting-edge technology and community support.' })}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Link
                                 to="/getstart"
                                   className="inline-flex items-center px-8 py-4 bg-white text-green-600 font-semibold rounded-full hover:bg-green-50 transition-all duration-300 transform hover:scale-105 shadow-xl">
-                                Get Started Free
+                                {t('home.hero.getStarted')}
                                 <ArrowRight className="ml-2 w-5 h-5" />
                             </Link>
                             <Link to="/watchdemo"
                                   className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-green-600 transition-all duration-300">
-                                Watch Demo
+                                {t('features.hero.watchDemo', { defaultValue: 'Watch Demo' })}
                             </Link>
                         </div>
                     </div>
@@ -167,12 +168,11 @@ const FeaturesPage = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                        Everything You Need to
-                        <span className="block text-green-600">Grow Successfully</span>
+                        {t('features.grid.title1', { defaultValue: 'Everything You Need to' })}
+                        <span className="block text-green-600">{t('features.grid.title2', { defaultValue: 'Grow Successfully' })}</span>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Our comprehensive platform provides all the tools, insights, and community support
-                        you need to transform your farming operations.
+                        {t('features.grid.subtitle', { defaultValue: 'Our comprehensive platform provides all the tools, insights, and community support you need to transform your farming operations.' })}
                     </p>
                 </div>
 
@@ -205,7 +205,7 @@ const FeaturesPage = () => {
                                 </div>
 
                                 <button className={`w-full py-3 px-4 bg-gradient-to-r ${feature.color} text-white font-semibold rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0`}>
-                                    Learn More
+                                    {t('features.learnMore', { defaultValue: 'Learn More' })}
                                 </button>
                             </div>
                         );
@@ -219,28 +219,27 @@ const FeaturesPage = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div>
                             <h2 className="text-4xl font-bold text-white mb-6">
-                                Seamless Integration with Your Workflow
+                                {t('features.integration.title', { defaultValue: 'Seamless Integration with Your Workflow' })}
                             </h2>
                             <p className="text-gray-300 text-lg mb-8">
-                                ModGoviya integrates perfectly with your existing farming practices,
-                                enhancing productivity without disrupting established routines.
+                                {t('features.integration.subtitle', { defaultValue: 'ModGoviya integrates perfectly with your existing farming practices, enhancing productivity without disrupting established routines.' })}
                             </p>
                             <div className="space-y-4">
                                 <div className="flex items-center text-gray-300">
                                     <Check className="w-6 h-6 text-green-400 mr-3" />
-                                    Mobile-first design for field use
+                                    {t('features.integration.mobileFirst', { defaultValue: 'Mobile-first design for field use' })}
                                 </div>
                                 <div className="flex items-center text-gray-300">
                                     <Check className="w-6 h-6 text-green-400 mr-3" />
-                                    Offline functionality for remote areas
+                                    {t('features.integration.offline', { defaultValue: 'Offline functionality for remote areas' })}
                                 </div>
                                 <div className="flex items-center text-gray-300">
                                     <Check className="w-6 h-6 text-green-400 mr-3" />
-                                    Real-time data synchronization
+                                    {t('features.integration.realtime', { defaultValue: 'Real-time data synchronization' })}
                                 </div>
                                 <div className="flex items-center text-gray-300">
                                     <Check className="w-6 h-6 text-green-400 mr-3" />
-                                    Multi-device accessibility
+                                    {t('features.integration.multidevice', { defaultValue: 'Multi-device accessibility' })}
                                 </div>
                             </div>
                         </div>
@@ -269,24 +268,24 @@ const FeaturesPage = () => {
             <div className="bg-gradient-to-r from-green-600 to-emerald-600 py-20">
                 <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
                     <h2 className="text-4xl font-bold text-white mb-6">
-                        Ready to Transform Your Farming Journey?
+                        {t('features.cta.title', { defaultValue: 'Ready to Transform Your Farming Journey?' })}
                     </h2>
                     <p className="text-xl text-green-100 mb-8">
-                        Join thousands of successful farmers who trust ModGoviya to enhance their productivity and profitability.
+                        {t('features.cta.subtitle', { defaultValue: 'Join thousands of successful farmers who trust ModGoviya to enhance their productivity and profitability.' })}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <button className="inline-flex items-center px-8 py-4 bg-white text-green-600 font-semibold rounded-full hover:bg-green-50 transition-all duration-300 transform hover:scale-105 shadow-xl">
-                            Start Free Trial
+                            {t('features.cta.startTrial', { defaultValue: 'Start Free Trial' })}
                             <ArrowRight className="ml-2 w-5 h-5" />
                         </button>
                         <Link
                             to="/schedule"
                               className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-green-600 transition-all duration-300">
-                            Schedule Demo
+                            {t('features.cta.scheduleDemo', { defaultValue: 'Schedule Demo' })}
                         </Link>
                     </div>
                     <div className="mt-8 text-green-100">
-                        <p>✓ No credit card required  ✓ 30-day free trial  ✓ Cancel anytime</p>
+                        <p>✓ {t('features.cta.noCard', { defaultValue: 'No credit card required' })}  ✓ {t('features.cta.trial', { defaultValue: '30-day free trial' })}  ✓ {t('features.cta.cancel', { defaultValue: 'Cancel anytime' })}</p>
                     </div>
                 </div>
             </div>
