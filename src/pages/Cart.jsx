@@ -4,9 +4,11 @@ import { ShoppingCart, X, Plus, Minus, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import { useTranslation } from 'react-i18next';
 
 const Cart = () => {
     const { cart, loading, error, updateCartItem, removeFromCart } = useCart();
+    const { t } = useTranslation();
 
     const handleQuantityChange = (itemId, newQuantity) => {
         if (newQuantity < 1) return;
@@ -27,26 +29,26 @@ const Cart = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <h1 className="text-3xl font-bold text-gray-900 mb-8 flex items-center">
                     <ShoppingCart className="w-8 h-8 mr-3 text-green-600" />
-                    Your Shopping Cart
+                    {t('cart.title')}
                 </h1>
 
-                {loading && <div className="text-center py-12">Loading...</div>}
+                {loading && <div className="text-center py-12">{t('common.loading')}</div>}
                 {error && <div className="text-red-500 mb-4">{error}</div>}
 
                 {cart.items.length === 0 ? (
                     <div className="text-center py-12">
                         <div className="text-gray-400 text-6xl mb-4">🛒</div>
                         <h3 className="text-xl font-semibold text-gray-600 mb-2">
-                            Your cart is empty
+                            {t('cart.empty')}
                         </h3>
                         <p className="text-gray-500 mb-6">
-                            Start shopping to add items to your cart
+                            {t('marketplace.title')}
                         </p>
                         <Link
                             to="/marketplace"
                             className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700"
                         >
-                            Browse Marketplace
+                            {t('home.hero.browseFeatures')}
                         </Link>
                     </div>
                 ) : (
@@ -122,7 +124,7 @@ const Cart = () => {
                         <div>
                             <div className="bg-white shadow-sm rounded-xl p-6 sticky top-6">
                                 <h2 className="text-lg font-bold text-gray-900 mb-4">
-                                    Order Summary
+                                    {t('cart.title')}
                                 </h2>
                                 <div className="space-y-4">
                                     <div className="flex justify-between">
@@ -137,7 +139,7 @@ const Cart = () => {
                                     </div>
                                     <div className="border-t border-gray-200 pt-4 mt-4">
                                         <div className="flex justify-between">
-                                            <span className="font-bold text-gray-900">Total</span>
+                                            <span className="font-bold text-gray-900">{t('cart.total')}</span>
                                             <span className="font-bold text-green-600">
                         Rs: {calculateTotal().toLocaleString()}
                       </span>
@@ -145,7 +147,7 @@ const Cart = () => {
                                     </div>
                                 </div>
                                 <button className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium">
-                                    Proceed to Checkout
+                                    {t('cart.checkout')}
                                 </button>
                                 <p className="mt-3 text-sm text-gray-500 text-center">
                                     or{' '}
@@ -153,7 +155,7 @@ const Cart = () => {
                                         to="/marketplace"
                                         className="text-green-600 hover:text-green-700"
                                     >
-                                        Continue Shopping
+                                        {t('common.continue', { defaultValue: 'Continue' })} {t('marketplace.title').toLowerCase()}
                                     </Link>
                                 </p>
                             </div>
