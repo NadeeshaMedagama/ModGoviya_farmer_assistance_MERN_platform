@@ -22,33 +22,33 @@ const ModGoviyaHomepage = () => {
     const features = [
         {
             icon: Package,
-            title: "Crop Management",
-            description: "Track and manage your crops with advanced digital tools"
+            title: t('home.features.cropManagement.title'),
+            description: t('home.features.cropManagement.description')
         },
         {
             icon: Cloud,
-            title: "Live Weather Forecast",
-            description: "Get accurate weather updates for better crop planning"
+            title: t('home.features.weather.title'),
+            description: t('home.features.weather.description')
         },
         {
             icon: ShoppingCart,
-            title: "Farming Marketplace",
-            description: "Buy and sell farming products directly with other farmers"
+            title: t('home.features.marketplace.title'),
+            description: t('home.features.marketplace.description')
         },
         {
             icon: MessageCircle,
-            title: "Community Forum",
-            description: "Connect with fellow farmers and share knowledge"
+            title: t('home.features.community.title'),
+            description: t('home.features.community.description')
         },
         {
             icon: Calendar,
-            title: "Task Scheduler",
-            description: "Never miss important farming activities with smart reminders"
+            title: t('home.features.scheduler.title'),
+            description: t('home.features.scheduler.description')
         },
         {
             icon: BookOpen,
-            title: "Modern Farming Tips",
-            description: "Access latest farming techniques and best practices"
+            title: t('home.features.tips.title'),
+            description: t('home.features.tips.description')
         }
     ];
 
@@ -232,10 +232,10 @@ const ModGoviyaHomepage = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                            What Farmers Say
+                            {t('home.testimonialsSection.title')}
                         </h2>
                         <p className="text-xl text-gray-600">
-                            Real stories from real farmers
+                            {t('home.testimonialsSection.subtitle')}
                         </p>
                     </div>
 
@@ -266,10 +266,10 @@ const ModGoviyaHomepage = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                            Latest Farming Tips
+                            {t('home.latestTips.title')}
                         </h2>
                         <p className="text-xl text-gray-600">
-                            Stay updated with modern farming techniques
+                            {t('home.latestTips.subtitle')}
                         </p>
                     </div>
 
