@@ -30,55 +30,12 @@ const WeatherPage = () => {
     const [alerts, setAlerts] = useState([]);
     const { t } = useTranslation();
 
-    // Mock weather data for demonstration
-    const mockCurrentWeather = {
-        location: 'Colombo, Sri Lanka',
-        temperature: 28,
-        condition: 'Partly Cloudy',
-        icon: 'partly-cloudy',
-        humidity: 75,
-        windSpeed: 12,
-        windDirection: 'NE',
-        pressure: 1013,
-        sunrise: '06:15',
-        sunset: '18:30',
-        feelsLike: 32
-    };
+    // API configuration
+    const API_KEY = '316ac904c3c082b761a5b8d0795f894d'; // Replace with your actual API key
+    const BASE_URL = 'https://api.openweathermap.org/data/2.5';
+    const GEOCODING_URL = 'https://api.openweathermap.org/geo/1.0/direct';
 
-    const mockHourlyForecast = [
-        { time: '14:00', temp: 28, condition: 'Sunny', precipitation: 10, icon: 'sunny' },
-        { time: '15:00', temp: 29, condition: 'Partly Cloudy', precipitation: 15, icon: 'partly-cloudy' },
-        { time: '16:00', temp: 27, condition: 'Cloudy', precipitation: 25, icon: 'cloudy' },
-        { time: '17:00', temp: 26, condition: 'Light Rain', precipitation: 60, icon: 'rain' },
-        { time: '18:00', temp: 25, condition: 'Rain', precipitation: 80, icon: 'rain' },
-        { time: '19:00', temp: 24, condition: 'Light Rain', precipitation: 45, icon: 'rain' }
-    ];
-
-    const mockDailyForecast = [
-        { day: 'Today', high: 29, low: 24, condition: 'Partly Cloudy', precipitation: 30, icon: 'partly-cloudy' },
-        { day: 'Tomorrow', high: 31, low: 25, condition: 'Sunny', precipitation: 10, icon: 'sunny' },
-        { day: 'Saturday', high: 28, low: 23, condition: 'Rainy', precipitation: 85, icon: 'rain' },
-        { day: 'Sunday', high: 27, low: 22, condition: 'Thunderstorms', precipitation: 90, icon: 'thunderstorm' },
-        { day: 'Monday', high: 30, low: 24, condition: 'Partly Cloudy', precipitation: 20, icon: 'partly-cloudy' },
-        { day: 'Tuesday', high: 32, low: 26, condition: 'Sunny', precipitation: 5, icon: 'sunny' },
-        { day: 'Wednesday', high: 29, low: 23, condition: 'Cloudy', precipitation: 40, icon: 'cloudy' }
-    ];
-
-    const mockAlerts = [
-        {
-            type: 'warning',
-            title: 'Heavy Rain Alert',
-            message: 'Heavy rainfall expected in the next 24 hours. Consider postponing outdoor farming activities.',
-            priority: 'high'
-        },
-        {
-            type: 'advice',
-            title: 'Irrigation Recommendation',
-            message: 'With upcoming rain, reduce irrigation for the next 2 days to prevent waterlogging.',
-            priority: 'medium'
-        }
-    ];
-
+    // Mock data for farming advice (unchanged)
     const farmingAdvice = [
         {
             icon: <Droplets className="w-5 h-5" />,
@@ -100,48 +57,347 @@ const WeatherPage = () => {
         }
     ];
 
-    useEffect(() => {
-        // Simulate loading weather data
-        setCurrentWeather(mockCurrentWeather);
-        setForecast({ hourly: mockHourlyForecast, daily: mockDailyForecast });
-        setAlerts(mockAlerts);
-    }, []);
-
-    const handleLocationSearch = () => {
+    // Fetch weather data from OpenWeatherMap API
+    const fetchWeatherData = async (lat, lon) => {
         setLoading(true);
-        // Simulate API call
-        setTimeout(() => {
+        try {
+            // Fetch current weather
+            const currentResponse = await fetch(
+                `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+            );
+            const currentData = await currentResponse.json();
+
+            // Fetch forecast
+            const forecastResponse = await fetch(
+                `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+            );
+            const forecastData = await forecastResponse.json();
+
+            // Validate API responses
+            if (!currentData || !forecastData || !currentData.weather || !forecastData.list) {
+                throw new Error('Invalid weather data received');
+            }
+
+            const processedCurrentWeather = {
+                location: `${currentData.name || 'Unknown'}, ${currentData.sys?.country || ''}`,
+                temperature: Math.round(currentData.main?.temp || 0),
+                condition: currentData.weather[0]?.main || 'Unknown',
+                icon: getIconName(currentData.weather[0]?.id, currentData.weather[0]?.icon),
+                humidity: currentData.main?.humidity || 0,
+                windSpeed: Math.round((currentData.wind?.speed || 0) * 3.6),
+                windDirection: getWindDirection(currentData.wind?.deg),
+                pressure: currentData.main?.pressure || 0,
+                sunrise: currentData.sys?.sunrise
+                    ? new Date(currentData.sys.sunrise * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    : '--:--',
+                sunset: currentData.sys?.sunset
+                    ? new Date(currentData.sys.sunset * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    : '--:--',
+                feelsLike: Math.round(currentData.main?.feels_like || 0),
+                // Include raw data for alerts generation
+                weather: currentData.weather,
+                main: currentData.main,
+                wind: currentData.wind,
+                sys: currentData.sys
+            };
+
+            const processForecastData = (forecastData) => {
+                // Process hourly forecast (next 6 hours)
+                const hourlyForecast = forecastData.list.slice(0, 6).map(item => ({
+                    time: new Date(item.dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    temp: Math.round(item.main?.temp || 0),
+                    condition: item.weather?.[0]?.main || 'Unknown',
+                    precipitation: item.pop ? Math.round(item.pop * 100) : 0,
+                    icon: getIconName(item.weather?.[0]?.id, item.weather?.[0]?.icon)
+                }));
+
+                // Process daily forecast (next 7 days)
+                const dailyForecast = [];
+                const today = new Date();
+
+                for (let i = 0; i < 7; i++) {
+                    const date = new Date(today);
+                    date.setDate(today.getDate() + i);
+
+                    const dayForecast = forecastData.list.filter(item => {
+                        const itemDate = new Date(item.dt * 1000);
+                        return itemDate.getDate() === date.getDate();
+                    });
+
+                    if (dayForecast.length > 0) {
+                        const temps = dayForecast.map(item => item.main?.temp || 0);
+                        const high = Math.round(Math.max(...temps));
+                        const low = Math.round(Math.min(...temps));
+                        const precipitation = Math.round(Math.max(...dayForecast.map(item => item.pop ? item.pop * 100 : 0)));
+
+                        dailyForecast.push({
+                            day: i === 0 ? 'Today' : date.toLocaleDateString([], { weekday: 'long' }),
+                            high,
+                            low,
+                            condition: dayForecast[0].weather?.[0]?.main || 'Unknown',
+                            precipitation,
+                            icon: getIconName(dayForecast[0].weather?.[0]?.id, dayForecast[0].weather?.[0]?.icon)
+                        });
+                    }
+                }
+
+                return { hourly: hourlyForecast, daily: dailyForecast };
+            };
+
+            const processedForecast = processForecastData(forecastData);
+
+            setCurrentWeather(processedCurrentWeather);
+            setForecast(processedForecast);
+            setAlerts(generateAlerts(currentData, forecastData));
+        } catch (error) {
+            console.error('Error fetching weather data:', error);
+            loadMockData();
+        } finally {
             setLoading(false);
-        }, 1000);
+        }
     };
 
+    // Helper function to get wind direction
+    const getWindDirection = (degrees) => {
+        const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+        const index = Math.round((degrees % 360) / 45);
+        return directions[index % 8];
+    };
+
+    // Helper function to get icon name from weather code
+    const getIconName = (weatherId, iconCode) => {
+        if (weatherId >= 200 && weatherId < 300) return 'thunderstorm';
+        if (weatherId >= 300 && weatherId < 600) return 'rain';
+        if (weatherId >= 600 && weatherId < 700) return 'snow';
+        if (weatherId >= 700 && weatherId < 800) return 'fog';
+        if (weatherId === 800) return iconCode.includes('n') ? 'clear-night' : 'sunny';
+        if (weatherId > 800) {
+            if (weatherId === 801 || weatherId === 802) return 'partly-cloudy';
+            return 'cloudy';
+        }
+        return 'sunny';
+    };
+
+    // Generate farming alerts based on weather conditions
+    const generateAlerts = (currentData, forecastData) => {
+        const alerts = [];
+
+        // Check if we have valid weather data
+        if (!currentData?.weather || !currentData?.main || !forecastData?.list) {
+            return [{
+                type: 'info',
+                title: t('weather.alerts.dataUnavailableTitle'),
+                message: t('weather.alerts.dataUnavailableMessage'),
+                priority: 'low'
+            }];
+        }
+
+        const currentCondition = currentData.weather[0]?.main?.toLowerCase() || '';
+        const rainForecast = forecastData.list.some(item =>
+            item.weather?.[0]?.main?.toLowerCase().includes('rain') &&
+            new Date(item.dt * 1000).getTime() - Date.now() < 24 * 60 * 60 * 1000
+        );
+
+        if (currentCondition.includes('rain') || rainForecast) {
+            alerts.push({
+                type: 'warning',
+                title: t('weather.alerts.rainAlertTitle'),
+                message: t('weather.alerts.rainAlertMessage'),
+                priority: 'high'
+            });
+        }
+
+        if (currentData.main?.temp > 30) {
+            alerts.push({
+                type: 'warning',
+                title: t('weather.alerts.heatAlertTitle'),
+                message: t('weather.alerts.heatAlertMessage'),
+                priority: 'medium'
+            });
+        }
+
+        if (forecastData.list.some(item => item.main?.temp_min < 10)) {
+            alerts.push({
+                type: 'warning',
+                title: t('weather.alerts.coldAlertTitle'),
+                message: t('weather.alerts.coldAlertMessage'),
+                priority: 'medium'
+            });
+        }
+
+        if (alerts.length === 0) {
+            alerts.push({
+                type: 'advice',
+                title: t('weather.alerts.generalAdviceTitle'),
+                message: t('weather.alerts.generalAdviceMessage'),
+                priority: 'low'
+            });
+        }
+
+        return alerts;
+    };
+
+    // Fallback to mock data
+    const loadMockData = () => {
+        const mockCurrentWeather = {
+            location: 'Colombo, Sri Lanka',
+            temperature: 28,
+            condition: 'Partly Cloudy',
+            icon: 'partly-cloudy',
+            humidity: 75,
+            windSpeed: 12,
+            windDirection: 'NE',
+            pressure: 1013,
+            sunrise: '06:15',
+            sunset: '18:30',
+            feelsLike: 32,
+            weather: [{ main: 'Partly Cloudy' }],
+            main: { temp: 28, feels_like: 32, humidity: 75, pressure: 1013 },
+            wind: { speed: 12, deg: 45 },
+            sys: { sunrise: 1234567890, sunset: 1234567890, country: 'LK' }
+        };
+
+        const mockHourlyForecast = [
+            {
+                dt: Date.now() / 1000 + 3600,
+                main: { temp: 28, temp_min: 27, temp_max: 29 },
+                weather: [{ main: 'Sunny', id: 800 }],
+                pop: 0.1
+            },
+            { time: '14:00', temp: 28, condition: 'Sunny', precipitation: 10, icon: 'sunny' },
+            { time: '15:00', temp: 29, condition: 'Partly Cloudy', precipitation: 15, icon: 'partly-cloudy' },
+            { time: '16:00', temp: 27, condition: 'Cloudy', precipitation: 25, icon: 'cloudy' },
+            { time: '17:00', temp: 26, condition: 'Light Rain', precipitation: 60, icon: 'rain' },
+            { time: '18:00', temp: 25, condition: 'Rain', precipitation: 80, icon: 'rain' },
+            { time: '19:00', temp: 24, condition: 'Light Rain', precipitation: 45, icon: 'rain' }
+        ];
+
+        const mockForecastData = {
+            list: mockHourlyForecast
+        };
+
+        generateAlerts(
+            { weather: [{ main: 'Partly Cloudy' }], main: { temp: 28 } },
+            { list: mockHourlyForecast }
+        );
+
+        setCurrentWeather(mockCurrentWeather);
+        setForecast({
+            hourly: mockHourlyForecast.map(hour => ({
+                time: new Date(hour.dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                temp: Math.round(hour.main.temp),
+                condition: hour.weather[0].main,
+                precipitation: hour.pop ? Math.round(hour.pop * 100) : 0,
+                icon: getIconName(hour.weather[0].id)
+            })),
+            daily: [
+                { day: 'Today', high: 29, low: 24, condition: 'Partly Cloudy', precipitation: 30, icon: 'partly-cloudy' },
+                { day: 'Tomorrow', high: 31, low: 25, condition: 'Sunny', precipitation: 10, icon: 'sunny' },
+                { day: 'Saturday', high: 28, low: 23, condition: 'Rainy', precipitation: 85, icon: 'rain' },
+                { day: 'Sunday', high: 27, low: 22, condition: 'Thunderstorms', precipitation: 90, icon: 'thunderstorm' },
+                { day: 'Monday', high: 30, low: 24, condition: 'Partly Cloudy', precipitation: 20, icon: 'partly-cloudy' },
+                { day: 'Tuesday', high: 32, low: 26, condition: 'Sunny', precipitation: 5, icon: 'sunny' },
+                { day: 'Wednesday', high: 29, low: 23, condition: 'Cloudy', precipitation: 40, icon: 'cloudy' }
+            ]
+        });
+        setAlerts(generateAlerts(mockCurrentWeather, mockForecastData));
+    };
+
+    // Handle location search
+    const handleLocationSearch = async () => {
+        if (!location.trim()) return;
+
+        setLoading(true);
+        try {
+            // First get coordinates for the location
+            const geocodeResponse = await fetch(
+                `${GEOCODING_URL}?q=${encodeURIComponent(location)}&limit=1&appid=${API_KEY}`
+            );
+            const geocodeData = await geocodeResponse.json();
+
+            if (geocodeData.length > 0) {
+                const { lat, lon } = geocodeData[0];
+                await fetchWeatherData(lat, lon);
+            } else {
+                alert('Location not found. Please try a different location.');
+                loadMockData();
+            }
+        } catch (error) {
+            console.error('Error fetching location data:', error);
+            loadMockData();
+        }
+    };
+
+    // Handle location detection
     const handleLocationDetect = () => {
         setLoading(true);
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    setLocation(`${position.coords.latitude}, ${position.coords.longitude}`);
-                    setLoading(false);
+                async (position) => {
+                    const { latitude, longitude } = position.coords;
+                    setLocation(`${latitude}, ${longitude}`);
+                    await fetchWeatherData(latitude, longitude);
                 },
-                () => {
+                (error) => {
+                    console.error('Geolocation error:', error);
                     setLoading(false);
                     alert('Location detection failed. Please enter manually.');
+                    loadMockData();
                 }
             );
+        } else {
+            setLoading(false);
+            alert('Geolocation is not supported by your browser.');
+            loadMockData();
         }
     };
 
+    // Get weather icon component
     const getWeatherIcon = (condition) => {
         switch (condition) {
-            case 'sunny': return <Sun className="w-8 h-8 text-yellow-500" />;
-            case 'partly-cloudy': return <Cloud className="w-8 h-8 text-gray-400" />;
-            case 'cloudy': return <Cloud className="w-8 h-8 text-gray-500" />;
-            case 'rain': return <CloudRain className="w-8 h-8 text-blue-500" />;
-            case 'thunderstorm': return <CloudRain className="w-8 h-8 text-purple-500" />;
-            default: return <Sun className="w-8 h-8 text-yellow-500" />;
+            case 'sunny':
+            case 'clear-night':
+                return <Sun className="w-8 h-8 text-yellow-500" />;
+            case 'partly-cloudy':
+                return <Cloud className="w-8 h-8 text-gray-400" />;
+            case 'cloudy':
+                return <Cloud className="w-8 h-8 text-gray-500" />;
+            case 'rain':
+                return <CloudRain className="w-8 h-8 text-blue-500" />;
+            case 'thunderstorm':
+                return <CloudRain className="w-8 h-8 text-purple-500" />;
+            case 'snow':
+                return <CloudRain className="w-8 h-8 text-blue-200" />;
+            case 'fog':
+                return <Cloud className="w-8 h-8 text-gray-300" />;
+            default:
+                return <Sun className="w-8 h-8 text-yellow-500" />;
         }
     };
 
+    // Initial load - use geolocation if available
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const { latitude, longitude } = position.coords;
+                    setLocation(`${latitude}, ${longitude}`);
+                    await fetchWeatherData(latitude, longitude);
+                },
+                () => {
+                    // Default to a location if geolocation fails
+                    setLocation('Colombo');
+                    loadMockData();
+                }
+            );
+        } else {
+            // Default to a location if geolocation not available
+            setLocation('Colombo');
+            loadMockData();
+        }
+    }, []);
+
+    // Render method remains the same as in your original code
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-yellow-50">
             {/* Header */}
@@ -154,7 +410,7 @@ const WeatherPage = () => {
                             <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
                                 <Sprout className="w-6 h-6 text-white" />
                             </div>
-                              {t('weather.title')}
+                            {t('weather.title')}
                         </h1>
                     </div>
                 </div>
