@@ -25,6 +25,7 @@ import { useCart } from '../contexts/CartContext';
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const Marketplace = () => {
     const [viewMode, setViewMode] = useState('grid');
@@ -36,6 +37,7 @@ const Marketplace = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showPostForm, setShowPostForm] = useState(false);
     const { addToCart } = useCart();
+    const { t } = useTranslation();
 
     const fetchProducts = async () => {
         try {
@@ -70,105 +72,15 @@ const Marketplace = () => {
         loadProducts();
     }, []);
 
-    // Sample product data
-    /*const products = [
-        {
-            id: "685c3fe0d588773868905e5c",
-            title: "Organic Tomato Seeds - Premium Quality",
-            price: 150,
-            category: "seeds",
-            location: "Colombo, Western Province",
-            seller: "Sunil Fernando",
-            rating: 4.8,
-            image: "https://www.seedsnow.com/cdn/shop/products/700xAce_55_700x_4f5ac27f-34b0-41b2-b44b-37b2a473f03c.jpg?v=1681430406&width=460",
-            description: "High-quality organic tomato seeds with 95% germination rate. Perfect for home gardens and commercial farming.",
-            condition: "new",
-            availability: "In Stock",
-            contact: { phone: "+94 77 123 4567", email: "sunil@email.com" }
-        },
-        {
-            id: "685c3fe0d588773868905e5b",
-            title: "Professional Farming Tractor - John Deere",
-            price: 850000,
-            category: "equipment",
-            location: "Kandy, Central Province",
-            seller: "Agricultural Machinery Ltd",
-            rating: 4.9,
-            image: "https://img.agriexpo.online/images_ag/photo-m2/169379-10289839.jpg",
-            description: "Well-maintained John Deere tractor, perfect for medium to large scale farming operations.",
-            condition: "used",
-            availability: "Available",
-            contact: { phone: "+94 81 234 5678", email: "machinery@email.com" }
-        },
-        {
-            id: "685c3fe0d588773868905e5d",
-            title: "Organic Fertilizer - NPK 10:10:10",
-            price: 2500,
-            category: "fertilizers",
-            location: "Galle, Southern Province",
-            seller: "Green Farm Solutions",
-            rating: 4.7,
-            image: "https://m.media-amazon.com/images/I/810hWHnYkvL.jpg",
-            description: "100% organic NPK fertilizer suitable for all types of crops. 50kg bag.",
-            condition: "new",
-            availability: "In Stock",
-            contact: { phone: "+94 91 345 6789", email: "greenfarm@email.com" }
-        },
-        {
-            id: "685c3fe0d588773868905e5f",
-            title: "Fresh Coconuts - Grade A",
-            price: 45,
-            category: "crops",
-            location: "Kurunegala, North Western",
-            seller: "Coconut Farmers Co-op",
-            rating: 4.6,
-            image: "https://m.media-amazon.com/images/I/41HgW4CyzKL.jpg",
-            description: "Fresh coconuts directly from our plantation. Perfect for drinking and cooking.",
-            condition: "new",
-            availability: "Available",
-            contact: { phone: "+94 37 456 7890", email: "coconut@email.com" }
-        },
-        {
-            id: 685c3fe0d588773868905e5g,
-            title: "Hand Tools Set - Complete Farming Kit",
-            price: 3500,
-            category: "tools",
-            location: "Matara, Southern Province",
-            seller: "Tool Master",
-            rating: 4.5,
-            image: "https://m.media-amazon.com/images/I/71YkFLh57+L.jpg",
-            description: "Complete set of hand tools including spades, hoes, pruning shears, and more.",
-            condition: "new",
-            availability: "In Stock",
-            contact: { phone: "+94 41 567 8901", email: "tools@email.com" }
-        },
-        {
-            id: 685c3fe0d588773868905e5gh,
-            title: "Water Buffalo for Farming",
-            price: 125000,
-            category: "livestock",
-            location: "Anuradhapura, North Central",
-            seller: "Livestock Traders",
-            rating: 4.4,
-            image: "https://static.vecteezy.com/system/resources/thumbnails/053/297/826/small/water-buffalo-grazing-peacefully-in-lush-green-field-photo.JPG",
-            description: "Healthy water buffalo, excellent for plowing and dairy. Well-trained and docile.",
-            condition: "used",
-            availability: "Available",
-            contact: { phone: "+94 25 678 9012", email: "livestock@email.com" }
-        }
-    ];*/
-
-
-
     const categories = [
-        { id: 'all', name: 'All Categories', icon: '🌾' },
-        { id: 'seeds', name: 'Seeds', icon: '🌱' },
-        { id: 'crops', name: 'Crops', icon: '🌽' },
-        { id: 'tools', name: 'Tools & Equipment', icon: '🛠️' },
-        { id: 'fertilizers', name: 'Fertilizers', icon: '🧪' },
-        { id: 'equipment', name: 'Heavy Equipment', icon: '🚜' },
-        { id: 'livestock', name: 'Livestock', icon: '🐄' },
-        { id: 'services', name: 'Services', icon: '⚙️' }
+        { id: 'all', name: t('marketplace.categories.all'), icon: '🌾' },
+        { id: 'seeds', name: t('marketplace.categories.seeds'), icon: '🌱' },
+        { id: 'crops', name: t('marketplace.categories.crops'), icon: '🌽' },
+        { id: 'tools', name: t('marketplace.categories.tools'), icon: '🛠️' },
+        { id: 'fertilizers', name: t('marketplace.categories.fertilizers'), icon: '🧪' },
+        { id: 'equipment', name: t('marketplace.categories.equipment'), icon: '🚜' },
+        { id: 'livestock', name: t('marketplace.categories.livestock'), icon: '🐄' },
+        { id: 'services', name: t('marketplace.categories.services'), icon: '⚙️' }
     ];
 
     const filteredProducts = products.filter(product => {
@@ -194,7 +106,7 @@ const Marketplace = () => {
           <span className={`px-2 py-1 text-xs font-medium rounded-full ${
               product.condition === 'new' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
           }`}>
-            {product.condition === 'new' ? 'New' : 'Used'}
+            {product.condition === 'new' ? t('marketplace.badges.new') : t('marketplace.badges.used')}
           </span>
                 </div>
             </div>
@@ -224,7 +136,7 @@ const Marketplace = () => {
                         onClick={() => setSelectedProduct(product)}
                         className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
                     >
-                        View Details
+                        {t('marketplace.viewDetails')}
                     </button>
                     <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50">
                         <Eye className="w-4 h-4 text-gray-600" />
@@ -263,7 +175,7 @@ const Marketplace = () => {
                                 <span className={`ml-3 px-3 py-1 text-sm font-medium rounded-full ${
                                     product.condition === 'new' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
                                 }`}>
-                  {product.condition === 'new' ? 'New' : 'Used'}
+                  {product.condition === 'new' ? t('marketplace.badges.new') : t('marketplace.badges.used')}
                 </span>
                             </div>
 
@@ -283,7 +195,7 @@ const Marketplace = () => {
                             </div>
 
                             <div className="mb-6">
-                                <h3 className="font-semibold mb-2">Description</h3>
+                                <h3 className="font-semibold mb-2">{t('marketplace.description')}</h3>
                                 <p className="text-gray-700">{product.description}</p>
                             </div>
 
@@ -295,16 +207,16 @@ const Marketplace = () => {
                                     }}
                                     className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center">
                                     <ShoppingCart className="w-4 h-4 mr-2" />
-                                    Add to Cart
+                                    {t('marketplace.addToCart')}
                                 </button>
                                 <div className="grid grid-cols-2 gap-2">
                                     <button className="border border-gray-300 hover:bg-gray-50 py-2 px-4 rounded-lg flex items-center justify-center">
                                         <Phone className="w-4 h-4 mr-2" />
-                                        Email
+                                        {t('marketplace.email')}
                                     </button>
                                     <button className="border border-gray-300 hover:bg-gray-50 py-2 px-4 rounded-lg flex items-center justify-center">
                                         <AlertTriangle className="w-4 h-4 mr-2" />
-                                        Report
+                                        {t('marketplace.report')}
                                     </button>
                                 </div>
                             </div>
@@ -352,24 +264,24 @@ const Marketplace = () => {
                             className="inline-flex items-center bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-6 py-2 mb-8 animate-fade-in-up">
                             <Globe className="h-4 w-4 text-green-200 mr-2"/>
                             <span className="text-sm font-medium text-green-100">
-              Trusted Agricultural Platform
+              {t('marketplace.hero.badge')}
             </span>
                         </div>
 
                         {/* Main Heading */}
                         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in-up animation-delay-200">
-                            Farming
+                            {t('marketplace.hero.title1')}
                             <span
                                 className="block bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent pb-2">
-              Marketplace
+              {t('marketplace.hero.title2')}
             </span>
                         </h1>
 
                         {/* Subtitle */}
                         <p className="text-xl md:text-2xl text-green-100 max-w-3xl mx-auto mb-8 leading-relaxed animate-fade-in-up animation-delay-400">
-                            Buy and sell farming tools, seeds, crops, fertilizers, and more.
+                            {t('marketplace.hero.subtitle1')}
                             <span className="block mt-2 font-medium text-white">
-              Connect with other farmers and sellers near you.
+              {t('marketplace.hero.subtitle2')}
             </span>
                         </p>
 
@@ -379,17 +291,17 @@ const Marketplace = () => {
                             <div
                                 className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
                                 <Shield className="h-4 w-4 text-green-200 mr-2"/>
-                                <span className="text-sm font-medium text-white">Secure Trading</span>
+                                <span className="text-sm font-medium text-white">{t('marketplace.pills.secure')}</span>
                             </div>
                             <div
                                 className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
                                 <TrendingUp className="h-4 w-4 text-green-200 mr-2"/>
-                                <span className="text-sm font-medium text-white">Best Prices</span>
+                                <span className="text-sm font-medium text-white">{t('marketplace.pills.prices')}</span>
                             </div>
                             <div
                                 className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
                                 <Users className="h-4 w-4 text-green-200 mr-2"/>
-                                <span className="text-sm font-medium text-white">Local Network</span>
+                                <span className="text-sm font-medium text-white">{t('marketplace.pills.local')}</span>
                             </div>
                         </div>
 
@@ -400,14 +312,14 @@ const Marketplace = () => {
                                 to="/trade"
                                 className="group bg-white text-green-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-50 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
               <span className="flex items-center justify-center">
-                Start Trading
+                {t('marketplace.cta.startTrading')}
                 <TrendingUp className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300"/>
               </span>
                             </Link>
                             <Link to="/learnmore"
                                   className="group bg-transparent text-white border-2 border-white/30 backdrop-blur-sm px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 hover:border-white/50 transform hover:scale-105 transition-all duration-300">
               <span className="flex items-center justify-center">
-                Learn More
+                {t('marketplace.cta.learnMore')}
                 <Sprout className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform duration-300"/>
               </span>
                             </Link>
@@ -448,7 +360,7 @@ const Marketplace = () => {
                                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"/>
                             <input
                                 type="text"
-                                placeholder="Search by item name, location..."
+                                placeholder={t('marketplace.searchPlaceholder')}
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
@@ -461,7 +373,7 @@ const Marketplace = () => {
                                 className="flex items-center px-4 py-3 border border-gray-300 rounded-xl hover:bg-gray-50"
                             >
                                 <Filter className="w-5 h-5 mr-2"/>
-                                Filters
+                                {t('marketplace.filters')}
                             </button>
 
                             <button
@@ -469,7 +381,7 @@ const Marketplace = () => {
                                 className="flex items-center px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700"
                             >
                                 <Plus className="w-5 h-5 mr-2"/>
-                                Post Ad
+                                {t('marketplace.postAd')}
                             </button>
                         </div>
                     </div>
@@ -482,7 +394,7 @@ const Marketplace = () => {
                     <div className="lg:w-64 space-y-6">
                         {/* Categories */}
                         <div className="bg-white rounded-xl shadow-sm p-6">
-                            <h3 className="font-semibold text-gray-900 mb-4">Categories</h3>
+                            <h3 className="font-semibold text-gray-900 mb-4">{t('marketplace.categories.title')}</h3>
                             <div className="space-y-2">
                                 {categories.map(category => (
                                     <button
@@ -503,19 +415,19 @@ const Marketplace = () => {
 
                         {/* Price Range */}
                         <div className="bg-white rounded-xl shadow-sm p-6">
-                            <h3 className="font-semibold text-gray-900 mb-4">Price Range</h3>
+                            <h3 className="font-semibold text-gray-900 mb-4">{t('marketplace.priceRange')}</h3>
                             <div className="space-y-4">
                                 <div className="flex gap-2">
                                     <input
                                         type="number"
-                                        placeholder="Min"
+                                        placeholder={t('marketplace.min')}
                                         value={priceRange[0]}
                                         onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])}
                                         className="w-24 px-2 py-2 border border-gray-300 rounded-lg"
                                     />
                                     <input
                                         type="number"
-                                        placeholder="Max"
+                                        placeholder={t('marketplace.max')}
                                         value={priceRange[1]}
                                         onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 1000000])}
                                         className="w-24 px-2 py-2 border border-gray-300 rounded-lg"
@@ -528,13 +440,13 @@ const Marketplace = () => {
                         <div className="bg-yellow-50 rounded-xl p-6 border border-yellow-200">
                             <div className="flex items-center mb-3">
                                 <Shield className="w-5 h-5 text-yellow-600 mr-2"/>
-                                <h3 className="font-semibold text-yellow-800">Safety Tips</h3>
+                                <h3 className="font-semibold text-yellow-800">{t('marketplace.safetyTips.title')}</h3>
                             </div>
                             <ul className="text-sm text-yellow-700 space-y-2">
-                                <li>• Meet in safe, public locations</li>
-                                <li>• Don't pay in advance</li>
-                                <li>• Verify seller information</li>
-                                <li>• Inspect items before buying</li>
+                                <li>• {t('marketplace.safetyTips.meetPublic')}</li>
+                                <li>• {t('marketplace.safetyTips.noAdvance')}</li>
+                                <li>• {t('marketplace.safetyTips.verifySeller')}</li>
+                                <li>• {t('marketplace.safetyTips.inspectItems')}</li>
                             </ul>
                         </div>
                     </div>
@@ -545,17 +457,17 @@ const Marketplace = () => {
                         <div className="flex justify-between items-center mb-6">
                             <div className="flex items-center gap-4">
                 <span className="text-gray-600">
-                  {filteredProducts.length} products found
+                  {t('marketplace.productsFound', { count: filteredProducts.length })}
                 </span>
                                 <select
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value)}
                                     className="px-3 py-2 border border-gray-300 rounded-lg"
                                 >
-                                    <option value="newest">Newest First</option>
-                                    <option value="price-low">Price: Low to High</option>
-                                    <option value="price-high">Price: High to Low</option>
-                                    <option value="location">By Location</option>
+                                    <option value="newest">{t('marketplace.sort.newest')}</option>
+                                    <option value="price-low">{t('marketplace.sort.priceLow')}</option>
+                                    <option value="price-high">{t('marketplace.sort.priceHigh')}</option>
+                                    <option value="location">{t('marketplace.sort.location')}</option>
                                 </select>
                             </div>
 
@@ -589,8 +501,8 @@ const Marketplace = () => {
                         {filteredProducts.length === 0 && (
                             <div className="text-center py-12">
                                 <div className="text-gray-400 text-6xl mb-4">📦</div>
-                                <h3 className="text-xl font-semibold text-gray-600 mb-2">No products found</h3>
-                                <p className="text-gray-500">Try adjusting your search criteria or filters</p>
+                                <h3 className="text-xl font-semibold text-gray-600 mb-2">{t('marketplace.noProducts')}</h3>
+                                <p className="text-gray-500">{t('marketplace.tryAdjust')}</p>
                             </div>
                         )}
                     </div>
