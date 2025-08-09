@@ -20,14 +20,15 @@ import {
 } from 'lucide-react';
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
+import { useTranslation } from 'react-i18next';
 
 const WeatherPage = () => {
     const [location, setLocation] = useState('');
     const [currentWeather, setCurrentWeather] = useState(null);
     const [forecast, setForecast] = useState(null);
-    const [language, setLanguage] = useState('en');
     const [loading, setLoading] = useState(false);
     const [alerts, setAlerts] = useState([]);
+    const { t } = useTranslation();
 
     // Mock weather data for demonstration
     const mockCurrentWeather = {
@@ -81,21 +82,21 @@ const WeatherPage = () => {
     const farmingAdvice = [
         {
             icon: <Droplets className="w-5 h-5" />,
-            title: 'Irrigation',
-            advice: 'Reduce watering due to expected rainfall',
-            timing: 'Next 2 days'
+            title: t('weather.advice.irrigationTitle', { defaultValue: 'Irrigation' }),
+            advice: t('weather.advice.irrigationText', { defaultValue: 'Reduce watering due to expected rainfall' }),
+            timing: t('weather.advice.irrigationTiming', { defaultValue: 'Next 2 days' })
         },
         {
             icon: <Shield className="w-5 h-5" />,
-            title: 'Crop Protection',
-            advice: 'Cover sensitive crops before evening rain',
-            timing: 'Before 17:00'
+            title: t('weather.advice.protectionTitle', { defaultValue: 'Crop Protection' }),
+            advice: t('weather.advice.protectionText', { defaultValue: 'Cover sensitive crops before evening rain' }),
+            timing: t('weather.advice.protectionTiming', { defaultValue: 'Before 17:00' })
         },
         {
             icon: <Sprout className="w-5 h-5" />,
-            title: 'Planting',
-            advice: 'Good conditions for rice planting after rain',
-            timing: 'Sunday onwards'
+            title: t('weather.advice.plantingTitle', { defaultValue: 'Planting' }),
+            advice: t('weather.advice.plantingText', { defaultValue: 'Good conditions for rice planting after rain' }),
+            timing: t('weather.advice.plantingTiming', { defaultValue: 'Sunday onwards' })
         }
     ];
 
@@ -141,38 +142,6 @@ const WeatherPage = () => {
         }
     };
 
-    const translations = {
-        en: {
-            title: 'Weather Dashboard',
-            location: 'Location',
-            current: 'Current Weather',
-            hourly: 'Hourly Forecast',
-            daily: 'Daily Forecast',
-            alerts: 'Agricultural Alerts',
-            advice: 'Farming Recommendations'
-        },
-        si: {
-            title: 'කාලගුණ පුවරුව',
-            location: 'ස්ථානය',
-            current: 'වර්තමාන කාලගුණය',
-            hourly: 'පැය අනුව පුරෝකථනය',
-            daily: 'දෛනික පුරෝකථනය',
-            alerts: 'කෘෂිකාර්මික අනතුරු ඇඟවීම්',
-            advice: 'ගොවිතැන් නිර්දේශ'
-        },
-        ta: {
-            title: 'வானிலை கட்டுப்பாடு',
-            location: 'இடம்',
-            current: 'தற்போதைய வானிலை',
-            hourly: 'மணிநேர முன்னறிவிப்பு',
-            daily: 'தினசரி முன்னறிவிப்பு',
-            alerts: 'விவசாய எச்சரிக்கைகள்',
-            advice: 'விவசாய பரிந்துரைகள்'
-        }
-    };
-
-    const t = translations[language];
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-yellow-50">
             {/* Header */}
@@ -185,19 +154,8 @@ const WeatherPage = () => {
                             <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
                                 <Sprout className="w-6 h-6 text-white" />
                             </div>
-                              {t.title}
+                              {t('weather.title')}
                         </h1>
-                        <div className="flex items-center gap-4">
-                            <select
-                                value={language}
-                                onChange={(e) => setLanguage(e.target.value)}
-                                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                            >
-                                <option value="en">English</option>
-                                <option value="si">සිංහල</option>
-                                <option value="ta">தமிழ்</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -207,13 +165,13 @@ const WeatherPage = () => {
                 <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
                         <MapPin className="w-5 h-5 text-green-500" />
-                        {t.location}
+                        {t('weather.location', { defaultValue: 'Location' })}
                     </h2>
                     <div className="flex gap-4 flex-wrap">
                         <div className="flex-1 min-w-64">
                             <input
                                 type="text"
-                                placeholder="Enter city, village, or coordinates..."
+                                placeholder={t('weather.locationPlaceholder', { defaultValue: 'Enter city, village, or coordinates...' })}
                                 value={location}
                                 onChange={(e) => setLocation(e.target.value)}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg"
@@ -225,7 +183,7 @@ const WeatherPage = () => {
                             className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200 flex items-center gap-2 font-medium"
                         >
                             {loading ? <RefreshCw className="w-5 h-5 animate-spin" /> : <MapPin className="w-5 h-5" />}
-                            Search
+                            {t('common.search', { defaultValue: 'Search' })}
                         </button>
                         <button
                             onClick={handleLocationDetect}
@@ -233,7 +191,7 @@ const WeatherPage = () => {
                             className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 flex items-center gap-2 font-medium"
                         >
                             <Navigation className="w-5 h-5" />
-                            Detect
+                            {t('weather.detect', { defaultValue: 'Detect' })}
                         </button>
                     </div>
                 </div>
@@ -243,7 +201,7 @@ const WeatherPage = () => {
                     <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
                         <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
                             <AlertTriangle className="w-5 h-5 text-red-500" />
-                            {t.alerts}
+                            {t('weather.alerts')}
                         </h2>
                         <div className="space-y-4">
                             {alerts.map((alert, index) => (
@@ -264,7 +222,7 @@ const WeatherPage = () => {
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
                                 <Thermometer className="w-5 h-5 text-blue-500" />
-                                {t.current}
+                                {t('weather.currentWeather')}
                             </h2>
                             <button
                                 onClick={handleLocationSearch}
@@ -281,7 +239,7 @@ const WeatherPage = () => {
                                     {getWeatherIcon(currentWeather.icon)}
                                     <div>
                                         <div className="text-5xl font-bold text-gray-800">{currentWeather.temperature}°C</div>
-                                        <div className="text-gray-600">Feels like {currentWeather.feelsLike}°C</div>
+                                        <div className="text-gray-600">{t('weather.feelsLike', { defaultValue: 'Feels like {{temp}}°C', temp: currentWeather.feelsLike })}</div>
                                     </div>
                                 </div>
                                 <div className="text-xl text-gray-700 mb-2">{currentWeather.condition}</div>
@@ -296,7 +254,7 @@ const WeatherPage = () => {
                                 <div className="bg-blue-50 p-4 rounded-lg">
                                     <div className="flex items-center gap-2 text-blue-600 mb-2">
                                         <Droplets className="w-5 h-5" />
-                                        <span className="font-medium">Humidity</span>
+                                        <span className="font-medium">{t('weather.humidity')}</span>
                                     </div>
                                     <div className="text-2xl font-bold text-gray-800">{currentWeather.humidity}%</div>
                                 </div>
@@ -304,7 +262,7 @@ const WeatherPage = () => {
                                 <div className="bg-green-50 p-4 rounded-lg">
                                     <div className="flex items-center gap-2 text-green-600 mb-2">
                                         <Wind className="w-5 h-5" />
-                                        <span className="font-medium">Wind</span>
+                                        <span className="font-medium">{t('weather.windSpeed')}</span>
                                     </div>
                                     <div className="text-2xl font-bold text-gray-800">{currentWeather.windSpeed} km/h</div>
                                     <div className="text-sm text-gray-600">{currentWeather.windDirection}</div>
@@ -313,7 +271,7 @@ const WeatherPage = () => {
                                 <div className="bg-purple-50 p-4 rounded-lg">
                                     <div className="flex items-center gap-2 text-purple-600 mb-2">
                                         <Eye className="w-5 h-5" />
-                                        <span className="font-medium">Pressure</span>
+                                        <span className="font-medium">{t('weather.pressure', { defaultValue: 'Pressure' })}</span>
                                     </div>
                                     <div className="text-2xl font-bold text-gray-800">{currentWeather.pressure} hPa</div>
                                 </div>
@@ -321,7 +279,7 @@ const WeatherPage = () => {
                                 <div className="bg-orange-50 p-4 rounded-lg">
                                     <div className="flex items-center gap-2 text-orange-600 mb-2">
                                         <Sunrise className="w-5 h-5" />
-                                        <span className="font-medium">Sun</span>
+                                        <span className="font-medium">{t('weather.sun', { defaultValue: 'Sun' })}</span>
                                     </div>
                                     <div className="text-sm text-gray-800">
                                         <div className="flex items-center gap-1">
@@ -344,7 +302,7 @@ const WeatherPage = () => {
                     <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
                         <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
                             <Clock className="w-5 h-5 text-blue-500" />
-                            {t.hourly}
+                            {t('weather.hourly', { defaultValue: 'Hourly Forecast' })}
                         </h2>
                         <div className="overflow-x-auto">
                             <div className="flex gap-4 min-w-max">
@@ -368,7 +326,7 @@ const WeatherPage = () => {
                     <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
                         <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
                             <Calendar className="w-5 h-5 text-green-500" />
-                            {t.daily}
+                            {t('weather.forecast')}
                         </h2>
                         <div className="space-y-3">
                             {forecast.daily.map((day, index) => (
@@ -397,7 +355,7 @@ const WeatherPage = () => {
                 <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
                         <Sprout className="w-5 h-5 text-green-500" />
-                        {t.advice}
+                        {t('weather.advice.title', { defaultValue: 'Farming Recommendations' })}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {farmingAdvice.map((advice, index) => (
@@ -415,7 +373,7 @@ const WeatherPage = () => {
 
                 {/* Data Source */}
                 <div className="text-center text-gray-500 text-sm">
-                    Weather data provided by OpenWeatherMap API
+                    {t('weather.dataSource', { defaultValue: 'Weather data provided by OpenWeatherMap API' })}
                 </div>
             </div>
             <Footer />
