@@ -1,25 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
     Menu,
     X,
     ChevronDown,
     Leaf,
     Globe,
-    ShoppingCart
+    ShoppingCart,
+    LogOut
 } from 'lucide-react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useTranslation } from 'react-i18next';
+import AuthContext from '../../contexts/AuthContext';
 
 const Header = () => {
     const location = useLocation(); // Get current location
+    const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+    const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
     const { cart } = useCart();
     const { currentLanguage, changeLanguage, languages, getCurrentLanguageInfo } = useLanguage();
     const { t, i18n } = useTranslation();
+    const { isAuthenticated, logout } = useContext(AuthContext) || {};
+
+    // Compute display name from stored user info (without altering design)
+    const [displayName, setDisplayName] = useState('');
 
     useEffect(() => {
         const handleScroll = () => {
@@ -33,6 +41,25 @@ const Header = () => {
     useEffect(() => {
         i18n.changeLanguage(currentLanguage);
     }, [currentLanguage, i18n]);
+
+    // Read user name from localStorage if available
+    useEffect(() => {
+        try {
+            const raw = localStorage.getItem('userInfo');
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                const nameFromResponse = parsed?.user?.name || parsed?.name;
+                if (nameFromResponse) {
+                    setDisplayName(nameFromResponse);
+                    return;
+                }
+            }
+            // Fallback: if only token/userId exist, keep empty name (will show Login)
+            setDisplayName('');
+        } catch {
+            setDisplayName('');
+        }
+    }, [isAuthenticated]);
 
     const currentLanguageInfo = getCurrentLanguageInfo();
 
@@ -61,6 +88,27 @@ const Header = () => {
     const handleLanguageChange = (languageCode) => {
         changeLanguage(languageCode);
         setIsLangDropdownOpen(false);
+    };
+
+    const handleLogout = () => {
+        // Clear user info from localStorage
+        localStorage.removeItem('userInfo');
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        
+        // Call logout from AuthContext
+        if (logout) {
+            logout();
+        }
+        
+        // Clear display name
+        setDisplayName('');
+        
+        // Close dropdown
+        setIsUserDropdownOpen(false);
+        
+        // Navigate to home page
+        navigate('/');
     };
 
     return (
@@ -147,11 +195,35 @@ const Header = () => {
                             )}
                         </Link>
 
-                        {/* Enhanced Login Button */}
-                        <a href="/login" className="hidden sm:block relative px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 group overflow-hidden">
-                            <span className="relative z-10">{t('header.login')}</span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-700 to-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-                        </a>
+                        {/* Enhanced Login Button - show user name if logged in */}
+                        {displayName ? (
+                            <div className="relative">
+                                <button
+                                    onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                                    className="hidden sm:block relative px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 group overflow-hidden"
+                                >
+                                    <span className="relative z-10">{displayName}</span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-700 to-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                                </button>
+
+                                {isUserDropdownOpen && (
+                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+                                        <button
+                                            onClick={handleLogout}
+                                            className="w-full flex items-center space-x-3 px-4 py-2 text-left hover:bg-gray-50 transition-colors duration-150 text-gray-700"
+                                        >
+                                            <LogOut className="w-4 h-4" />
+                                            <span className="font-medium">Logout</span>
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <a href="/login" className="hidden sm:block relative px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 group overflow-hidden">
+                                <span className="relative z-10">{t('header.login')}</span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-emerald-700 to-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                            </a>
+                        )}
 
                         {/* Enhanced Mobile Menu Button */}
                         <div className="lg:hidden">
@@ -237,24 +309,45 @@ const Header = () => {
                             )}
                         </Link>
 
-                        <a
-                            href="/login"
-                            className="flex items-center justify-center px-4 py-3 mt-4 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-lg shadow-md"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            {t('header.login')}
-                        </a>
+                        {displayName ? (
+                            <div className="space-y-2">
+                                <span
+                                    className="flex items-center justify-center px-4 py-3 mt-4 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-lg shadow-md"
+                                >
+                                    {displayName}
+                                </span>
+                                <button
+                                    onClick={() => {
+                                        handleLogout();
+                                        setIsMenuOpen(false);
+                                    }}
+                                    className="flex items-center justify-center w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors duration-200"
+                                >
+                                    <LogOut className="w-4 h-4 mr-2" />
+                                    Logout
+                                </button>
+                            </div>
+                        ) : (
+                            <a
+                                href="/login"
+                                className="flex items-center justify-center px-4 py-3 mt-4 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-lg shadow-md"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                {t('header.login')}
+                            </a>
+                        )}
                     </div>
                 </div>
             </div>
 
             {/* Close dropdown when clicking outside */}
-            {(isLangDropdownOpen || isMenuOpen) && (
+            {(isLangDropdownOpen || isMenuOpen || isUserDropdownOpen) && (
                 <div
                     className="fixed inset-0 z-40"
                     onClick={() => {
                         setIsLangDropdownOpen(false);
                         setIsMenuOpen(false);
+                        setIsUserDropdownOpen(false);
                     }}
                 ></div>
             )}
