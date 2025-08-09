@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, User, Mail, Lock, Phone, MapPin, Sprout, Globe } from 'lucide-react';
 import Header from "../layout/Header";
 import { useNavigate } from 'react-router-dom';
@@ -22,6 +22,34 @@ const RegisterPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [errors, setErrors] = useState({});
+
+    // Initialize Facebook SDK
+    useEffect(() => {
+        // Load Facebook SDK
+        const loadFacebookSDK = () => {
+            if (window.FB) return;
+
+            window.fbAsyncInit = function() {
+                window.FB.init({
+                    appId: process.env.REACT_APP_FACEBOOK_APP_ID || 'YOUR_FACEBOOK_APP_ID', // Replace with your Facebook App ID
+                    cookie: true,
+                    xfbml: true,
+                    version: 'v18.0'
+                });
+            };
+
+            // Load Facebook SDK script
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        };
+
+        loadFacebookSDK();
+    }, []);
 
     const cities = [
         'Colombo', 'Kandy', 'Galle', 'Jaffna', 'Negombo', 'Anuradhapura',
@@ -173,6 +201,65 @@ const RegisterPage = () => {
         }
         
         alert(errorMessage);
+    };
+
+    const handleFacebookLogin = () => {
+        if (!window.FB) {
+            alert('Facebook SDK not loaded. Please try again.');
+            return;
+        }
+
+        window.FB.login(async (response) => {
+            if (response.authResponse) {
+                try {
+                    console.log('Facebook login successful:', response);
+                    
+                    // Send the access token to backend for verification
+                    const backendResponse = await axios.post('http://localhost:5000/api/auth/facebook', {
+                        accessToken: response.authResponse.accessToken
+                    }, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    console.log('Facebook OAuth registration successful:', backendResponse.data);
+                    
+                    if (backendResponse.data.success) {
+                        alert('Registration successful!');
+                        localStorage.setItem('userInfo', JSON.stringify(backendResponse.data));
+                        navigate('/login');
+                    } else {
+                        alert(backendResponse.data.message || 'Registration failed');
+                    }
+                } catch (error) {
+                    console.error('Facebook OAuth registration failed:', error);
+                    let errorMessage = 'Facebook registration failed. Please try again.';
+
+                    if (error.response) {
+                        // Server responded with error status
+                        const errorData = error.response.data;
+                        errorMessage = errorData.message || errorData.error || errorMessage;
+                        console.error('Server error response:', errorData);
+                    } else if (error.request) {
+                        // Request was made but no response
+                        errorMessage = 'No response from server. Please check if the backend is running.';
+                        console.error('No response received:', error.request);
+                    } else {
+                        // Other errors
+                        errorMessage = error.message || errorMessage;
+                        console.error('Other error:', error);
+                    }
+
+                    alert(errorMessage);
+                }
+            } else {
+                console.log('Facebook login cancelled or failed');
+                alert('Facebook login was cancelled or failed. Please try again.');
+            }
+        }, {
+            scope: 'email,public_profile'
+        });
     };
 
     const handleSocialLogin = (provider) => {
@@ -545,7 +632,7 @@ const RegisterPage = () => {
                         {/* Facebook Login */}
                         <button
                             type="button"
-                            onClick={() => handleSocialLogin('Facebook')}
+                            onClick={handleFacebookLogin}
                             className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 bg-white/90"
                         >
                             <svg className="w-5 h-5 mr-3" fill="#1877F2" viewBox="0 0 24 24">
