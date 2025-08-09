@@ -21,6 +21,7 @@ import {
     Bookmark
 } from 'lucide-react';
 import Footer from "../components/layout/Footer";
+import { useTranslation } from 'react-i18next';
 
 const CommunityPage = () => {
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -29,23 +30,24 @@ const CommunityPage = () => {
     const [selectedPost, setSelectedPost] = useState(null);
     const [showNewPost, setShowNewPost] = useState(false);
     const [newPost, setNewPost] = useState({ title: '', category: '', content: '', anonymous: false });
+    const { t } = useTranslation();
 
     // Mock data for demonstration
     const categories = [
-        { id: 'all', name: 'All Categories', icon: Users, color: 'bg-green-500' },
-        { id: 'crops', name: 'Crop Discussions', icon: Wheat, color: 'bg-yellow-500' },
-        { id: 'livestock', name: 'Livestock', icon: Beef, color: 'bg-red-500' },
-        { id: 'pest', name: 'Pest & Disease', icon: Bug, color: 'bg-orange-500' },
-        { id: 'equipment', name: 'Equipment & Tools', icon: Wrench, color: 'bg-blue-500' },
-        { id: 'organic', name: 'Organic Farming', icon: Leaf, color: 'bg-green-600' },
-        { id: 'market', name: 'Market Prices', icon: TrendingUp, color: 'bg-purple-500' }
+        { id: 'all', name: t('community.categories.all'), icon: Users, color: 'bg-green-500' },
+        { id: 'crops', name: t('community.categories.crops'), icon: Wheat, color: 'bg-yellow-500' },
+        { id: 'livestock', name: t('community.categories.livestock'), icon: Beef, color: 'bg-red-500' },
+        { id: 'pest', name: t('community.categories.pest'), icon: Bug, color: 'bg-orange-500' },
+        { id: 'equipment', name: t('community.categories.equipment'), icon: Wrench, color: 'bg-blue-500' },
+        { id: 'organic', name: t('community.categories.organic'), icon: Leaf, color: 'bg-green-600' },
+        { id: 'market', name: t('community.categories.market'), icon: TrendingUp, color: 'bg-purple-500' }
     ];
 
     const posts = [
         {
             id: 1,
             title: 'Best fertilizer for rice cultivation in monsoon season?',
-            content: 'I\'m planning to start rice cultivation next month. What fertilizers work best during heavy rainfall? Any specific brands you recommend?',
+            content: "I'm planning to start rice cultivation next month. What fertilizers work best during heavy rainfall? Any specific brands you recommend?",
             author: 'Sunil Perera',
             location: 'Anuradhapura',
             category: 'crops',
@@ -79,7 +81,7 @@ const CommunityPage = () => {
         },
         {
             id: 3,
-            title: 'Today\'s vegetable prices at Dambulla market',
+            title: "Today's vegetable prices at Dambulla market",
             content: 'Tomato - Rs.120/kg, Carrot - Rs.80/kg, Cabbage - Rs.60/kg, Beans - Rs.180/kg. Prices are stable compared to last week.',
             author: 'Market Reporter',
             location: 'Dambulla',
@@ -119,22 +121,22 @@ const CommunityPage = () => {
             <div className="bg-gradient-to-r from-green-600 to-green-700 text-white">
                 <div className="max-w-7xl mx-auto px-4 py-12">
                     <div className="text-center">
-                        <h1 className="text-4xl font-bold mb-4">ModGoviya Farmer Community</h1>
+                        <h1 className="text-4xl font-bold mb-4">{t('community.hero.title')}</h1>
                         <p className="text-xl text-green-100 max-w-2xl mx-auto">
-                            Ask questions, share ideas, and connect with fellow farmers across Sri Lanka
+                            {t('community.hero.subtitle')}
                         </p>
                         <div className="mt-8 flex justify-center space-x-4">
                             <div className="bg-white/10 backdrop-blur rounded-lg px-6 py-3">
                                 <div className="text-2xl font-bold">1,247</div>
-                                <div className="text-sm text-green-100">Active Farmers</div>
+                                <div className="text-sm text-green-100">{t('community.stats.activeFarmers')}</div>
                             </div>
                             <div className="bg-white/10 backdrop-blur rounded-lg px-6 py-3">
                                 <div className="text-2xl font-bold">3,892</div>
-                                <div className="text-sm text-green-100">Discussions</div>
+                                <div className="text-sm text-green-100">{t('community.stats.discussions')}</div>
                             </div>
                             <div className="bg-white/10 backdrop-blur rounded-lg px-6 py-3">
                                 <div className="text-2xl font-bold">12,456</div>
-                                <div className="text-sm text-green-100">Solutions Shared</div>
+                                <div className="text-sm text-green-100">{t('community.stats.solutions')}</div>
                             </div>
                         </div>
                     </div>
@@ -147,7 +149,7 @@ const CommunityPage = () => {
                     <div className="lg:col-span-1">
                         {/* Categories */}
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-                            <h3 className="text-lg font-semibold text-gray-800 mb-4">Categories</h3>
+                            <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('community.categories.title')}</h3>
                             <div className="space-y-2">
                                 {categories.map((category) => {
                                     const IconComponent = category.icon;
@@ -175,7 +177,7 @@ const CommunityPage = () => {
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
                                 <Star className="text-yellow-500 mr-2" size={20} />
-                                Top Contributors
+                                {t('community.topContributors')}
                             </h3>
                             <div className="space-y-3">
                                 {topContributors.map((contributor, index) => (
@@ -185,7 +187,7 @@ const CommunityPage = () => {
                                         </div>
                                         <div className="flex-1">
                                             <div className="font-medium text-sm text-gray-800">{contributor.name}</div>
-                                            <div className="text-xs text-gray-500">{contributor.posts} posts • {contributor.reputation} pts</div>
+                                            <div className="text-xs text-gray-500">{contributor.posts} {t('community.contributor.posts')} • {contributor.reputation} {t('community.contributor.points')}</div>
                                         </div>
                                     </div>
                                 ))}
@@ -204,7 +206,7 @@ const CommunityPage = () => {
                                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                                             <input
                                                 type="text"
-                                                placeholder="Search discussions..."
+                                                placeholder={t('community.searchPlaceholder')}
                                                 value={searchTerm}
                                                 onChange={(e) => setSearchTerm(e.target.value)}
                                                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
@@ -215,17 +217,17 @@ const CommunityPage = () => {
                                             onChange={(e) => setSortBy(e.target.value)}
                                             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                         >
-                                            <option value="recent">Most Recent</option>
-                                            <option value="popular">Most Popular</option>
-                                            <option value="trending">Trending</option>
-                                            <option value="unanswered">Unanswered</option>
+                                            <option value="recent">{t('community.sort.recent')}</option>
+                                            <option value="popular">{t('community.sort.popular')}</option>
+                                            <option value="trending">{t('community.sort.trending')}</option>
+                                            <option value="unanswered">{t('community.sort.unanswered')}</option>
                                         </select>
                                         <button
                                             onClick={() => setShowNewPost(true)}
                                             className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg flex items-center space-x-2 transition-colors"
                                         >
                                             <Plus size={20} />
-                                            <span>New Post</span>
+                                            <span>{t('community.newPost')}</span>
                                         </button>
                                     </div>
                                 </div>
@@ -240,20 +242,20 @@ const CommunityPage = () => {
                                                         <div className="flex items-center space-x-2 mb-2">
                                                             {post.trending && (
                                                                 <span className="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full font-medium">
-                                  🔥 Trending
-                                </span>
+                                                                  🔥 {t('community.badges.trending')}
+                                                                </span>
                                                             )}
                                                             {post.urgent && (
                                                                 <span className="bg-orange-100 text-orange-600 text-xs px-2 py-1 rounded-full font-medium flex items-center">
-                                  <AlertTriangle size={12} className="mr-1" />
-                                  Urgent
-                                </span>
+                                                                  <AlertTriangle size={12} className="mr-1" />
+                                                                  {t('community.badges.urgent')}
+                                                                </span>
                                                             )}
                                                             <span className={`text-xs px-2 py-1 rounded-full font-medium ${
                                                                 categories.find(c => c.id === post.category)?.color || 'bg-gray-500'
                                                             } text-white`}>
-                                {categories.find(c => c.id === post.category)?.name}
-                              </span>
+                                                              {categories.find(c => c.id === post.category)?.name}
+                                                            </span>
                                                         </div>
                                                         <h3
                                                             className="text-lg font-semibold text-gray-800 hover:text-green-600 cursor-pointer mb-2"
@@ -283,15 +285,15 @@ const CommunityPage = () => {
                                                     <div className="flex items-center space-x-6 text-sm text-gray-500">
                                                         <div className="flex items-center space-x-1">
                                                             <MessageCircle size={16} />
-                                                            <span>{post.replies} replies</span>
+                                                            <span>{post.replies} {t('community.labels.replies')}</span>
                                                         </div>
                                                         <div className="flex items-center space-x-1">
                                                             <ThumbsUp size={16} />
-                                                            <span>{post.likes} likes</span>
+                                                            <span>{post.likes} {t('community.labels.likes')}</span>
                                                         </div>
                                                         <div className="flex items-center space-x-1">
                                                             <Eye size={16} />
-                                                            <span>{post.views} views</span>
+                                                            <span>{post.views} {t('community.labels.views')}</span>
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center space-x-2">
@@ -317,7 +319,7 @@ const CommunityPage = () => {
                         {showNewPost && (
                             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                                 <div className="flex items-center justify-between mb-6">
-                                    <h2 className="text-xl font-semibold text-gray-800">Create New Discussion</h2>
+                                    <h2 className="text-xl font-semibold text-gray-800">{t('community.form.title')}</h2>
                                     <button
                                         onClick={() => setShowNewPost(false)}
                                         className="text-gray-500 hover:text-gray-700"
@@ -328,24 +330,24 @@ const CommunityPage = () => {
 
                                 <div className="space-y-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Discussion Title</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">{t('community.form.discussionTitle')}</label>
                                         <input
                                             type="text"
                                             value={newPost.title}
                                             onChange={(e) => setNewPost({...newPost, title: e.target.value})}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                                            placeholder="What's your question or topic?"
+                                            placeholder={t('community.form.discussionTitlePlaceholder')}
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">{t('community.form.category')}</label>
                                         <select
                                             value={newPost.category}
                                             onChange={(e) => setNewPost({...newPost, category: e.target.value})}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                         >
-                                            <option value="">Select a category</option>
+                                            <option value="">{t('community.form.selectCategory')}</option>
                                             {categories.filter(c => c.id !== 'all').map(category => (
                                                 <option key={category.id} value={category.id}>{category.name}</option>
                                             ))}
@@ -353,13 +355,13 @@ const CommunityPage = () => {
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">{t('community.form.description')}</label>
                                         <textarea
                                             value={newPost.content}
                                             onChange={(e) => setNewPost({...newPost, content: e.target.value})}
                                             rows={6}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                                            placeholder="Describe your question or share your knowledge..."
+                                            placeholder={t('community.form.descriptionPlaceholder')}
                                         />
                                     </div>
 
@@ -371,7 +373,7 @@ const CommunityPage = () => {
                                             onChange={(e) => setNewPost({...newPost, anonymous: e.target.checked})}
                                             className="rounded border-gray-300 text-green-600 focus:ring-green-500"
                                         />
-                                        <label htmlFor="anonymous" className="text-sm text-gray-700">Post anonymously</label>
+                                        <label htmlFor="anonymous" className="text-sm text-gray-700">{t('community.form.postAnonymously')}</label>
                                     </div>
 
                                     <div className="flex space-x-4 pt-4">
@@ -379,13 +381,13 @@ const CommunityPage = () => {
                                             onClick={handleNewPost}
                                             className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors"
                                         >
-                                            Post Discussion
+                                            {t('community.form.postButton')}
                                         </button>
                                         <button
                                             onClick={() => setShowNewPost(false)}
                                             className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg transition-colors"
                                         >
-                                            Cancel
+                                            {t('common.cancel')}
                                         </button>
                                     </div>
                                 </div>
@@ -400,19 +402,19 @@ const CommunityPage = () => {
                                         onClick={() => setSelectedPost(null)}
                                         className="text-green-600 hover:text-green-700 mb-4 flex items-center space-x-2"
                                     >
-                                        <span>← Back to discussions</span>
+                                        <span>← {t('community.backToDiscussions')}</span>
                                     </button>
 
                                     <div className="flex items-center space-x-2 mb-3">
-                    <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-                        categories.find(c => c.id === selectedPost.category)?.color || 'bg-gray-500'
-                    } text-white`}>
-                      {categories.find(c => c.id === selectedPost.category)?.name}
-                    </span>
+                                        <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+                                            categories.find(c => c.id === selectedPost.category)?.color || 'bg-gray-500'
+                                        } text-white`}>
+                                          {categories.find(c => c.id === selectedPost.category)?.name}
+                                        </span>
                                         {selectedPost.trending && (
                                             <span className="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full font-medium">
-                        🔥 Trending
-                      </span>
+                                                🔥 {t('community.badges.trending')}
+                                            </span>
                                         )}
                                     </div>
 
@@ -453,7 +455,7 @@ const CommunityPage = () => {
                                 {/* Comments Section */}
                                 <div className="p-6">
                                     <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                                        {selectedPost.replies} Replies
+                                        {selectedPost.replies} {t('community.labels.replies')}
                                     </h3>
 
                                     {selectedPost.comments && selectedPost.comments.map((comment) => (
@@ -472,13 +474,13 @@ const CommunityPage = () => {
 
                                     {/* Reply Form */}
                                     <div className="mt-6 pt-4 border-t border-gray-200">
-                    <textarea
-                        placeholder="Share your knowledge or ask for clarification..."
-                        rows={3}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 mb-3"
-                    />
+                                        <textarea
+                                            placeholder={t('community.reply.placeholder')}
+                                            rows={3}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 mb-3"
+                                        />
                                         <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
-                                            Post Reply
+                                            {t('community.reply.post')}
                                         </button>
                                     </div>
                                 </div>
@@ -491,19 +493,19 @@ const CommunityPage = () => {
             {/* Community Guidelines Footer */}
             <div className="bg-gray-100 border-t border-gray-200 mt-12">
                 <div className="max-w-7xl mx-auto px-4 py-8">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">Community Guidelines</h3>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('community.guidelines.title')}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-600">
                         <div>
-                            <h4 className="font-medium text-gray-800 mb-2">Be Respectful</h4>
-                            <p>Treat all community members with respect and kindness. Share knowledge constructively.</p>
+                            <h4 className="font-medium text-gray-800 mb-2">{t('community.guidelines.respect.title')}</h4>
+                            <p>{t('community.guidelines.respect.desc')}</p>
                         </div>
                         <div>
-                            <h4 className="font-medium text-gray-800 mb-2">Stay Relevant</h4>
-                            <p>Keep discussions focused on farming, agriculture, and related topics that help fellow farmers.</p>
+                            <h4 className="font-medium text-gray-800 mb-2">{t('community.guidelines.relevant.title')}</h4>
+                            <p>{t('community.guidelines.relevant.desc')}</p>
                         </div>
                         <div>
-                            <h4 className="font-medium text-gray-800 mb-2">Report Issues</h4>
-                            <p>Help keep our community safe by reporting spam, inappropriate content, or harassment.</p>
+                            <h4 className="font-medium text-gray-800 mb-2">{t('community.guidelines.report.title')}</h4>
+                            <p>{t('community.guidelines.report.desc')}</p>
                         </div>
                     </div>
                 </div>
