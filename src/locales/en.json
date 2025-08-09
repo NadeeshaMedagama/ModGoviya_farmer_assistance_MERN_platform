@@ -117,6 +117,14 @@
         "text": "The marketplace feature helped me sell my harvest directly to buyers at better prices."
       }
     },
+    "testimonialsSection": {
+      "title": "What Farmers Say",
+      "subtitle": "Real stories from real farmers"
+    },
+    "latestTips": {
+      "title": "Latest Farming Tips",
+      "subtitle": "Stay updated with modern farming techniques"
+    },
     "howItWorks": {
       "title": "How It Works",
       "subtitle": "Get started in just a few simple steps"
@@ -159,7 +167,54 @@
     "addToCart": "Add to Cart",
     "buyNow": "Buy Now",
     "outOfStock": "Out of Stock",
-    "inStock": "In Stock"
+    "inStock": "In Stock",
+    "badges": {"new": "New", "used": "Used"},
+    "viewDetails": "View Details",
+    "description": "Description",
+    "email": "Email",
+    "report": "Report",
+    "hero": {
+      "badge": "Trusted Agricultural Platform",
+      "title1": "Farming",
+      "title2": "Marketplace",
+      "subtitle1": "Buy and sell farming tools, seeds, crops, fertilizers, and more.",
+      "subtitle2": "Connect with other farmers and sellers near you."
+    },
+    "pills": {"secure": "Secure Trading", "prices": "Best Prices", "local": "Local Network"},
+    "cta": {"startTrading": "Start Trading", "learnMore": "Learn More"},
+    "searchPlaceholder": "Search by item name, location...",
+    "filters": "Filters",
+    "postAd": "Post Ad",
+    "categories": {
+      "title": "Categories",
+      "all": "All Categories",
+      "seeds": "Seeds",
+      "crops": "Crops",
+      "tools": "Tools & Equipment",
+      "fertilizers": "Fertilizers",
+      "equipment": "Heavy Equipment",
+      "livestock": "Livestock",
+      "services": "Services"
+    },
+    "priceRange": "Price Range",
+    "min": "Min",
+    "max": "Max",
+    "safetyTips": {
+      "title": "Safety Tips",
+      "meetPublic": "Meet in safe, public locations",
+      "noAdvance": "Don't pay in advance",
+      "verifySeller": "Verify seller information",
+      "inspectItems": "Inspect items before buying"
+    },
+    "productsFound": "{{count}} products found",
+    "sort": {
+      "newest": "Newest First",
+      "priceLow": "Price: Low to High",
+      "priceHigh": "Price: High to Low",
+      "location": "By Location"
+    },
+    "noProducts": "No products found",
+    "tryAdjust": "Try adjusting your search criteria or filters"
   },
   "weather": {
     "title": "Weather",
@@ -170,7 +225,27 @@
     "windSpeed": "Wind Speed",
     "precipitation": "Precipitation",
     "sunrise": "Sunrise",
-    "sunset": "Sunset"
+    "sunset": "Sunset",
+    "location": "Location",
+    "locationPlaceholder": "Enter city, village, or coordinates...",
+    "detect": "Detect",
+    "feelsLike": "Feels like {{temp}}°C",
+    "pressure": "Pressure",
+    "sun": "Sun",
+    "hourly": "Hourly Forecast",
+    "advice": {
+      "title": "Farming Recommendations",
+      "irrigationTitle": "Irrigation",
+      "irrigationText": "Reduce watering due to expected rainfall",
+      "irrigationTiming": "Next 2 days",
+      "protectionTitle": "Crop Protection",
+      "protectionText": "Cover sensitive crops before evening rain",
+      "protectionTiming": "Before 17:00",
+      "plantingTitle": "Planting",
+      "plantingText": "Good conditions for rice planting after rain",
+      "plantingTiming": "Sunday onwards"
+    },
+    "dataSource": "Weather data provided by OpenWeatherMap API"
   },
   "cart": {
     "title": "Shopping Cart",
@@ -181,5 +256,107 @@
     "update": "Update",
     "clear": "Clear Cart",
     "items": "items"
+  },
+  "about": {
+    "hero": {
+      "title": "About",
+      "subtitle": "Empowering farmers with modern technology and sustainable practices for a prosperous future"
+    },
+    "intro": {
+      "title": "Revolutionizing Agriculture Through Technology",
+      "p1": "ModGoviya (Modern Farmer) is a comprehensive digital platform designed to transform traditional farming practices through cutting-edge technology and data-driven insights. We bridge the gap between traditional agricultural wisdom and modern technological solutions.",
+      "p2": "Our platform provides farmers with access to real-time weather data, crop monitoring tools, market intelligence, and a vibrant community of agricultural experts and fellow farmers. We believe that technology should serve humanity, and our mission is to make farming more profitable, sustainable, and efficient."
+    },
+    "values": {
+      "sustainable": {"title": "Sustainable Practices", "desc": "Promoting eco-friendly farming methods for long-term sustainability"},
+      "market": {"title": "Market Intelligence", "desc": "Real-time market data and price predictions for better decision making"},
+      "community": {"title": "Community Support", "desc": "Connecting farmers with experts and peer-to-peer knowledge sharing"}
+    },
+    "stats": {
+      "title": "Our Impact in Numbers",
+      "subtitle": "Driving measurable change in the agricultural sector",
+      "farmersConnected": "Farmers Connected",
+      "avgYield": "Average Yield Increase",
+      "reliability": "Platform Reliability",
+      "awards": "Industry Awards"
+    },
+    "mission": {"title": "Our Mission", "desc": "To empower farmers worldwide with innovative technology solutions that enhance productivity, promote sustainable practices, and improve livelihoods. We strive to make advanced agricultural tools accessible to every farmer, regardless of their scale of operation or geographical location."},
+    "vision": {"title": "Our Vision", "desc": "To create a world where technology and traditional farming wisdom work together to ensure food security, environmental sustainability, and economic prosperity for farming communities. We envision a future where every farmer is equipped with the knowledge and tools needed to thrive."},
+    "team": {
+      "title": "Meet Our Team",
+      "subtitle": "Our diverse team of agricultural experts, technologists, and industry veterans is dedicated to revolutionizing farming practices",
+      "cto": "Founder & CEO",
+      "positionCTO": "CTO",
+      "headOps": "Head of Operations",
+      "agriAdvisor": "Agricultural Advisor",
+      "rajeshDesc": "Agricultural Engineer with 15+ years in sustainable farming",
+      "priyaDesc": "Technology expert specializing in AgTech solutions",
+      "amitDesc": "Operations specialist with deep farming industry knowledge",
+      "sunitaDesc": "Plant pathologist and sustainable agriculture researcher"
+    },
+    "images": {"modernFarmingAlt": "Modern farming technology"},
+    "contact": {
+      "title": "Get in Touch",
+      "subtitle": "Ready to transform your farming experience? We're here to help you every step of the way",
+      "phoneTitle": "Phone Support",
+      "phoneDesc": "24/7 customer support",
+      "emailTitle": "Email Us",
+      "emailDesc": "Quick response guaranteed",
+      "visitTitle": "Visit Us",
+      "visitDesc": "Main headquarters",
+      "cta": "Contact Us Today"
+    }
+  },
+  "community": {
+    "hero": {
+      "title": "ModGoviya Farmer Community",
+      "subtitle": "Ask questions, share ideas, and connect with fellow farmers across Sri Lanka"
+    },
+    "stats": {
+      "activeFarmers": "Active Farmers",
+      "discussions": "Discussions",
+      "solutions": "Solutions Shared"
+    },
+    "categories": {
+      "title": "Categories",
+      "all": "All Categories",
+      "crops": "Crop Discussions",
+      "livestock": "Livestock",
+      "pest": "Pest & Disease",
+      "equipment": "Equipment & Tools",
+      "organic": "Organic Farming",
+      "market": "Market Prices"
+    },
+    "topContributors": "Top Contributors",
+    "contributor": {"posts": "posts", "points": "pts"},
+    "searchPlaceholder": "Search discussions...",
+    "sort": {
+      "recent": "Most Recent",
+      "popular": "Most Popular",
+      "trending": "Trending",
+      "unanswered": "Unanswered"
+    },
+    "newPost": "New Post",
+    "badges": {"trending": "Trending", "urgent": "Urgent"},
+    "labels": {"replies": "replies", "likes": "likes", "views": "views"},
+    "form": {
+      "title": "Create New Discussion",
+      "discussionTitle": "Discussion Title",
+      "discussionTitlePlaceholder": "What's your question or topic?",
+      "category": "Category",
+      "selectCategory": "Select a category",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe your question or share your knowledge...",
+      "postAnonymously": "Post anonymously",
+      "postButton": "Post Discussion"
+    },
+    "backToDiscussions": "Back to discussions",
+    "reply": {"placeholder": "Share your knowledge or ask for clarification...", "post": "Post Reply"},
+    "guidelines": {
+      "title": "Community Guidelines",
+      "respect": {"title": "Be Respectful", "desc": "Treat all community members with respect and kindness. Share knowledge constructively."},
+      "relevant": {"title": "Stay Relevant", "desc": "Keep discussions focused on farming, agriculture, and related topics that help fellow farmers."},
+      "report": {"title": "Report Issues", "desc": "Help keep our community safe by reporting spam, inappropriate content, or harassment."}
+    }
   }
-} 
+}
