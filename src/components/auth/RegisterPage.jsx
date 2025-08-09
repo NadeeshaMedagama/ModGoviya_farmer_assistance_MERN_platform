@@ -109,31 +109,70 @@ const RegisterPage = () => {
 
     const handleGoogleSuccess = async (credentialResponse) => {
         try {
-            // Send the credential to your backend for verification
+            console.log('Google credential received:', credentialResponse);
+            
+            // Send the OpenID Connect credential to backend for verification
             const response = await axios.post('http://localhost:5000/api/auth/google', {
                 credential: credentialResponse.credential
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
 
-            console.log('Google registration successful:', response.data);
-            alert('Registration successful!');
-
-            localStorage.setItem('userInfo', JSON.stringify(response.data));
-            navigate('/login');
+            console.log('Google OpenID Connect registration successful:', response.data);
+            
+            if (response.data.success) {
+                alert('Registration successful!');
+                localStorage.setItem('userInfo', JSON.stringify(response.data));
+                navigate('/login');
+            } else {
+                alert(response.data.message || 'Registration failed');
+            }
         } catch (error) {
-            console.error('Google registration failed:', error);
+            console.error('Google OpenID Connect registration failed:', error);
             let errorMessage = 'Google registration failed. Please try again.';
 
             if (error.response) {
-                errorMessage = error.response.data.message || errorMessage;
+                // Server responded with error status
+                const errorData = error.response.data;
+                errorMessage = errorData.message || errorData.error || errorMessage;
+                console.error('Server error response:', errorData);
+            } else if (error.request) {
+                // Request was made but no response
+                errorMessage = 'No response from server. Please check if the backend is running.';
+                console.error('No response received:', error.request);
+            } else {
+                // Other errors
+                errorMessage = error.message || errorMessage;
+                console.error('Other error:', error);
             }
 
             alert(errorMessage);
         }
     };
 
-    const handleGoogleError = () => {
-        console.log('Google login failed');
-        alert('Google login failed. Please try again.');
+    const handleGoogleError = (error) => {
+        console.error('Google OpenID Connect registration failed:', error);
+        let errorMessage = 'Google registration failed. Please try again.';
+        
+        if (error && error.error) {
+            switch (error.error) {
+                case 'popup_closed_by_user':
+                    errorMessage = 'Registration cancelled by user.';
+                    break;
+                case 'access_denied':
+                    errorMessage = 'Access denied. Please try again.';
+                    break;
+                case 'immediate_failed':
+                    errorMessage = 'One-tap sign-in failed. Please use the button above.';
+                    break;
+                default:
+                    errorMessage = `Google error: ${error.error}`;
+            }
+        }
+        
+        alert(errorMessage);
     };
 
     const handleSocialLogin = (provider) => {
@@ -474,13 +513,14 @@ const RegisterPage = () => {
                             <GoogleLogin
                                 onSuccess={handleGoogleSuccess}
                                 onError={handleGoogleError}
-                                useOneTap
+                                useOneTap={false}
                                 text="signup_with"
                                 shape="rectangular"
                                 size="large"
                                 width="100%"
                                 theme="filled_blue"
                                 logo_alignment="left"
+                                context="signup"
                             />
                         </GoogleOAuthProvider>
 
@@ -521,7 +561,7 @@ const RegisterPage = () => {
                         <p className="text-gray-600">
                             Already have an account?{' '}
                             <a
-                                href="#"
+                                href="/login"
                                 className="text-green-600 hover:text-green-800 font-semibold transition-colors duration-200"
                             >
                                 Sign in here
