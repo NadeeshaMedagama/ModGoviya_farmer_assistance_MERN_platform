@@ -19,6 +19,7 @@ import WatchDemoPage from "./services/WatchDemoPage";
 import ScheduleDemo from "./components/forum/ScheduleDemo";
 import LearnMore from "./services/LearnMore";
 import Cart from "./pages/Cart";
+import Orders from "./pages/Orders";
 import GetStartedPage from "./services/GetStartedPage";
 import './i18n'; // Import i18n configuration
 
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/schedule" element={<ScheduleDemo />} />
                 <Route path="/learnmore" element={<LearnMore />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/orders" element={<Orders />} />
                 <Route path="/getstart" element={<GetStartedPage />} />
               </Routes>
             </CartProvider>
