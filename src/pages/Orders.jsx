@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'react-toastify';
 import api from '../api/axios';
 import { Calendar, Clock, MapPin, Package, User, Mail, Phone, Globe, X, Truck, Leaf } from 'lucide-react';
+import Footer from "../components/layout/Footer";
 
 const Orders = () => {
     const { user, token, isAuthenticated } = useAuth();
@@ -440,6 +441,7 @@ const Orders = () => {
                     </div>
                 </div>
             )}
+            <Footer />
         </div>
     );
 };
