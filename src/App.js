@@ -21,6 +21,8 @@ import LearnMore from "./services/LearnMore";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import GetStartedPage from "./services/GetStartedPage";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './i18n'; // Import i18n configuration
 
 function App() {
@@ -28,6 +30,18 @@ function App() {
         <Router>
           <LanguageProvider>
             <CartProvider>
+              <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
