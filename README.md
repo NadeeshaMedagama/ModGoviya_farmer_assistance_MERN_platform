@@ -56,6 +56,194 @@ To democratize access to agricultural technology and information, enabling farme
 - **SendGrid** - Email service for notifications
 - **Google Maps API** - Location services
 
+## 🔐 Security Notice
+
+⚠️ **IMPORTANT**: This repository contains example configuration files with placeholder values. Before deploying to any environment, ensure you:
+
+1. **Remove all sensitive data** from committed files
+2. **Never commit** actual credentials, API keys, or secrets to version control
+3. **Use environment variables** or secure secret management systems
+4. **Generate strong, unique passwords** for all services
+5. **Review all configuration files** before deployment
+
+### Sensitive Data to Configure:
+- Database credentials and connection strings
+- JWT secrets and encryption keys
+- Third-party API keys (OpenWeatherMap, Cloudinary, SendGrid, Google Maps)
+- Email service credentials
+- OAuth/OIDC client secrets
+- SSL certificates and private keys
+
+## 🗃️ Database Setup
+
+### MongoDB Database Creation Script
+
+Before running the application, you need to create the MongoDB database and initial collections. Run the following scripts:
+
+#### 1. Database Initialization Script (`scripts/init-database.js`)
+
+```javascript
+// Connect to MongoDB and create the ModGoviya database
+use modgoviya
+
+// Create collections with validation schemas
+db.createCollection("users", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name", "email", "password"],
+      properties: {
+        name: { bsonType: "string", minLength: 2, maxLength: 100 },
+        email: { bsonType: "string", pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" },
+        password: { bsonType: "string", minLength: 6 },
+        role: { enum: ["farmer", "expert", "admin"], default: "farmer" },
+        location: {
+          bsonType: "object",
+          properties: {
+            district: { bsonType: "string" },
+            coordinates: {
+              type: { enum: ["Point"] },
+              coordinates: { bsonType: "array", minItems: 2, maxItems: 2 }
+            }
+          }
+        },
+        createdAt: { bsonType: "date" },
+        updatedAt: { bsonType: "date" }
+      }
+    }
+  }
+})
+
+db.createCollection("crops", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name", "farmer", "variety", "plantingDate"],
+      properties: {
+        name: { bsonType: "string", minLength: 1 },
+        variety: { bsonType: "string" },
+        plantingDate: { bsonType: "date" },
+        expectedHarvest: { bsonType: "date" },
+        area: { bsonType: "number", minimum: 0 },
+        status: { enum: ["planted", "growing", "harvested", "failed"] }
+      }
+    }
+  }
+})
+
+db.createCollection("products", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["title", "seller", "price", "category"],
+      properties: {
+        title: { bsonType: "string", minLength: 1 },
+        price: { bsonType: "number", minimum: 0 },
+        category: { enum: ["seeds", "fertilizers", "equipment", "produce", "services"] },
+        availability: { enum: ["available", "sold", "reserved"] }
+      }
+    }
+  }
+})
+
+db.createCollection("forumposts", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["title", "content", "author"],
+      properties: {
+        title: { bsonType: "string", minLength: 5 },
+        content: { bsonType: "string", minLength: 10 },
+        tags: { bsonType: "array", items: { bsonType: "string" } },
+        likes: { bsonType: "number", minimum: 0 }
+      }
+    }
+  }
+})
+
+// Create indexes for better performance
+db.users.createIndex({ "email": 1 }, { unique: true })
+db.users.createIndex({ "location.coordinates": "2dsphere" })
+db.crops.createIndex({ "farmer": 1, "plantingDate": -1 })
+db.products.createIndex({ "category": 1, "availability": 1 })
+db.products.createIndex({ "seller": 1 })
+db.forumposts.createIndex({ "author": 1, "createdAt": -1 })
+db.forumposts.createIndex({ "tags": 1 })
+
+print("ModGoviya database initialized successfully!")
+```
+
+#### 2. Sample Data Script (`scripts/seed-data.js`)
+
+```javascript
+// Insert sample data for development/testing
+use modgoviya
+
+// Sample user data (passwords should be hashed in production)
+db.users.insertMany([
+  {
+    name: "John Farmer",
+    email: "john@example.com",
+    password: "$2a$10$example_hashed_password", // Hash this properly
+    role: "farmer",
+    location: {
+      district: "Colombo",
+      coordinates: {
+        type: "Point",
+        coordinates: [79.8612, 6.9271]
+      }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    name: "Dr. Agricultural Expert",
+    email: "expert@example.com",
+    password: "$2a$10$example_hashed_password", // Hash this properly
+    role: "expert",
+    location: {
+      district: "Kandy",
+      coordinates: {
+        type: "Point",
+        coordinates: [80.6337, 7.2906]
+      }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  }
+])
+
+// Sample crop categories
+db.cropCategories = db.collection('cropCategories')
+db.cropCategories.insertMany([
+  { name: "Rice", type: "cereal", seasons: ["Yala", "Maha"] },
+  { name: "Tea", type: "beverage", seasons: ["year-round"] },
+  { name: "Coconut", type: "plantation", seasons: ["year-round"] },
+  { name: "Vegetables", type: "horticulture", seasons: ["year-round"] }
+])
+
+print("Sample data inserted successfully!")
+```
+
+### Running Database Scripts
+
+```bash
+# Navigate to project root
+cd modgoviya
+
+# Create the scripts directory
+mkdir -p scripts
+
+# Make scripts executable
+chmod +x scripts/*.js
+
+# Run database initialization
+mongosh < scripts/init-database.js
+
+# Run sample data insertion (optional, for development)
+mongosh < scripts/seed-data.js
+```
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -120,6 +308,9 @@ To democratize access to agricultural technology and information, enabling farme
    # Start MongoDB service
    mongod
    
+   # Run database initialization scripts
+   mongosh < scripts/init-database.js
+   
    # Run database migrations (if applicable)
    cd backend
    npm run migrate
@@ -137,9 +328,9 @@ To democratize access to agricultural technology and information, enabling farme
    ```
 
 6. **Access the application**
-    - Frontend: http://localhost:3000
-    - Backend API: http://localhost:5000
-    - API Documentation: http://localhost:5000/api-docs
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:5000
+   - API Documentation: http://localhost:5000/api-docs
 
 ## 📁 Project Structure
 
@@ -194,6 +385,9 @@ ModGoviya/
 │   │   └── index.js
 │   ├── package.json
 │   └── tailwind.config.js
+├── scripts/
+│   ├── init-database.js
+│   └── seed-data.js
 ├── docs/
 ├── tests/
 ├── README.md
@@ -277,6 +471,186 @@ npm run build
 cd backend
 npm run build
 ```
+
+### Tomcat Server Deployment
+
+#### Prerequisites for Tomcat Deployment
+- Apache Tomcat 9.0 or higher
+- Java 11 or higher
+- Node.js build environment
+
+#### Step 1: Prepare Application for Tomcat
+
+1. **Build the React Frontend**
+   ```bash
+   cd frontend
+   npm run build
+   ```
+
+2. **Create WAR Structure**
+   ```bash
+   # Create deployment directory
+   mkdir -p deploy/modgoviya
+   
+   # Copy built React app
+   cp -r frontend/build/* deploy/modgoviya/
+   
+   # Create WEB-INF directory
+   mkdir -p deploy/modgoviya/WEB-INF
+   ```
+
+3. **Create web.xml for Tomcat** (`deploy/modgoviya/WEB-INF/web.xml`)
+   ```xml
+   <?xml version="1.0" encoding="UTF-8"?>
+   <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+            http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+            version="4.0">
+     
+     <display-name>ModGoviya</display-name>
+     
+     <!-- Default servlet for static content -->
+     <servlet-mapping>
+       <servlet-name>default</servlet-name>
+       <url-pattern>*.js</url-pattern>
+     </servlet-mapping>
+     
+     <servlet-mapping>
+       <servlet-name>default</servlet-name>
+       <url-pattern>*.css</url-pattern>
+     </servlet-mapping>
+     
+     <servlet-mapping>
+       <servlet-name>default</servlet-name>
+       <url-pattern>*.png</url-pattern>
+     </servlet-mapping>
+     
+     <servlet-mapping>
+       <servlet-name>default</servlet-name>
+       <url-pattern>*.jpg</url-pattern>
+     </servlet-mapping>
+     
+     <!-- Route all other requests to index.html for React Router -->
+     <error-page>
+       <error-code>404</error-code>
+       <location>/index.html</location>
+     </error-page>
+     
+   </web-app>
+   ```
+
+#### Step 2: Deploy Backend API Server
+
+The Node.js backend needs to run separately from Tomcat. Choose one of these approaches:
+
+**Option A: Run Node.js Backend on Different Port**
+```bash
+# Start backend on port 8080 (or different from Tomcat)
+cd backend
+PORT=8080 npm start
+
+# Update frontend API URL to point to backend
+# In your React build, ensure REACT_APP_API_URL=http://your-server:8080/api
+```
+
+**Option B: Use Reverse Proxy (Recommended)**
+
+Configure Apache HTTP Server or Nginx as reverse proxy:
+
+**Apache httpd.conf:**
+```apache
+<VirtualHost *:80>
+    ServerName yourdomain.com
+    
+    # Serve React app from Tomcat
+    ProxyPass /api/ http://localhost:8080/api/
+    ProxyPassReverse /api/ http://localhost:8080/api/
+    
+    # All other requests go to Tomcat (React app)
+    ProxyPass / http://localhost:8080/modgoviya/
+    ProxyPassReverse / http://localhost:8080/modgoviya/
+</VirtualHost>
+```
+
+#### Step 3: Create WAR File and Deploy
+
+1. **Create WAR file**
+   ```bash
+   cd deploy
+   jar -cvf modgoviya.war -C modgoviya/ .
+   ```
+
+2. **Deploy to Tomcat**
+   ```bash
+   # Copy WAR to Tomcat webapps directory
+   cp modgoviya.war $CATALINA_HOME/webapps/
+   
+   # Or use Tomcat Manager (if enabled)
+   # Upload via http://localhost:8080/manager/html
+   ```
+
+3. **Start Services**
+   ```bash
+   # Start MongoDB
+   mongod --config /etc/mongod.conf
+   
+   # Start Node.js backend
+   cd backend
+   NODE_ENV=production npm start
+   
+   # Start Tomcat
+   $CATALINA_HOME/bin/startup.sh
+   ```
+
+#### Step 4: Production Environment Configuration
+
+1. **Update Environment Variables for Production**
+   ```bash
+   # Backend production .env
+   NODE_ENV=production
+   MONGODB_URI=mongodb://localhost:27017/modgoviya_prod
+   JWT_SECRET=your_production_jwt_secret
+   PORT=8080
+   
+   # Ensure all API keys are configured
+   WEATHER_API_KEY=your_actual_api_key
+   CLOUDINARY_API_KEY=your_actual_api_key
+   # ... other production credentials
+   ```
+
+2. **Configure Database for Production**
+   ```bash
+   # Create production database
+   mongosh --eval "use modgoviya_prod" < scripts/init-database.js
+   ```
+
+3. **Set up SSL/HTTPS (Recommended)**
+   - Configure SSL certificate in Tomcat or reverse proxy
+   - Update all URLs to use HTTPS
+   - Enable secure cookie settings
+
+#### Troubleshooting Tomcat Deployment
+
+**Common Issues:**
+
+1. **404 errors for React routes:**
+   - Ensure `web.xml` error-page configuration is correct
+   - Verify React Router basename matches deployment path
+
+2. **API calls failing:**
+   - Check CORS configuration in backend
+   - Verify API URL configuration in frontend
+   - Ensure backend server is running and accessible
+
+3. **Static assets not loading:**
+   - Check servlet-mapping in `web.xml`
+   - Verify build assets are in correct directory
+
+**Logs to Check:**
+- Tomcat logs: `$CATALINA_HOME/logs/catalina.out`
+- Backend logs: Check your Node.js application logs
+- MongoDB logs: `/var/log/mongodb/mongod.log`
 
 ### Docker Deployment
 ```bash
