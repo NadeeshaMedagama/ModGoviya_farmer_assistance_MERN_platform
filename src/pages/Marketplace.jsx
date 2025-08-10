@@ -18,12 +18,14 @@ import { Search,
     Users,
     TrendingUp,
     Globe,
-    ShoppingCart
+    ShoppingCart,
+    Package
 }
     from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
+import PurchaseModal from "../components/PurchaseModal";
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
@@ -36,6 +38,7 @@ const Marketplace = () => {
     const [sortBy, setSortBy] = useState('newest');
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showPostForm, setShowPostForm] = useState(false);
+    const [showPurchaseModal, setShowPurchaseModal] = useState(false);
     const { addToCart } = useCart();
     const { t } = useTranslation();
 
@@ -208,6 +211,16 @@ const Marketplace = () => {
                                     className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center">
                                     <ShoppingCart className="w-4 h-4 mr-2" />
                                     {t('marketplace.addToCart')}
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        onClose();
+                                        setSelectedProduct(product);
+                                        setShowPurchaseModal(true);
+                                    }}
+                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center">
+                                    <Package className="w-4 h-4 mr-2" />
+                                    Purchase Now
                                 </button>
                                 <div className="grid grid-cols-2 gap-2">
                                     <button className="border border-gray-300 hover:bg-gray-50 py-2 px-4 rounded-lg flex items-center justify-center">
@@ -516,6 +529,18 @@ const Marketplace = () => {
                     onClose={() => setSelectedProduct(null)}
                 />
             )}
+
+            {/* Purchase Modal */}
+            <PurchaseModal
+                show={showPurchaseModal}
+                onHide={() => setShowPurchaseModal(false)}
+                product={selectedProduct}
+                onSuccess={(order) => {
+                    console.log('Order created:', order);
+                    // You can add navigation to orders page here
+                }}
+            />
+
             <Footer/>
         </div>
     );
