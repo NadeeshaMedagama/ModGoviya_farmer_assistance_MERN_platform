@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import api from '../api/axios';
 import { Calendar, Clock, MapPin, Package, User, Mail, Phone, Globe, X, Truck, Leaf } from 'lucide-react';
 import Footer from "../components/layout/Footer";
+import Header from "../components/layout/Header";
 
 const Orders = () => {
     const { user, token, isAuthenticated } = useAuth();
@@ -173,7 +174,11 @@ const Orders = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-yellow-50 py-8">
-            <div className="container mx-auto px-4 max-w-7xl">
+
+            <Header />
+
+            <div className="container mx-auto px-4 max-w-7xl py-16">
+
                 {/* Header with Agricultural Theme */}
                 <div className="text-center mb-8">
                     <div className="flex items-center justify-center mb-4">
