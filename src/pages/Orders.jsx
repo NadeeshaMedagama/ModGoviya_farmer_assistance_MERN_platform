@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Badge, Modal, Form, Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import api from '../api/axios';
 import { Calendar, Clock, MapPin, Package, User, Mail, Phone, Globe } from 'lucide-react';
 
 const Orders = () => {
-    const { user, token } = useAuth();
+    const { user, token, isAuthenticated } = useAuth();
     
     // Set axios authorization header
-    if (token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    }
+    useEffect(() => {
+        if (token) {
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        }
+    }, [token]);
     
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -22,17 +24,30 @@ const Orders = () => {
     const [deliveryTimes, setDeliveryTimes] = useState([]);
 
     useEffect(() => {
-        fetchOrders();
-        fetchDeliveryOptions();
-    }, []);
+        if (isAuthenticated) {
+            fetchOrders();
+            fetchDeliveryOptions();
+        } else {
+            setLoading(false);
+            setError('Please login to view your orders');
+        }
+    }, [isAuthenticated]);
 
     const fetchOrders = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('/api/orders/my-orders');
-            setOrders(response.data.data);
+            setError(null);
+            const response = await api.get('/orders/my-orders');
+            setOrders(response.data.data || []);
         } catch (error) {
-            setError('Failed to fetch orders');
+            console.error('Error fetching orders:', error);
+            if (error.response?.status === 401) {
+                setError('Please login to view your orders');
+            } else if (error.response?.status === 404) {
+                setError('Orders endpoint not found');
+            } else {
+                setError('Failed to fetch orders. Please try again later.');
+            }
             toast.error('Failed to fetch orders');
         } finally {
             setLoading(false);
@@ -42,13 +57,14 @@ const Orders = () => {
     const fetchDeliveryOptions = async () => {
         try {
             const [districtsRes, timesRes] = await Promise.all([
-                axios.get('/api/orders/delivery/districts'),
-                axios.get('/api/orders/delivery/times')
+                api.get('/orders/delivery/districts'),
+                api.get('/orders/delivery/times')
             ]);
-            setDistricts(districtsRes.data.data);
-            setDeliveryTimes(timesRes.data.data);
+            setDistricts(districtsRes.data.data || []);
+            setDeliveryTimes(timesRes.data.data || []);
         } catch (error) {
             console.error('Failed to fetch delivery options:', error);
+            // Don't show error for delivery options as they're not critical
         }
     };
 
@@ -69,16 +85,37 @@ const Orders = () => {
     };
 
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
+        if (!dateString) return 'N/A';
+        try {
+            return new Date(dateString).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        } catch (error) {
+            return 'Invalid Date';
+        }
     };
 
     const formatTime = (timeString) => {
-        return timeString;
+        return timeString || 'N/A';
     };
+
+    // Show login prompt if not authenticated
+    if (!isAuthenticated) {
+        return (
+            <Container className="py-5">
+                <div className="text-center">
+                    <Package size={64} className="text-muted mb-3" />
+                    <h5 className="text-muted">Please Login</h5>
+                    <p className="text-muted">You need to be logged in to view your orders.</p>
+                    <Button variant="primary" href="/login">
+                        Login
+                    </Button>
+                </div>
+            </Container>
+        );
+    }
 
     if (loading) {
         return (
@@ -95,7 +132,14 @@ const Orders = () => {
     if (error) {
         return (
             <Container className="py-5">
-                <Alert variant="danger">{error}</Alert>
+                <Alert variant="danger">
+                    {error}
+                    <div className="mt-3">
+                        <Button variant="outline-danger" onClick={fetchOrders}>
+                            Try Again
+                        </Button>
+                    </div>
+                </Alert>
             </Container>
         );
     }
@@ -118,7 +162,7 @@ const Orders = () => {
                                     <div className="d-flex align-items-center mb-3">
                                         <User className="me-2 text-primary" size={20} />
                                         <strong>Name:</strong>
-                                        <span className="ms-2">{user?.name || 'N/A'}</span>
+                                        <span className="ms-2">{user?.name || user?.fullName || 'N/A'}</span>
                                     </div>
                                     <div className="d-flex align-items-center mb-3">
                                         <Mail className="me-2 text-primary" size={20} />
@@ -130,7 +174,7 @@ const Orders = () => {
                                     <div className="d-flex align-items-center mb-3">
                                         <Phone className="me-2 text-primary" size={20} />
                                         <strong>Contact:</strong>
-                                        <span className="ms-2">{user?.contactNumber || 'N/A'}</span>
+                                        <span className="ms-2">{user?.contactNumber || user?.mobile || 'N/A'}</span>
                                     </div>
                                     <div className="d-flex align-items-center mb-3">
                                         <Globe className="me-2 text-primary" size={20} />
@@ -167,29 +211,33 @@ const Orders = () => {
                             ) : (
                                 <Row>
                                     {orders.map((order) => (
-                                        <Col key={order._id} lg={6} className="mb-4">
+                                        <Col key={order._id || order.id} lg={6} className="mb-4">
                                             <Card className="h-100 shadow-sm order-card">
                                                 <Card.Body>
                                                     <div className="d-flex justify-content-between align-items-start mb-3">
                                                         <h6 className="card-title mb-0">
-                                                            Order #{order.orderNumber}
+                                                            Order #{order.orderNumber || 'N/A'}
                                                         </h6>
                                                         {getStatusBadge(order.status)}
                                                     </div>
                                                     
-                                                    {order.items.map((item, index) => (
+                                                    {order.items && order.items.length > 0 ? order.items.map((item, index) => (
                                                         <div key={index} className="mb-3">
                                                             <div className="d-flex align-items-center">
                                                                 <img 
-                                                                    src={item.product?.image} 
-                                                                    alt={item.product?.title}
+                                                                    src={item.product?.image || '/placeholder-image.png'} 
+                                                                    alt={item.product?.title || 'Product'}
                                                                     className="rounded me-3"
                                                                     style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                                                                    onError={(e) => {
+                                                                        e.target.src = '/placeholder-image.png';
+                                                                        e.target.onerror = null;
+                                                                    }}
                                                                 />
                                                                 <div className="flex-grow-1">
-                                                                    <h6 className="mb-1">{item.product?.title}</h6>
+                                                                    <h6 className="mb-1">{item.product?.title || 'Product Title'}</h6>
                                                                     <p className="text-muted mb-1">
-                                                                        Quantity: {item.quantity} × ${item.price}
+                                                                        Quantity: {item.quantity || 0} × ${item.price || 0}
                                                                     </p>
                                                                     <p className="text-muted mb-0">
                                                                         Seller: {item.seller?.name || 'N/A'}
@@ -197,7 +245,11 @@ const Orders = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    ))}
+                                                    )) : (
+                                                        <div className="text-muted">
+                                                            <p>No items found for this order</p>
+                                                        </div>
+                                                    )}
                                                     
                                                     <hr />
                                                     
@@ -215,11 +267,11 @@ const Orders = () => {
                                                         <div className="col-6">
                                                             <div className="d-flex align-items-center mb-2">
                                                                 <MapPin size={16} className="me-2" />
-                                                                <span>{order.deliveryLocation}</span>
+                                                                <span>{order.deliveryLocation || 'N/A'}</span>
                                                             </div>
                                                             <div className="d-flex align-items-center">
                                                                 <strong className="text-dark">
-                                                                    Total: ${order.totalAmount}
+                                                                    Total: ${order.totalAmount || 0}
                                                                 </strong>
                                                             </div>
                                                         </div>
@@ -273,41 +325,49 @@ const Orders = () => {
                                     <p><strong>Status:</strong> {getStatusBadge(selectedOrder.status)}</p>
                                     <p><strong>Purchase Date:</strong> {formatDate(selectedOrder.purchaseDate)}</p>
                                     <p><strong>Delivery Time:</strong> {formatTime(selectedOrder.deliveryTime)}</p>
-                                    <p><strong>Delivery Location:</strong> {selectedOrder.deliveryLocation}</p>
-                                    <p><strong>Total Amount:</strong> ${selectedOrder.totalAmount}</p>
+                                    <p><strong>Delivery Location:</strong> {selectedOrder.deliveryLocation || 'N/A'}</p>
+                                    <p><strong>Total Amount:</strong> ${selectedOrder.totalAmount || 0}</p>
                                 </Col>
                                 <Col md={6}>
                                     <h6>Shipping Address</h6>
-                                    <p>{selectedOrder.shippingAddress?.name}</p>
-                                    <p>{selectedOrder.shippingAddress?.address}</p>
-                                    <p>{selectedOrder.shippingAddress?.district}, {selectedOrder.shippingAddress?.province}</p>
-                                    <p>Phone: {selectedOrder.shippingAddress?.phone}</p>
+                                    <p>{selectedOrder.shippingAddress?.name || 'N/A'}</p>
+                                    <p>{selectedOrder.shippingAddress?.address || 'N/A'}</p>
+                                    <p>{selectedOrder.shippingAddress?.district || 'N/A'}, {selectedOrder.shippingAddress?.province || 'N/A'}</p>
+                                    <p>Phone: {selectedOrder.shippingAddress?.phone || 'N/A'}</p>
                                 </Col>
                             </Row>
                             
                             <hr />
                             
                             <h6>Order Items</h6>
-                            {selectedOrder.items.map((item, index) => (
+                            {selectedOrder.items && selectedOrder.items.length > 0 ? selectedOrder.items.map((item, index) => (
                                 <div key={index} className="d-flex align-items-center mb-3 p-3 border rounded">
                                     <img 
-                                        src={item.product?.image} 
-                                        alt={item.product?.title}
+                                        src={item.product?.image || '/placeholder-image.png'} 
+                                        alt={item.product?.title || 'Product'}
                                         className="rounded me-3"
                                         style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                                        onError={(e) => {
+                                            e.target.src = '/placeholder-image.png';
+                                            e.target.onerror = null;
+                                        }}
                                     />
                                     <div className="flex-grow-1">
-                                        <h6 className="mb-1">{item.product?.title}</h6>
-                                        <p className="text-muted mb-1">{item.product?.description}</p>
+                                        <h6 className="mb-1">{item.product?.title || 'Product Title'}</h6>
+                                        <p className="text-muted mb-1">{item.product?.description || 'No description available'}</p>
                                         <p className="mb-1">
-                                            <strong>Quantity:</strong> {item.quantity} × ${item.price}
+                                            <strong>Quantity:</strong> {item.quantity || 0} × ${item.price || 0}
                                         </p>
                                         <p className="mb-0">
-                                            <strong>Seller:</strong> {item.seller?.name} ({item.seller?.email})
+                                            <strong>Seller:</strong> {item.seller?.name || 'N/A'} ({item.seller?.email || 'N/A'})
                                         </p>
                                     </div>
                                 </div>
-                            ))}
+                            )) : (
+                                <div className="text-muted">
+                                    <p>No items found for this order</p>
+                                </div>
+                            )}
                             
                             {selectedOrder.message && (
                                 <div className="mt-3">
