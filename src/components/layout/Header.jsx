@@ -6,7 +6,8 @@ import {
     Leaf,
     Globe,
     ShoppingCart,
-    LogOut
+    LogOut,
+    Package
 } from 'lucide-react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext';
@@ -208,6 +209,14 @@ const Header = () => {
 
                                 {isUserDropdownOpen && (
                                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+                                        <Link
+                                            to="/orders"
+                                            className="w-full flex items-center space-x-3 px-4 py-2 text-left hover:bg-gray-50 transition-colors duration-150 text-gray-700"
+                                            onClick={() => setIsUserDropdownOpen(false)}
+                                        >
+                                            <Package className="w-4 h-4" />
+                                            <span className="font-medium">My Orders</span>
+                                        </Link>
                                         <button
                                             onClick={handleLogout}
                                             className="w-full flex items-center space-x-3 px-4 py-2 text-left hover:bg-gray-50 transition-colors duration-150 text-gray-700"
