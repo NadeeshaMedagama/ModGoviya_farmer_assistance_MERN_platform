@@ -1,11 +1,9 @@
 import React, {createContext, useContext, useState, useEffect} from 'react';
-import axios from 'axios';
+import api from '../utils/axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const CartContext = createContext();
-
-const token = localStorage.getItem('token');
 
 export const CartProvider = ({children}) => {
     const [cart, setCart] = useState({items: []});
@@ -15,11 +13,7 @@ export const CartProvider = ({children}) => {
     const fetchCart = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('http://localhost:5000/api/cart', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const response = await api.get('/cart');
             setCart(response.data);
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to fetch cart');
@@ -31,14 +25,9 @@ export const CartProvider = ({children}) => {
     const addToCart = async (productId, quantity = 1) => {
         try {
             setLoading(true);
-            const token = localStorage.getItem('token');
-            const response = await axios.post('http://localhost:5000/api/cart', {
+            const response = await api.post('/cart', {
                 productId,
                 quantity
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
             });
             setCart(response.data);
             toast.success('Item added to cart!');
@@ -53,14 +42,9 @@ export const CartProvider = ({children}) => {
     const updateCartItem = async (itemId, quantity) => {
         try {
             setLoading(true);
-            const response = await axios.put(`http://localhost:5000/api/cart/${itemId}`, {
-                    quantity,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+            const response = await api.put(`/cart/${itemId}`, {
+                quantity,
+            });
             setCart(response.data);
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to update cart');
@@ -70,22 +54,16 @@ export const CartProvider = ({children}) => {
     };
 
     const removeFromCart = async (itemId) => {
-            try {
-                setLoading(true);
-                const response = await axios.delete(`http://localhost:5000/api/cart/${itemId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                setCart(response.data);
-            } catch
-                (err) {
-                setError(err.response?.data?.message || 'Failed to remove from cart');
-            } finally {
-                setLoading(false);
-            }
+        try {
+            setLoading(true);
+            const response = await api.delete(`/cart/${itemId}`);
+            setCart(response.data);
+        } catch (err) {
+            setError(err.response?.data?.message || 'Failed to remove from cart');
+        } finally {
+            setLoading(false);
         }
-    ;
+    };
 
     useEffect(() => {
         fetchCart();
