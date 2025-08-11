@@ -109,7 +109,7 @@ const ModGoviyaHomepage = () => {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative bg-gradient-to-r from-green-50 to-emerald-50 py-20">
+            <section className="relative bg-gradient-to-r from-green-50 to-emerald-50 py-40">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-emerald-600/10"></div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
                     <div className="text-center">
