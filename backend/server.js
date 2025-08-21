@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
+const https = require('https');
+const fs = require('fs');
 const subscribeRouter = require('./routes/subscribe');
 
 // Security middleware imports
@@ -123,11 +125,45 @@ mongoose.connect(process.env.MONGODB_URI, {
 })
     .then(() => {
         console.log('MongoDB connected');
-        const server = app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
-            console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-            console.log('Security measures: ✅ Enabled');
-        });
+        const useHttps = process.env.HTTPS_ENABLED === 'true';
+        let server;
+        if (useHttps) {
+            const keyPath = process.env.SSL_KEY_PATH;
+            const certPath = process.env.SSL_CERT_PATH;
+            if (keyPath && certPath) {
+                try {
+                    const credentials = {
+                        key: fs.readFileSync(keyPath),
+                        cert: fs.readFileSync(certPath)
+                    };
+                    server = https.createServer(credentials, app).listen(PORT, () => {
+                        console.log(`HTTPS server running on port ${PORT}`);
+                        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+                        console.log('Security measures: ✅ Enabled (HTTPS)');
+                    });
+                } catch (e) {
+                    console.error('Failed to read SSL certificate or key. Falling back to HTTP.', e.message);
+                    server = app.listen(PORT, () => {
+                        console.log(`Server running on port ${PORT}`);
+                        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+                        console.log('Security measures: ✅ Enabled');
+                    });
+                }
+            } else {
+                console.warn('HTTPS_ENABLED is true but SSL_KEY_PATH/SSL_CERT_PATH not provided. Falling back to HTTP.');
+                server = app.listen(PORT, () => {
+                    console.log(`Server running on port ${PORT}`);
+                    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+                    console.log('Security measures: ✅ Enabled');
+                });
+            }
+        } else {
+            server = app.listen(PORT, () => {
+                console.log(`Server running on port ${PORT}`);
+                console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+                console.log('Security measures: ✅ Enabled');
+            });
+        }
 
         // Handle server errors
         server.on('error', (error) => {
