@@ -198,6 +198,9 @@ const extractStandardClaims = (payload) => {
 // Generate OIDC-compliant JWT for application use
 const generateAppToken = (user, claims) => {
     const jwt = require('jsonwebtoken');
+    if (!process.env.JWT_SECRET) {
+        throw new Error('JWT_SECRET is not configured');
+    }
     
     const tokenPayload = {
         // Standard JWT claims
