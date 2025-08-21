@@ -31,7 +31,7 @@ router.post('/register', async (req, res) => {
         });
 
         // Generate token
-        const token = generateToken(user._id);
+        const token = generateToken(user);
 
         res.status(201).json({
             success: true,
