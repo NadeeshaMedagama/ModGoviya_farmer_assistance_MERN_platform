@@ -21,3 +21,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Backend secrets
+backend/.env
+backend/*.key
+backend/*.pem
+backend/config/secrets.json
