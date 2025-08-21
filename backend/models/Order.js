@@ -11,6 +11,10 @@ const OrderSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    buyerUsername: {
+        type: String,
+        trim: true
+    },
     items: [{
         product: {
             type: mongoose.Schema.Types.ObjectId,
@@ -97,7 +101,11 @@ const OrderSchema = new mongoose.Schema({
         enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
         default: 'pending'
     },
-    notes: String
+    notes: String,
+    paymentProof: {
+        type: String,
+        default: ''
+    }
 }, {
     timestamps: true
 });
