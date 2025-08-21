@@ -16,6 +16,12 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
     const [error, setError] = useState(null);
     const [districts, setDistricts] = useState([]);
     const [deliveryTimes, setDeliveryTimes] = useState([]);
+    const [paymentMethod, setPaymentMethod] = useState('bank_transfer');
+    const [showPaymentProof, setShowPaymentProof] = useState(false);
+    const [orderId, setOrderId] = useState(null);
+    const [paymentProof, setPaymentProof] = useState('');
+    const [paymentLoading, setPaymentLoading] = useState(false);
+    const [paymentError, setPaymentError] = useState(null);
 
     useEffect(() => {
         if (show) {
@@ -97,14 +103,17 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
                 purchaseDate: formData.purchaseDate,
                 deliveryTime: formData.deliveryTime,
                 deliveryLocation: formData.deliveryLocation,
-                message: formData.message
+                message: formData.message,
+                paymentMethod
             };
 
             const response = await axios.post('/api/orders/create', orderData);
             
             toast.success('Order created successfully!');
-            onSuccess(response.data.data);
-            onHide();
+            setOrderId(response.data.data._id);
+            setShowPaymentProof(true);
+            // onSuccess(response.data.data); // Only call after payment proof
+            // onHide();
             
             // Reset form
             setFormData({
@@ -120,6 +129,25 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
             setError(error.response?.data?.message || 'Failed to create order');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handlePaymentProofSubmit = async (e) => {
+        e.preventDefault();
+        setPaymentLoading(true);
+        setPaymentError(null);
+        try {
+            await axios.post(`/api/orders/${orderId}/payment-proof`, { paymentProof });
+            toast.success('Payment proof submitted!');
+            setShowPaymentProof(false);
+            setPaymentProof('');
+            setOrderId(null);
+            if (onSuccess) onSuccess();
+            if (onHide) onHide();
+        } catch (error) {
+            setPaymentError(error.response?.data?.message || 'Failed to submit payment proof');
+        } finally {
+            setPaymentLoading(false);
         }
     };
 
@@ -312,6 +340,37 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
                     </Button>
                 </Modal.Footer>
             </Form>
+            {showPaymentProof && (
+                <Form onSubmit={handlePaymentProofSubmit} className="mt-4">
+                    <Alert variant="info">
+                        <strong>Bank Transfer Instructions:</strong><br />
+                        Please transfer the total amount to the following bank account:<br />
+                        <strong>Bank:</strong> [Your Bank Name]<br />
+                        <strong>Account Name:</strong> [Account Name]<br />
+                        <strong>Account Number:</strong> [Account Number]<br />
+                        <strong>Reference:</strong> Use your Order ID as reference.<br />
+                        <br />
+                        After completing the transfer, enter your payment reference number below and submit.
+                    </Alert>
+                    {paymentError && (
+                        <Alert variant="danger" onClose={() => setPaymentError(null)} dismissible>
+                            {paymentError}
+                        </Alert>
+                    )}
+                    <Form.Group className="mb-3">
+                        <Form.Label>Payment Reference Number</Form.Label>
+                        <Form.Control
+                            type="text"
+                            value={paymentProof}
+                            onChange={e => setPaymentProof(e.target.value)}
+                            required
+                        />
+                    </Form.Group>
+                    <Button type="submit" variant="primary" disabled={paymentLoading || !paymentProof}>
+                        {paymentLoading ? 'Submitting...' : 'Submit Payment Proof'}
+                    </Button>
+                </Form>
+            )}
         </Modal>
     );
 };
