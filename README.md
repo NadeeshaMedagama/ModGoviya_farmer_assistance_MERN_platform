@@ -695,9 +695,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👥 Team
 
 - **Project Lead**: [Nadeesha Medagama](https://github.com/NadeeshaMedagama)
-- **Backend Developer**: [Team Member](https://github.com/teammember)
-- **Frontend Developer**: [Team Member](https://github.com/teammember)
-- **UI/UX Designer**: [Team Member](https://github.com/teammember)
+- **Backend Developer**: [Nadeesha Medagama](https://github.com/NadeeshaMedagama)
+- **Frontend Developer**: [Nadeesha Medagama](https://github.com/NadeeshaMedagama)
 
 ## 🙏 Acknowledgments
 
@@ -708,9 +707,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Documentation**: [Wiki](https://github.com/yourusername/modgoviya/wiki)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/modgoviya/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/modgoviya/discussions)
+- **Documentation**: [Wiki](https://github.com/NadeeshaMedagama/ModGoviya_farmer_assistance_MERN_platform/wiki)
+- **Issues**: [GitHub Issues](https://github.com/NadeeshaMedagama/ModGoviya_farmer_assistance_MERN_platform/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/NadeeshaMedagama/ModGoviya_farmer_assistance_MERN_platform/discussions)
 - **Email**: nadeeshamedagama@gmail.com
 
 ## 🔮 Roadmap
