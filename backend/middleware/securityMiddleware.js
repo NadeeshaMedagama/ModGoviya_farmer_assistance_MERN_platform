@@ -47,7 +47,13 @@ const securityHeaders = helmet({
 
 // XSS protection middleware (custom implementation since xss-clean is deprecated)
 const xssProtection = (req, res, next) => {
-    const sanitizeData = (data) => {
+    // Skip sanitization for auth routes to avoid breaking OIDC tokens and passwords
+    if (req.path && req.path.startsWith('/api/auth')) {
+        return next();
+    }
+
+    const sanitizeData = (data, keyPath = '') => {
+        const exemptKeys = new Set(['password', 'credential', 'accessToken', 'id_token', 'token', 'refresh_token']);
         if (typeof data === 'string') {
             // Remove potentially dangerous characters and scripts
             return data
@@ -60,7 +66,11 @@ const xssProtection = (req, res, next) => {
         if (typeof data === 'object' && data !== null) {
             const sanitized = {};
             for (const [key, value] of Object.entries(data)) {
-                sanitized[key] = sanitizeData(value);
+                if (exemptKeys.has(key)) {
+                    sanitized[key] = value;
+                } else {
+                    sanitized[key] = sanitizeData(value, keyPath ? `${keyPath}.${key}` : key);
+                }
             }
             return sanitized;
         }
@@ -128,14 +138,24 @@ const corsOptions = {
 
 // Input validation middleware
 const validateInput = (req, res, next) => {
+    // Skip sanitization for auth routes to avoid breaking OIDC tokens and passwords
+    if (req.path && req.path.startsWith('/api/auth')) {
+        return next();
+    }
+
     const sanitizeData = (data) => {
+        const exemptKeys = new Set(['password', 'credential', 'accessToken', 'id_token', 'token', 'refresh_token']);
         if (typeof data === 'string') {
             return validator.escape(validator.trim(data));
         }
         if (typeof data === 'object' && data !== null) {
             const sanitized = {};
             for (const [key, value] of Object.entries(data)) {
-                sanitized[key] = sanitizeData(value);
+                if (exemptKeys.has(key)) {
+                    sanitized[key] = value;
+                } else {
+                    sanitized[key] = sanitizeData(value);
+                }
             }
             return sanitized;
         }
