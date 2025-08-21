@@ -15,22 +15,26 @@ jobs:
       run:
         working-directory: ModGoviya/backend
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
-      - name: Install backend dependencies
-        run: npm ci
+      - name: Install dependencies
+        run: |
+          npm ci || npm install
 
-      - name: Run security audit (non-blocking)
-        run: npm audit --production --audit-level=high || true
+      - name: Security audit (non-blocking)
+        run: |
+          npm audit --production --audit-level=high || true
 
       - name: Verify backend entry exists
-        run: node -e "require('fs').accessSync('server.js'); console.log('server.js found')"
+        run: |
+          node -e "require('fs').accessSync('server.js'); console.log('server.js found')"
 
   frontend:
     if: ${{ hashFiles('ModGoviya/frontend/package.json') != '' }}
@@ -40,22 +44,24 @@ jobs:
       run:
         working-directory: ModGoviya/frontend
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
-      - name: Install frontend dependencies
-        run: npm ci
+      - name: Install dependencies
+        run: |
+          npm ci || npm install
 
-      - name: Build frontend
+      - name: Build
         run: npm run build
 
-      - name: Upload frontend build artifact
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: frontend-build
-          path: build
+          path: ModGoviya/frontend/build
