@@ -211,6 +211,11 @@ const Orders = () => {
                                         <span className="font-semibold text-gray-700 w-20">Email:</span>
                                         <span className="text-gray-800">{user?.email || 'N/A'}</span>
                                     </div>
+                                    <div className="flex items-center">
+                                        <User className="mr-3 text-green-600" size={20} />
+                                        <span className="font-semibold text-gray-700 w-20">Username:</span>
+                                        <span className="text-gray-800">{user?.email ? user.email.split('@')[0] : 'N/A'}</span>
+                                    </div>
                                 </div>
                                 <div className="space-y-4">
                                     <div className="flex items-center">
