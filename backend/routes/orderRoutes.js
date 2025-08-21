@@ -88,7 +88,8 @@ router.post('/create', requireAuth, createOrderValidation, async (req, res) => {
             purchaseDate,
             deliveryTime,
             deliveryLocation,
-            message
+            message,
+            paymentMethod
         } = req.body;
 
         // Get product details
@@ -135,6 +136,7 @@ router.post('/create', requireAuth, createOrderValidation, async (req, res) => {
         // Create order
         const order = new Order({
             buyer: req.user._id,
+            buyerUsername: (user.email && user.email.includes('@')) ? user.email.split('@')[0] : (user.name || 'user'),
             items: [{
                 product: productId,
                 seller: product.userId,
@@ -149,7 +151,7 @@ router.post('/create', requireAuth, createOrderValidation, async (req, res) => {
                 district: deliveryLocation,
                 province: user.country || 'Sri Lanka'
             },
-            paymentMethod: 'cash_on_delivery',
+            paymentMethod: paymentMethod || 'bank_transfer',
             totalAmount: product.price * quantity,
             notes: message,
             purchaseDate: purchaseDate,
@@ -258,6 +260,27 @@ router.patch('/:orderId/status', requireAuth, async (req, res) => {
             success: false,
             message: 'Failed to update order status'
         });
+    }
+});
+
+// Add new endpoint for uploading payment proof
+router.post('/:orderId/payment-proof', requireAuth, async (req, res) => {
+    try {
+        const { paymentProof } = req.body;
+        const order = await Order.findById(req.params.orderId);
+        if (!order) {
+            return res.status(404).json({ success: false, message: 'Order not found' });
+        }
+        if (order.buyer.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ success: false, message: 'Access denied' });
+        }
+        order.paymentProof = paymentProof;
+        order.paymentStatus = 'paid';
+        await order.save();
+        res.json({ success: true, message: 'Payment proof submitted', data: order });
+    } catch (error) {
+        console.error('Error uploading payment proof:', error);
+        res.status(500).json({ success: false, message: 'Failed to upload payment proof' });
     }
 });
 
