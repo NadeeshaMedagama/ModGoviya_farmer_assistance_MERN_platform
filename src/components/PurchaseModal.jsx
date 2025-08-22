@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Button, Alert, Row, Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import api from '../utils/axios';
 import { Calendar, Clock, MapPin, MessageSquare, Package } from 'lucide-react';
 
 const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
@@ -46,8 +46,8 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
     const fetchDeliveryOptions = async () => {
         try {
             const [districtsRes, timesRes] = await Promise.all([
-                axios.get('/api/orders/delivery/districts'),
-                axios.get('/api/orders/delivery/times')
+                api.get('/orders/delivery/districts'),
+                api.get('/orders/delivery/times')
             ]);
             setDistricts(districtsRes.data.data);
             setDeliveryTimes(timesRes.data.data);
@@ -93,6 +93,13 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
             return;
         }
 
+        const token = localStorage.getItem('token');
+        if (!token) {
+            toast.error('Please log in to place an order');
+            window.location.href = '/login';
+            return;
+        }
+
         setLoading(true);
         setError(null);
 
@@ -107,7 +114,7 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
                 paymentMethod
             };
 
-            const response = await axios.post('/api/orders/create', orderData);
+            const response = await api.post('/orders/create', orderData);
             
             toast.success('Order created successfully!');
             setOrderId(response.data.data._id);
@@ -134,10 +141,16 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
 
     const handlePaymentProofSubmit = async (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token');
+        if (!token) {
+            toast.error('Please log in to submit payment proof');
+            window.location.href = '/login';
+            return;
+        }
         setPaymentLoading(true);
         setPaymentError(null);
         try {
-            await axios.post(`/api/orders/${orderId}/payment-proof`, { paymentProof });
+            await api.post(`/orders/${orderId}/payment-proof`, { paymentProof });
             toast.success('Payment proof submitted!');
             setShowPaymentProof(false);
             setPaymentProof('');

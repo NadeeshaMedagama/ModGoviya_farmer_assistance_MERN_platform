@@ -1,5 +1,0 @@
-# Backend secrets
-backend/.env
-backend/*.key
-backend/*.pem
-backend/config/secrets.json
