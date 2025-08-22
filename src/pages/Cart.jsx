@@ -146,9 +146,11 @@ const Cart = () => {
                                         </div>
                                     </div>
                                 </div>
+                                <Link to="/checkout" className="w-full mt-6">
                                 <button className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium">
                                     {t('cart.checkout')}
                                 </button>
+                                </Link>
                                 <p className="mt-3 text-sm text-gray-500 text-center">
                                     or{' '}
                                     <Link
