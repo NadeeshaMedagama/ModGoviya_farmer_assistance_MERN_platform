@@ -20,6 +20,7 @@ import ScheduleDemo from "./components/forum/ScheduleDemo";
 import LearnMore from "./services/LearnMore";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
+import Checkout from "./pages/Checkout";
 import GetStartedPage from "./services/GetStartedPage";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -61,6 +62,7 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/getstart" element={<GetStartedPage />} />
+                <Route path="/checkout" element={<Checkout />} />
               </Routes>
             </CartProvider>
           </LanguageProvider>
