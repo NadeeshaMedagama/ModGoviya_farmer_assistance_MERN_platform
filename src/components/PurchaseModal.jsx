@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Form, Button, Alert, Row, Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import api from '../utils/axios';
-import { Calendar, Clock, MapPin, MessageSquare, Package } from 'lucide-react';
+import { Calendar, Clock, MapPin, MessageSquare, Package, User, Phone, Globe } from 'lucide-react';
 
 const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
     const [formData, setFormData] = useState({
@@ -12,6 +12,15 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
         deliveryLocation: '',
         message: ''
     });
+    
+    // User profile fields
+    const [userProfile, setUserProfile] = useState({
+        name: '',
+        contactNumber: '',
+        location: '',
+        country: 'Sri Lanka'
+    });
+    
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [districts, setDistricts] = useState([]);
@@ -22,10 +31,12 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
     const [paymentProof, setPaymentProof] = useState('');
     const [paymentLoading, setPaymentLoading] = useState(false);
     const [paymentError, setPaymentError] = useState(null);
+    const [profileLoading, setProfileLoading] = useState(false);
 
     useEffect(() => {
         if (show) {
             fetchDeliveryOptions();
+            fetchUserProfile();
             // Set minimum date to today (excluding Sundays)
             const today = new Date();
             let minDate = new Date(today);
@@ -56,9 +67,52 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
         }
     };
 
+    const fetchUserProfile = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            
+            const response = await api.get('/users/profile');
+            if (response.data.success) {
+                const profile = response.data.data;
+                setUserProfile({
+                    name: profile.name || '',
+                    contactNumber: profile.contactNumber || '',
+                    location: profile.location || '',
+                    country: profile.country || 'Sri Lanka'
+                });
+            }
+        } catch (error) {
+            console.error('Failed to fetch user profile:', error);
+        }
+    };
+
+    const updateUserProfile = async () => {
+        try {
+            setProfileLoading(true);
+            const response = await api.put('/users/profile', userProfile);
+            if (response.data.success) {
+                toast.success('Profile updated successfully!');
+            }
+        } catch (error) {
+            console.error('Failed to update profile:', error);
+            toast.error('Failed to update profile');
+        } finally {
+            setProfileLoading(false);
+        }
+    };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleProfileChange = (e) => {
+        const { name, value } = e.target;
+        setUserProfile(prev => ({
             ...prev,
             [name]: value
         }));
@@ -93,6 +147,11 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
             return;
         }
 
+        if (!userProfile.name || !userProfile.contactNumber) {
+            setError('Please fill in your name and contact number');
+            return;
+        }
+
         const token = localStorage.getItem('token');
         if (!token) {
             toast.error('Please log in to place an order');
@@ -104,6 +163,9 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
         setError(null);
 
         try {
+            // First update user profile
+            await updateUserProfile();
+
             const orderData = {
                 productId: product._id,
                 quantity: parseInt(formData.quantity),
@@ -119,8 +181,6 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
             toast.success('Order created successfully!');
             setOrderId(response.data.data._id);
             setShowPaymentProof(true);
-            // onSuccess(response.data.data); // Only call after payment proof
-            // onHide();
             
             // Reset form
             setFormData({
@@ -219,6 +279,95 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
                                     <span className="h5 text-primary mb-0">${product?.price}</span>
                                     <span className="text-muted">Available: {product?.availability}</span>
                                 </div>
+                            </Col>
+                        </Row>
+                    </div>
+
+                    {/* User Profile Information */}
+                    <div className="border rounded p-3 mb-4 bg-light">
+                        <h6 className="mb-3">
+                            <User className="me-2" />
+                            Your Information
+                        </h6>
+                        <Row>
+                            <Col md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>
+                                        <User className="me-2" />
+                                        Full Name *
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="name"
+                                        value={userProfile.name}
+                                        onChange={handleProfileChange}
+                                        placeholder="Enter your full name"
+                                        required
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>
+                                        <Phone className="me-2" />
+                                        Contact Number *
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="tel"
+                                        name="contactNumber"
+                                        value={userProfile.contactNumber}
+                                        onChange={handleProfileChange}
+                                        placeholder="Enter your phone number"
+                                        required
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>
+                                        <MapPin className="me-2" />
+                                        Location
+                                    </Form.Label>
+                                    <Form.Select
+                                        name="location"
+                                        value={userProfile.location}
+                                        onChange={handleProfileChange}
+                                    >
+                                        <option value="">Select Location</option>
+                                        <option value="Colombo">Colombo</option>
+                                        <option value="Kandy">Kandy</option>
+                                        <option value="Galle">Galle</option>
+                                        <option value="Jaffna">Jaffna</option>
+                                        <option value="Negombo">Negombo</option>
+                                        <option value="Anuradhapura">Anuradhapura</option>
+                                        <option value="Polonnaruwa">Polonnaruwa</option>
+                                        <option value="Kurunegala">Kurunegala</option>
+                                        <option value="Ratnapura">Ratnapura</option>
+                                        <option value="Badulla">Badulla</option>
+                                        <option value="Matara">Matara</option>
+                                        <option value="Hambantota">Hambantota</option>
+                                        <option value="Trincomalee">Trincomalee</option>
+                                        <option value="Batticaloa">Batticaloa</option>
+                                        <option value="Ampara">Ampara</option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>
+                                        <Globe className="me-2" />
+                                        Country
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="country"
+                                        value={userProfile.country}
+                                        onChange={handleProfileChange}
+                                        placeholder="Enter your country"
+                                    />
+                                </Form.Group>
                             </Col>
                         </Row>
                     </div>
@@ -347,7 +496,7 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
                     <Button 
                         variant="primary" 
                         type="submit" 
-                        disabled={loading || !formData.purchaseDate || !formData.deliveryLocation}
+                        disabled={loading || !formData.purchaseDate || !formData.deliveryLocation || !userProfile.name || !userProfile.contactNumber}
                     >
                         {loading ? 'Creating Order...' : 'Create Order'}
                     </Button>
