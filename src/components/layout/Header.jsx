@@ -25,7 +25,7 @@ const Header = () => {
     const { cart } = useCart();
     const { currentLanguage, changeLanguage, languages, getCurrentLanguageInfo } = useLanguage();
     const { t, i18n } = useTranslation();
-    const { isAuthenticated, logout } = useContext(AuthContext) || {};
+    const { isAuthenticated, user, logout } = useContext(AuthContext) || {};
 
     // Compute display name from stored user info (without altering design)
     const [displayName, setDisplayName] = useState('');
@@ -43,9 +43,16 @@ const Header = () => {
         i18n.changeLanguage(currentLanguage);
     }, [currentLanguage, i18n]);
 
-    // Read user name from localStorage if available
+    // Read user name from localStorage and AuthContext if available
     useEffect(() => {
         try {
+            // First check AuthContext user data (from login)
+            if (user && user.name) {
+                setDisplayName(user.name);
+                return;
+            }
+            
+            // Fallback: check localStorage userInfo (from registration)
             const raw = localStorage.getItem('userInfo');
             if (raw) {
                 const parsed = JSON.parse(raw);
@@ -55,12 +62,13 @@ const Header = () => {
                     return;
                 }
             }
-            // Fallback: if only token/userId exist, keep empty name (will show Login)
+            
+            // If no name found, clear display name
             setDisplayName('');
         } catch {
             setDisplayName('');
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, user]);
 
     const currentLanguageInfo = getCurrentLanguageInfo();
 
