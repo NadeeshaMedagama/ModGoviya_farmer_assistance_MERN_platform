@@ -463,7 +463,7 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
         if (!validateCardData()) {
             return;
         }
-        
+
         setLoading(true);
         setError(null);
         
@@ -474,11 +474,11 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
                 if (paymentResult === 'pending_3d_secure') {
                     setOtpCode(''); // Clear OTP for 3D Secure
                     setShow3DSecure(true); // Show 3D Secure modal
-                    return;
-                }
+            return;
+        }
                 if (!paymentResult) {
                     setLoading(false);
-                    return;
+            return;
                 }
             } else if (paymentMethod === 'paypal' || paymentMethod === 'apple_pay' || paymentMethod === 'google_pay') {
                 const paymentResult = await processDigitalWalletPayment();
@@ -502,7 +502,7 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
             
             // Update user profile
             await updateUserProfile();
-            
+
             // Create order
             const orderData = {
                 productId: product._id,
@@ -514,12 +514,12 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
                 paymentMethod: paymentMethod,
                 totalAmount: calculateTotal()
             };
-            
+
             const response = await api.post('/orders/create', orderData);
             
             if (response.data.success) {
-                toast.success('Order created successfully!');
-                setOrderId(response.data.data._id);
+            toast.success('Order created successfully!');
+            setOrderId(response.data.data._id);
                 
                 if (paymentMethod === 'bank_transfer') {
                     setShowPaymentProof(true);
@@ -855,7 +855,7 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
                         <div className="mt-2 text-muted small">
                             <Lock className="w-3 h-3 me-1" />
                             Secure payment processing with SSL encryption
-                        </div>
+                    </div>
                     </div>
 
                     {/* Payment Method Selection */}
