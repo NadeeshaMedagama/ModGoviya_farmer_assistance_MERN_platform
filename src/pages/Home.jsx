@@ -106,30 +106,31 @@ const ModGoviyaHomepage = () => {
     return (
         <div className="min-h-screen bg-white dark:bg-gray-900">
             <Header />
-            
+
             {/* Hero Section */}
-            <section className="relative bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 py-20 lg:py-32">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-emerald-600/10 dark:from-gray-600/20 dark:to-gray-800/20"></div>
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-                        {t('home.hero.title')}
+            <section className="relative bg-green-50 py-20 lg:py-32">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h1 className="text-4xl md:text-6xl font-bold mb-6 ">
+                        <span className="text-gray-900">Empowering Farmers with</span>
+                        <br/>
+                        <span className="text-green-600 mt-4 inline-block">Modern Technology</span>
                     </h1>
-                    <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-                        {t('home.hero.subtitle')}
+                    <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                        Join thousands of farmers using ModGoviya to revolutionize their farming practices with smart tools, weather insights, and community support.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link
                             to="/register"
-                            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200"
+                            className="inline-flex items-center px-8 py-4 bg-green-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200"
                         >
-                            {t('home.hero.getStarted')}
+                            Get Started
                             <ArrowRight className="ml-2 w-5 h-5" />
                         </Link>
                         <Link
                             to="/features"
-                            className="inline-flex items-center px-8 py-4 border-2 border-green-600 text-green-600 dark:text-green-400 font-semibold rounded-lg hover:bg-green-600 hover:text-white dark:hover:bg-green-600 dark:hover:text-white transition-all duration-200"
+                            className="inline-flex items-center px-8 py-4 border-2 border-green-600 text-green-600 font-semibold rounded-lg hover:bg-green-600 hover:text-white transition-all duration-200"
                         >
-                            {t('home.hero.learnMore')}
+                            Browse Features
                         </Link>
                     </div>
                 </div>
