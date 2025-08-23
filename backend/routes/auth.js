@@ -1,11 +1,16 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
-const User = require('../models/User');
-const { generateToken } = require('../utils/generateToken');
+const { 
+    registerUser, 
+    loginUser, 
+    getUserProfile, 
+    updateUserProfile, 
+    changePassword 
+} = require('../controllers/authController');
 const { verifyOIDCToken, generateAppToken } = require('../config/oidc');
 const { facebookOAuth } = require('../config/facebook');
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
@@ -16,443 +21,256 @@ const loginValidation = [
         .normalizeEmail()
         .withMessage('Please provide a valid email address'),
     body('password')
-        .isLength({ min: 6 })
-        .withMessage('Password must be at least 6 characters long')
+        .isLength({ min: 8 })
+        .withMessage('Password must be at least 8 characters long')
 ];
 
 // Input validation for registration
 const registerValidation = [
-    body('name')
+    body('fullName')
         .trim()
-        .isLength({ min: 2, max: 50 })
-        .withMessage('Name must be between 2 and 50 characters')
-        .matches(/^[a-zA-Z\s]+$/)
-        .withMessage('Name can only contain letters and spaces'),
+        .isLength({ min: 2, max: 100 })
+        .withMessage('Full name must be between 2 and 100 characters'),
     body('email')
         .isEmail()
         .normalizeEmail()
         .withMessage('Please provide a valid email address'),
     body('password')
-        .isLength({ min: 8 })
-        .withMessage('Password must be at least 8 characters long')
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/)
-        .withMessage('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character')
+        .isLength({ min: 8, max: 128 })
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+        .withMessage('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
+    body('mobile')
+        .optional()
+        .isMobilePhone()
+        .withMessage('Please provide a valid mobile number'),
+    body('location')
+        .optional()
+        .trim()
+        .isLength({ max: 100 })
+        .withMessage('Location cannot exceed 100 characters'),
+    body('farmingType')
+        .optional()
+        .trim()
+        .isLength({ max: 100 })
+        .withMessage('Farming type cannot exceed 100 characters'),
+    body('language')
+        .optional()
+        .isIn(['English', 'Sinhala', 'Tamil'])
+        .withMessage('Language must be English, Sinhala, or Tamil'),
+    body('userType')
+        .optional()
+        .isIn(['farmer', 'trader', 'buyer'])
+        .withMessage('User type must be farmer, trader, or buyer'),
+    body('agreeToTerms')
+        .isBoolean()
+        .withMessage('You must agree to the terms and conditions')
 ];
 
-// Login route with validation
-router.post('/login', loginValidation, async (req, res) => {
-    try {
-        // Check for validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                message: 'Validation failed',
-                errors: errors.array()
-            });
-        }
+// Input validation for profile update
+const profileUpdateValidation = [
+    body('fullName')
+        .optional()
+        .trim()
+        .isLength({ min: 2, max: 100 })
+        .withMessage('Full name must be between 2 and 100 characters'),
+    body('mobile')
+        .optional()
+        .isMobilePhone()
+        .withMessage('Please provide a valid mobile number'),
+    body('location')
+        .optional()
+        .trim()
+        .isLength({ max: 100 })
+        .withMessage('Location cannot exceed 100 characters'),
+    body('farmingType')
+        .optional()
+        .trim()
+        .isLength({ max: 100 })
+        .withMessage('Farming type cannot exceed 100 characters'),
+    body('language')
+        .optional()
+        .isIn(['English', 'Sinhala', 'Tamil'])
+        .withMessage('Language must be English, Sinhala, or Tamil')
+];
 
-        const { email, password } = req.body;
+// Input validation for password change
+const passwordChangeValidation = [
+    body('currentPassword')
+        .isLength({ min: 8 })
+        .withMessage('Current password must be at least 8 characters long'),
+    body('newPassword')
+        .isLength({ min: 8, max: 128 })
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+        .withMessage('New password must contain at least one uppercase letter, one lowercase letter, one number, and one special character')
+];
 
-        // Check if user exists
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ 
-                success: false,
-                message: 'Invalid credentials' 
-            });
-        }
-
-        // Check if account is locked
-        if (user.isLocked) {
-            await user.incLoginAttempts();
-            return res.status(423).json({ 
-                success: false,
-                message: 'Account temporarily locked due to too many failed login attempts' 
-            });
-        }
-
-        // Check password
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            await user.incLoginAttempts();
-            return res.status(400).json({ 
-                success: false,
-                message: 'Invalid credentials' 
-            });
-        }
-
-        // Reset login attempts on successful login
-        if (user.loginAttempts > 0) {
-            await user.resetLoginAttempts();
-        }
-
-        // Update last login
-        user.lastLogin = new Date();
-        await user.save();
-
-        // Create JWT token with shorter expiration
-        const token = jwt.sign(
-            { 
-                userId: user._id,
-                email: user.email,
-                role: user.role
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
-        );
-
-        res.json({
-            success: true,
-            token,
-            userId: user._id,
-            message: 'Login successful',
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role
-            }
-        });
-    } catch (err) {
-        console.error('Login error:', err);
-        res.status(500).json({ 
+// Middleware to check validation results
+const checkValidationResult = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
             success: false,
-            message: 'Server error' 
+            message: 'Validation failed',
+            errors: errors.array()
         });
     }
-});
+    next();
+};
 
-// Register route with validation
-router.post('/register', registerValidation, async (req, res) => {
-    try {
-        // Check for validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                message: 'Validation failed',
-                errors: errors.array()
-            });
-        }
+// @route   POST /api/auth/register
+// @desc    Register a new user
+// @access  Public
+router.post('/register', registerValidation, checkValidationResult, registerUser);
 
-        const { name, email, password } = req.body;
+// @route   POST /api/auth/login
+// @desc    Authenticate user & get token
+// @access  Public
+router.post('/login', loginValidation, checkValidationResult, loginUser);
 
-        // Check if user already exists
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ 
-                success: false,
-                message: 'User already exists' 
-            });
-        }
+// @route   GET /api/auth/profile
+// @desc    Get user profile
+// @access  Private
+router.get('/profile', getUserProfile);
 
-        // Hash password with higher salt rounds
-        const salt = await bcrypt.genSalt(12);
-        const hashedPassword = await bcrypt.hash(password, salt);
+// @route   PUT /api/auth/profile
+// @desc    Update user profile
+// @access  Private
+router.put('/profile', profileUpdateValidation, checkValidationResult, updateUserProfile);
 
-        // Create new user
-        const user = new User({
-            name,
-            email,
-            password: hashedPassword,
-            authProvider: 'local'
-        });
+// @route   PUT /api/auth/change-password
+// @desc    Change user password
+// @access  Private
+router.put('/change-password', passwordChangeValidation, checkValidationResult, changePassword);
 
-        await user.save();
-
-        // Create JWT token
-        const token = jwt.sign(
-            { 
-                userId: user._id,
-                email: user.email,
-                role: user.role
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
-        );
-
-        res.status(201).json({
-            success: true,
-            token,
-            userId: user._id,
-            message: 'Registration successful',
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role
-            }
-        });
-
-    } catch (error) {
-        console.error('Registration error:', error);
-        res.status(500).json({ 
-            success: false,
-            message: 'Server error during registration' 
-        });
-    }
-});
-
-// Google OAuth/OIDC route
+// @route   POST /api/auth/google
+// @desc    Google OAuth authentication
+// @access  Public
 router.post('/google', async (req, res) => {
     try {
-        console.log('Google OAuth request received:', { body: req.body, headers: req.headers });
+        const { idToken } = req.body;
         
-        const { credential } = req.body;
-
-        if (!credential) {
-            console.error('No credential provided in request');
+        if (!idToken) {
             return res.status(400).json({
                 success: false,
-                message: 'Credential is required'
+                message: 'Google ID token is required'
             });
         }
 
-        console.log('Verifying OIDC token...');
-        const verification = await verifyOIDCToken(credential, 'google');
+        // Verify Google ID token
+        const ticket = await verifyOIDCToken(idToken);
+        const payload = ticket.getPayload();
         
-        if (!verification.valid) {
-            console.error('OIDC token verification failed:', verification.error);
-            return res.status(400).json({
-                success: false,
-                message: 'OpenID Connect token verification failed',
-                error: verification.error
-            });
-        }
-
-        console.log('OIDC token verified successfully');
-        const { payload, claims } = verification;
-
         // Check if user exists
-        let user;
-        try {
-            user = await User.findOne({ 
-                $or: [
-                    { email: claims.email },
-                    { googleId: claims.subject }
-                ]
-            });
-        } catch (dbError) {
-            console.error('Database error while finding user:', dbError);
-            return res.status(500).json({
-                success: false,
-                message: 'Database error while processing authentication'
-            });
-        }
-
+        let user = await User.findOne({ email: payload.email });
+        
         if (!user) {
-            console.log('Creating new user with Google OAuth');
             // Create new user
-            user = new User({
-                name: claims.name || 'Unknown User',
-                email: claims.email,
-                googleId: claims.subject,
-                avatar: claims.picture || null,
-                isVerified: claims.emailVerified || false,
+            user = await User.create({
+                email: payload.email,
+                fullName: payload.name,
+                firstName: payload.given_name,
+                lastName: payload.family_name,
                 authProvider: 'google',
-                contactNumber: '', // Initialize with empty string
-                country: 'Sri Lanka', // Default country
-                oidcClaims: {
-                    issuer: claims.issuer || null,
-                    subject: claims.subject || null,
-                    audience: claims.audience || null,
-                    issuedAt: claims.issuedAt ? new Date(claims.issuedAt * 1000) : null,
-                    expiration: claims.expiration ? new Date(claims.expiration * 1000) : null
-                }
-            });
-        } else {
-            console.log('Updating existing user with Google OAuth');
-            // Update existing user
-            user.name = claims.name || user.name;
-            user.googleId = claims.subject;
-            user.avatar = claims.picture || user.avatar;
-            user.isVerified = claims.emailVerified || user.isVerified;
-            user.authProvider = 'google';
-            user.lastLogin = new Date();
-            // Ensure required fields exist
-            if (!user.contactNumber) user.contactNumber = '';
-            if (!user.country) user.country = 'Sri Lanka';
-            user.oidcClaims = {
-                issuer: claims.issuer || null,
-                subject: claims.subject || null,
-                audience: claims.audience || null,
-                issuedAt: claims.issuedAt ? new Date(claims.issuedAt * 1000) : null,
-                expiration: claims.expiration ? new Date(claims.expiration * 1000) : null
-            };
-        }
-
-        try {
-            await user.save();
-            console.log('User saved successfully');
-        } catch (saveError) {
-            console.error('Database error while saving user:', saveError);
-            return res.status(500).json({
-                success: false,
-                message: 'Database error while saving user data'
+                isVerified: payload.email_verified,
+                language: 'English',
+                userType: 'farmer',
+                role: 'farmer'
             });
         }
 
-        // Generate application token
-        const token = generateAppToken(user, claims);
-        console.log('Application token generated');
-
-        res.json({
-            success: true,
-            token,
-            userId: user._id,
-            message: 'OpenID Connect authentication successful',
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role,
-                avatar: user.avatar
-            }
-        });
-
-    } catch (error) {
-        console.error('OpenID Connect authentication error:', error);
-        res.status(400).json({
-            success: false,
-            message: 'OpenID Connect authentication failed',
-            error: error.message
-        });
-    }
-});
-
-// Facebook OAuth routes
-router.post('/facebook', async (req, res) => {
-    try {
-        console.log('Facebook OAuth request received:', { body: req.body, headers: req.headers });
-        
-        const { accessToken } = req.body;
-
-        if (!accessToken) {
-            console.error('No access token provided in request');
-            return res.status(400).json({
-                success: false,
-                message: 'Access token is required'
-            });
-        }
-
-        console.log('Verifying Facebook access token...');
-        
-        // Verify the access token
-        const tokenInfo = await facebookOAuth.verifyAccessToken(accessToken);
-        if (!tokenInfo.is_valid) {
-            console.error('Facebook access token verification failed');
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid Facebook access token'
-            });
-        }
-
-        console.log('Facebook access token verified successfully');
-        
-        // Get user information from Facebook
-        const userInfo = await facebookOAuth.getUserInfo(accessToken);
-        console.log('Facebook user info received:', userInfo);
-
-        // Check if user exists
-        let user;
-        try {
-            user = await User.findOne({ 
-                $or: [
-                    { email: userInfo.email },
-                    { facebookId: userInfo.id }
-                ]
-            });
-        } catch (dbError) {
-            console.error('Database error while finding user:', dbError);
-            return res.status(500).json({
-                success: false,
-                message: 'Database error while processing authentication'
-            });
-        }
-
-        if (!user) {
-            console.log('Creating new user with Facebook OAuth');
-            // Create new user
-            user = new User({
-                name: userInfo.name || 'Unknown User',
-                email: userInfo.email,
-                facebookId: userInfo.id,
-                avatar: userInfo.picture?.data?.url || null,
-                isVerified: true, // Facebook users are considered verified
-                authProvider: 'facebook',
-                contactNumber: '', // Initialize with empty string
-                country: 'Sri Lanka', // Default country
-                lastLogin: new Date()
-            });
-        } else {
-            console.log('Updating existing user with Facebook OAuth');
-            // Update existing user
-            user.name = userInfo.name || user.name;
-            user.facebookId = userInfo.id;
-            user.avatar = userInfo.picture?.data?.url || user.avatar;
-            user.isVerified = true;
-            user.authProvider = 'facebook';
-            user.lastLogin = new Date();
-            // Ensure required fields exist
-            if (!user.contactNumber) user.contactNumber = '';
-            if (!user.country) user.country = 'Sri Lanka';
-        }
-
-        try {
-            await user.save();
-            console.log('User saved successfully');
-        } catch (saveError) {
-            console.error('Database error while saving user:', saveError);
-            return res.status(500).json({
-                success: false,
-                message: 'Database error while saving user data'
-            });
-        }
-
-        // Generate application token
+        // Generate JWT token
         const token = jwt.sign(
-            { 
-                userId: user._id,
-                email: user.email,
-                role: user.role
-            },
+            { userId: user._id, email: user.email, role: user.role },
             process.env.JWT_SECRET,
-            { expiresIn: '24h' }
+            { expiresIn: '7d' }
         );
 
-        console.log('Application token generated');
-
         res.json({
             success: true,
-            token,
-            userId: user._id,
-            message: 'Facebook OAuth authentication successful',
-            user: {
-                id: user._id,
-                name: user.name,
+            message: 'Google authentication successful',
+            data: {
+                _id: user._id,
+                fullName: user.fullName,
                 email: user.email,
+                userType: user.userType,
                 role: user.role,
-                avatar: user.avatar
-            }
+                isVerified: user.isVerified,
+                language: user.language
+            },
+            token
         });
-
     } catch (error) {
-        console.error('Facebook OAuth authentication error:', error);
-        res.status(400).json({
+        console.error('Google OAuth error:', error);
+        res.status(500).json({
             success: false,
-            message: 'Facebook OAuth authentication failed',
-            error: error.message
+            message: 'Google authentication failed'
         });
     }
 });
 
-// Logout route
-router.post('/logout', (req, res) => {
-    res.json({
-        success: true,
-        message: 'Logout successful'
-    });
+// @route   POST /api/auth/facebook
+// @desc    Facebook OAuth authentication
+// @access  Public
+router.post('/facebook', async (req, res) => {
+    try {
+        const { accessToken } = req.body;
+        
+        if (!accessToken) {
+            return res.status(400).json({
+                success: false,
+                message: 'Facebook access token is required'
+            });
+        }
+
+        // Get Facebook user data
+        const userData = await facebookOAuth(accessToken);
+        
+        // Check if user exists
+        let user = await User.findOne({ email: userData.email });
+        
+        if (!user) {
+            // Create new user
+            user = await User.create({
+                email: userData.email,
+                fullName: userData.name,
+                firstName: userData.first_name,
+                lastName: userData.last_name,
+                authProvider: 'facebook',
+                isVerified: true,
+                language: 'English',
+                userType: 'farmer',
+                role: 'farmer'
+            });
+        }
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { userId: user._id, email: user.email, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+        );
+
+        res.json({
+            success: true,
+            message: 'Facebook authentication successful',
+            data: {
+                _id: user._id,
+                fullName: user.fullName,
+                email: user.email,
+                userType: user.userType,
+                role: user.role,
+                isVerified: user.isVerified,
+                language: user.language
+            },
+            token
+        });
+    } catch (error) {
+        console.error('Facebook OAuth error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Facebook authentication failed'
+        });
+    }
 });
 
 module.exports = router;
