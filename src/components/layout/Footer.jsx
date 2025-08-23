@@ -56,7 +56,7 @@ const Footer = () => {
     };
 
     return (
-        <footer className="bg-gray-900 text-white">
+        <footer className="bg-gray-900 dark:bg-black text-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
                     {/* Company Info */}
@@ -75,10 +75,10 @@ const Footer = () => {
                                     className="ml-3 text-2xl font-bold">
                                     ModGoviya
                                 </span>
-                                <div className="text-xs text-gray-300 font-medium -mt-1 mx-2">Agriculture Platform</div>
+                                <div className="text-xs text-gray-300 dark:text-gray-400 font-medium -mt-1 mx-2">Agriculture Platform</div>
                             </div>
                         </div>
-                        <p className="text-gray-300 mb-6 max-w-md my-3">
+                        <p className="text-gray-300 dark:text-gray-400 mb-6 max-w-md my-3">
                             Empowering Sri Lankan farmers with modern technology and community support. Join us in
                             revolutionizing agriculture for a sustainable future.
                         </p>
@@ -103,19 +103,19 @@ const Footer = () => {
                         <h3 className="text-lg font-semibold mb-6 text-green-400">Quick Links</h3>
                         <ul className="space-y-3">
                             <li><a href="/"
-                                   className="text-gray-300 hover:text-white transition-colors duration-200">Home</a>
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Home</a>
                             </li>
                             <li><a href="/features"
-                                   className="text-gray-300 hover:text-white transition-colors duration-200">Features</a>
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Features</a>
                             </li>
                             <li><a href="/marketplace"
-                                   className="text-gray-300 hover:text-white transition-colors duration-200">Marketplace</a>
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Marketplace</a>
                             </li>
                             <li><a href="/weather"
-                                   className="text-gray-300 hover:text-white transition-colors duration-200">Weather</a>
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Weather</a>
                             </li>
                             <li><a href="/community"
-                                   className="text-gray-300 hover:text-white transition-colors duration-200">Community</a>
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Community</a>
                             </li>
                         </ul>
                     </div>
@@ -124,11 +124,11 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold mb-6 text-green-400">Resources</h3>
                         <ul className="space-y-3">
-                        <li><a href="/blog" className="text-gray-300 hover:text-white transition-colors duration-200">Blog</a></li>
-                            <li><a href="/guides" className="text-gray-300 hover:text-white transition-colors duration-200">Farming Guides</a></li>
-                            <li><a href="/tutorials" className="text-gray-300 hover:text-white transition-colors duration-200">Tutorials</a></li>
-                            <li><a href="/faq" className="text-gray-300 hover:text-white transition-colors duration-200">FAQ</a></li>
-                            <li><a href="/support" className="text-gray-300 hover:text-white transition-colors duration-200">Help Center</a></li>
+                        <li><a href="/blog" className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Blog</a></li>
+                            <li><a href="/guides" className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Farming Guides</a></li>
+                            <li><a href="/tutorials" className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Tutorials</a></li>
+                            <li><a href="/faq" className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">FAQ</a></li>
+                            <li><a href="/support" className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Help Center</a></li>
                         </ul>
                     </div>
 
@@ -138,29 +138,29 @@ const Footer = () => {
                         <div className="space-y-3">
                             <div className="flex items-center">
                                 <Phone size={16} className="mr-3 text-green-500"/>
-                                <span className="text-gray-300">+94 11 234 5678</span>
+                                <span className="text-gray-300 dark:text-gray-400">+94 11 234 5678</span>
                             </div>
                             <div className="flex items-center">
                                 <Mail size={16} className="mr-3 text-green-500"/>
-                                <span className="text-gray-300">info@modgoviya.lk</span>
+                                <span className="text-gray-300 dark:text-gray-400">info@modgoviya.lk</span>
                             </div>
                             <div className="flex items-center">
                                 <MapPin size={16} className="mr-3 text-green-500"/>
-                                <span className="text-gray-300">Colombo, Sri Lanka</span>
+                                <span className="text-gray-300 dark:text-gray-400">Colombo, Sri Lanka</span>
                             </div>
                             <div className="flex items-center">
                                 <Globe size={16} className="mr-3 text-green-500"/>
-                                <span className="text-gray-300">www.modgoviya.lk</span>
+                                <span className="text-gray-300 dark:text-gray-400">www.modgoviya.lk</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Newsletter Subscription */}
-                <div className="border-t border-gray-800 mt-12 pt-8">
+                <div className="border-t border-gray-800 dark:border-gray-700 mt-12 pt-8">
                     <div className="max-w-md mx-auto text-center mb-8">
                         <h3 className="text-xl font-semibold mb-3 text-green-400">Stay Updated</h3>
-                        <p className="text-gray-300 mb-6">
+                        <p className="text-gray-300 dark:text-gray-400 mb-6">
                             Get the latest farming tips, weather updates, and market insights delivered to your inbox.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3">
@@ -169,7 +169,7 @@ const Footer = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Enter your email address"
-                                className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                className="flex-1 px-4 py-3 bg-gray-800 dark:bg-gray-900 border border-gray-700 dark:border-gray-600 rounded-lg text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                             />
                             <button
                                 onClick={handleSubscribe}
@@ -202,14 +202,14 @@ const Footer = () => {
                     </div>
 
                     {/* Bottom Footer */}
-                    <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-gray-800">
-                        <p className="text-gray-400 text-sm">
+                    <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-gray-800 dark:border-gray-700">
+                        <p className="text-gray-400 dark:text-gray-500 text-sm">
                             © 2025 ModGoviya. All rights reserved.
                         </p>
                         <div className="flex space-x-6 mt-4 md:mt-0">
-                            <a href="/terms" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Terms & Conditions</a>
-                            <a href="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Privacy Policy</a>
-                            <a href="/support" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Support</a>
+                            <a href="/terms" className="text-gray-400 dark:text-gray-500 hover:text-white text-sm transition-colors duration-200">Terms & Conditions</a>
+                            <a href="/privacy" className="text-gray-400 dark:text-gray-500 hover:text-white text-sm transition-colors duration-200">Privacy Policy</a>
+                            <a href="/support" className="text-gray-400 dark:text-gray-500 hover:text-white text-sm transition-colors duration-200">Support</a>
                         </div>
                     </div>
                 </div>
