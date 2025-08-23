@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './contexts/CartContext';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { AuthProvider } from './contexts/AuthContext';
 import WeatherPage from './pages/WeatherPage';
 import CropManagement from "./pages/CropManagement";
 import Login from './components/auth/Login';
@@ -29,43 +30,45 @@ import './i18n'; // Import i18n configuration
 function App() {
   return (
         <Router>
-          <LanguageProvider>
-            <CartProvider>
-              <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-              />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/weather" element={<WeatherPage />} />
-                <Route path="/cropmanage" element={<CropManagement />} />
-                <Route path="/features" element={<FeaturesPage />} />
-                <Route path="/marketplace" element={<Marketplace />} />
-                <Route path="/community" element={<CommunityPage />} />
-                <Route path="/about" element={<AboutUs />} />
-                <Route path="/contact" element={<ContactUs />} />
-                <Route path="/trade" element={<StartTrading />} />
-                <Route path="/browse" element={<BrowseFeaturesPage />} />
-                <Route path="/watchdemo" element={<WatchDemoPage />} />
-                <Route path="/schedule" element={<ScheduleDemo />} />
-                <Route path="/learnmore" element={<LearnMore />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/orders" element={<Orders />} />
-                <Route path="/getstart" element={<GetStartedPage />} />
-                <Route path="/checkout" element={<Checkout />} />
-              </Routes>
-            </CartProvider>
-          </LanguageProvider>
+          <AuthProvider>
+            <LanguageProvider>
+              <CartProvider>
+                <ToastContainer
+                  position="top-right"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
+                />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<RegisterPage />} />
+                  <Route path="/weather" element={<WeatherPage />} />
+                  <Route path="/cropmanage" element={<CropManagement />} />
+                  <Route path="/features" element={<FeaturesPage />} />
+                  <Route path="/marketplace" element={<Marketplace />} />
+                  <Route path="/community" element={<CommunityPage />} />
+                  <Route path="/about" element={<AboutUs />} />
+                  <Route path="/contact" element={<ContactUs />} />
+                  <Route path="/trade" element={<StartTrading />} />
+                  <Route path="/browse" element={<BrowseFeaturesPage />} />
+                  <Route path="/watchdemo" element={<WatchDemoPage />} />
+                  <Route path="/schedule" element={<ScheduleDemo />} />
+                  <Route path="/learnmore" element={<LearnMore />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/orders" element={<Orders />} />
+                  <Route path="/getstart" element={<GetStartedPage />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                </Routes>
+              </CartProvider>
+            </LanguageProvider>
+          </AuthProvider>
         </Router>
   );
 }
