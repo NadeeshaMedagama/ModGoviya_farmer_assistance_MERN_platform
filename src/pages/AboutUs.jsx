@@ -15,6 +15,7 @@ import { Users,
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from "../components/common/LanguageSwitcher";
 
 const AboutUs = () => {
     const { t } = useTranslation();
@@ -78,6 +79,10 @@ const AboutUs = () => {
             <div className="relative bg-gradient-to-r from-green-600 to-blue-600 text-white pt-10">
                 <div className="absolute inset-0 bg-black opacity-20"></div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+                    {/* Language Switcher */}
+                    <div className="absolute top-6 right-6 z-10">
+                        <LanguageSwitcher variant="minimal" />
+                    </div>
                     <div className="text-center">
                         <h1 className="text-5xl md:text-6xl font-bold mb-6">
                             {t('about.hero.title', { defaultValue: 'About' })} <span className="text-yellow-300">ModGoviya</span>
