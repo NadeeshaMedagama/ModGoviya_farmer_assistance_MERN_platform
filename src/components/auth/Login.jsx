@@ -29,6 +29,9 @@ const LoginPage = () => {
                 const response = await axios.post('http://localhost:5000/api/auth/login', formData);
                 console.log('Login successful:', response.data);
 
+                // Store user info in localStorage for consistency with registration
+                localStorage.setItem('userInfo', JSON.stringify(response.data));
+                
                 login(response.data.token, response.data.user);
                 navigate('/');
 
@@ -50,6 +53,9 @@ const LoginPage = () => {
             });
 
             console.log('Google OpenID Connect login successful:', response.data);
+            
+            // Store user info in localStorage for consistency with registration
+            localStorage.setItem('userInfo', JSON.stringify(response.data));
             
             // Use the login context to save authentication data
             login(response.data.token, response.data.user);
