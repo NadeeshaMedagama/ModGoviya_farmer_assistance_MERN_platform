@@ -7,11 +7,14 @@ import {
     Globe,
     ShoppingCart,
     LogOut,
-    Package
+    Package,
+    Sun,
+    Moon
 } from 'lucide-react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useTheme } from '../../contexts/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import AuthContext from '../../contexts/AuthContext';
 
@@ -24,6 +27,7 @@ const Header = () => {
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
     const { cart } = useCart();
     const { currentLanguage, changeLanguage, languages, getCurrentLanguageInfo } = useLanguage();
+    const { isDarkMode, toggleTheme } = useTheme();
     const { t, i18n } = useTranslation();
     const { isAuthenticated, user, logout } = useContext(AuthContext) || {};
 
@@ -78,12 +82,12 @@ const Header = () => {
             onClick={onClick}
             className={`relative px-4 py-2 font-medium rounded-lg transition-all duration-200 group ${
                 active
-                    ? 'text-emerald-600 font-semibold'
-                    : 'text-gray-700 hover:text-emerald-600'
+                    ? 'text-emerald-600 font-semibold dark:text-emerald-400'
+                    : 'text-gray-700 hover:text-emerald-600 dark:text-gray-300 dark:hover:text-emerald-400'
             }`}
         >
             <span className="relative z-10">{children}</span>
-            <div className={`absolute inset-0 bg-emerald-50 rounded-lg transition-opacity duration-200 ${
+            <div className={`absolute inset-0 bg-emerald-50 rounded-lg transition-opacity duration-200 dark:bg-emerald-900/20 ${
                 active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
             }`}></div>
         </a>
@@ -123,8 +127,8 @@ const Header = () => {
     return (
         <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
             isScrolled
-                ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100'
-                : 'bg-white shadow-sm'
+                ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100 dark:bg-gray-900/95 dark:border-gray-700'
+                : 'bg-white shadow-sm dark:bg-gray-900'
         }`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-20">
@@ -139,10 +143,10 @@ const Header = () => {
                                     <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-80 animate-pulse"></div>
                                 </div>
                                 <div className="ml-4">
-                                <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
+                                <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent dark:from-gray-100 dark:via-gray-200 dark:to-gray-100">
                                     ModGoviya
                                 </span>
-                                    <div className="text-xs text-gray-500 font-medium -mt-1">{t('header.agriculturePlatform')}</div>
+                                    <div className="text-xs text-gray-500 font-medium -mt-1 dark:text-gray-400">{t('header.agriculturePlatform')}</div>
                                 </div>
                             </div>
                         </div>
@@ -161,26 +165,39 @@ const Header = () => {
 
                     {/* Enhanced Right Section */}
                     <div className="flex items-center space-x-4">
+                        {/* Theme Toggle Button */}
+                        <button
+                            onClick={toggleTheme}
+                            className="p-2.5 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:text-emerald-400 dark:hover:bg-emerald-900/20 rounded-lg transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                            title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                        >
+                            {isDarkMode ? (
+                                <Sun className="w-5 h-5" />
+                            ) : (
+                                <Moon className="w-5 h-5" />
+                            )}
+                        </button>
+
                         {/* Professional Language Selector */}
                         <div className="relative">
                             <button
                                 onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-                                className="flex items-center space-x-2 px-3 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                                className="flex items-center space-x-2 px-3 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                             >
-                                <Globe className="w-4 h-4 text-gray-600" />
-                                <span className="text-sm font-medium text-gray-700">{currentLanguageInfo.flag}</span>
-                                <span className="hidden sm:block text-sm font-medium text-gray-700">{currentLanguageInfo.name}</span>
-                                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${isLangDropdownOpen ? 'rotate-180' : ''}`} />
+                                <Globe className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{currentLanguageInfo.flag}</span>
+                                <span className="hidden sm:block text-sm font-medium text-gray-700 dark:text-gray-300">{currentLanguageInfo.name}</span>
+                                <ChevronDown className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${isLangDropdownOpen ? 'rotate-180' : ''}`} />
                             </button>
 
                             {isLangDropdownOpen && (
-                                <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+                                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-600 py-2 z-50">
                                     {languages.map((lang) => (
                                         <button
                                             key={lang.code}
                                             onClick={() => handleLanguageChange(lang.code)}
-                                            className={`w-full flex items-center space-x-3 px-4 py-2 text-left hover:bg-gray-50 transition-colors duration-150 ${
-                                                currentLanguage === lang.code ? 'bg-emerald-50 text-emerald-700' : 'text-gray-700'
+                                            className={`w-full flex items-center space-x-3 px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150 ${
+                                                currentLanguage === lang.code ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400' : 'text-gray-700 dark:text-gray-300'
                                             }`}
                                         >
                                             <span className="text-lg">{lang.flag}</span>
@@ -194,7 +211,7 @@ const Header = () => {
                         {/* Professional Cart Icon */}
                         <Link
                             to="/cart"
-                            className="relative p-2.5 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                            className="relative p-2.5 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:text-emerald-400 dark:hover:bg-emerald-900/20 rounded-lg transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         >
                             <ShoppingCart className="w-6 h-6" />
                             {cart.items.length > 0 && (
@@ -216,10 +233,10 @@ const Header = () => {
                                 </button>
 
                                 {isUserDropdownOpen && (
-                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+                                    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-600 py-2 z-50">
                                         <Link
                                             to="/orders"
-                                            className="w-full flex items-center space-x-3 px-4 py-2 text-left hover:bg-gray-50 transition-colors duration-150 text-gray-700"
+                                            className="w-full flex items-center space-x-3 px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150 text-gray-700 dark:text-gray-300"
                                             onClick={() => setIsUserDropdownOpen(false)}
                                         >
                                             <Package className="w-4 h-4" />
@@ -227,7 +244,7 @@ const Header = () => {
                                         </Link>
                                         <button
                                             onClick={handleLogout}
-                                            className="w-full flex items-center space-x-3 px-4 py-2 text-left hover:bg-gray-50 transition-colors duration-150 text-gray-700"
+                                            className="w-full flex items-center space-x-3 px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150 text-gray-700 dark:text-gray-300"
                                         >
                                             <LogOut className="w-4 h-4" />
                                             <span className="font-medium">Logout</span>
@@ -246,7 +263,7 @@ const Header = () => {
                         <div className="lg:hidden">
                             <button
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                className="p-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                className="p-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:text-emerald-400 dark:hover:bg-emerald-900/20 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                             >
                                 {isMenuOpen ? <X size={24}/> : <Menu size={24}/>}
                             </button>
@@ -260,11 +277,11 @@ const Header = () => {
                         ? 'max-h-96 opacity-100'
                         : 'max-h-0 opacity-0 overflow-hidden'
                 }`}>
-                    <div className="px-2 pt-4 pb-6 space-y-2 bg-white border-t border-gray-100">
+                    <div className="px-2 pt-4 pb-6 space-y-2 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700">
                         <a
                             href="/"
                             className={`flex items-center px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
-                                isActive('/') ? 'text-emerald-600 bg-emerald-50 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'
+                                isActive('/') ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:text-emerald-400 dark:hover:bg-emerald-900/20'
                             }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
@@ -273,7 +290,7 @@ const Header = () => {
                         <a
                             href="/features"
                             className={`flex items-center px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
-                                isActive('/features') ? 'text-emerald-600 bg-emerald-50 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'
+                                isActive('/features') ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:text-emerald-400 dark:hover:bg-emerald-900/20'
                             }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
@@ -282,7 +299,7 @@ const Header = () => {
                         <a
                             href="/marketplace"
                             className={`flex items-center px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
-                                isActive('/marketplace') ? 'text-emerald-600 bg-emerald-50 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'
+                                isActive('/marketplace') ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:text-emerald-400 dark:hover:bg-emerald-900/20'
                             }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
@@ -291,7 +308,7 @@ const Header = () => {
                         <a
                             href="/weather"
                             className={`flex items-center px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
-                                isActive('/weather') ? 'text-emerald-600 bg-emerald-50 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'
+                                isActive('/weather') ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:text-emerald-400 dark:hover:bg-emerald-900/20'
                             }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
@@ -300,7 +317,7 @@ const Header = () => {
                         <a
                             href="/about"
                             className={`flex items-center px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
-                                isActive('/about') ? 'text-emerald-600 bg-emerald-50 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'
+                                isActive('/about') ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:text-emerald-400 dark:hover:bg-emerald-900/20'
                             }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
@@ -311,7 +328,7 @@ const Header = () => {
                         <Link
                             to="/cart"
                             className={`flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
-                                isActive('/cart') ? 'text-emerald-600 bg-emerald-50 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'
+                                isActive('/cart') ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 font-semibold' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:text-emerald-400 dark:hover:bg-emerald-900/20'
                             }`}
                             onClick={() => setIsMenuOpen(false)}
                         >
@@ -338,7 +355,7 @@ const Header = () => {
                                         handleLogout();
                                         setIsMenuOpen(false);
                                     }}
-                                    className="flex items-center justify-center w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors duration-200"
+                                    className="flex items-center justify-center w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg transition-colors duration-200"
                                 >
                                     <LogOut className="w-4 h-4 mr-2" />
                                     Logout
