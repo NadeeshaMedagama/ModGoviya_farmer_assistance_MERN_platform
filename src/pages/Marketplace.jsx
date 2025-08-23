@@ -95,19 +95,19 @@ const Marketplace = () => {
     });
 
     const ProductCard = ({ product }) => (
-        <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700">
             <div className="relative">
                 <img
                     src={product.image}
                     alt={product.title}
                     className="w-full h-48 object-cover"
                 />
-                <button className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-red-50">
-                    <Heart className="w-4 h-4 text-gray-600 hover:text-red-500" />
+                <button className="absolute top-3 right-3 p-2 bg-white dark:bg-gray-700 rounded-full shadow-md hover:bg-red-50 dark:hover:bg-red-900/20">
+                    <Heart className="w-4 h-4 text-gray-600 dark:text-gray-300 hover:text-red-500" />
                 </button>
                 <div className="absolute bottom-3 left-3">
           <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-              product.condition === 'new' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+              product.condition === 'new' ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300'
           }`}>
             {product.condition === 'new' ? t('marketplace.badges.new') : t('marketplace.badges.used')}
           </span>
@@ -115,21 +115,21 @@ const Marketplace = () => {
             </div>
 
             <div className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.title}</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2">{product.title}</h3>
                 <div className="flex items-center justify-between mb-2">
-                    <span className="text-2xl font-bold text-green-600">Rs: {product.price.toLocaleString()}.00</span>
+                    <span className="text-2xl font-bold text-green-600 dark:text-green-400">Rs: {product.price.toLocaleString()}.00</span>
                     <div className="flex items-center">
                         <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                        <span className="text-sm text-gray-600 ml-1">{product.rating}</span>
+                        <span className="text-sm text-gray-600 dark:text-gray-300 ml-1">{product.rating}</span>
                     </div>
                 </div>
 
-                <div className="flex items-center text-sm text-gray-600 mb-2">
+                <div className="flex items-center text-sm text-gray-600 dark:text-gray-300 mb-2">
                     <MapPin className="w-4 h-4 mr-1" />
                     <span>{product.location}</span>
                 </div>
 
-                <div className="flex items-center text-sm text-gray-600 mb-3">
+                <div className="flex items-center text-sm text-gray-600 dark:text-gray-300 mb-3">
                     <User className="w-4 h-4 mr-1" />
                     <span>{product.seller}</span>
                 </div>
@@ -141,8 +141,8 @@ const Marketplace = () => {
                     >
                         {t('marketplace.viewDetails')}
                     </button>
-                    <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50">
-                        <Eye className="w-4 h-4 text-gray-600" />
+                    <button className="p-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <Eye className="w-4 h-4 text-gray-600 dark:text-gray-300" />
                     </button>
                 </div>
             </div>
@@ -151,13 +151,13 @@ const Marketplace = () => {
 
     const ProductModal = ({ product, onClose }) => (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="bg-white dark:bg-gray-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
                 <div className="p-6">
                     <div className="flex justify-between items-start mb-4">
-                        <h2 className="text-2xl font-bold text-gray-900">{product.title}</h2>
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{product.title}</h2>
                         <button
                             onClick={onClose}
-                            className="text-gray-500 hover:text-gray-700 text-xl font-bold"
+                            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-xl font-bold"
                         >
                             ×
                         </button>
@@ -174,9 +174,9 @@ const Marketplace = () => {
 
                         <div>
                             <div className="mb-4">
-                                <span className="text-3xl font-bold text-green-600">Rs: {product.price.toLocaleString()}.00</span>
+                                <span className="text-3xl font-bold text-green-600 dark:text-green-400">Rs: {product.price.toLocaleString()}.00</span>
                                 <span className={`ml-3 px-3 py-1 text-sm font-medium rounded-full ${
-                                    product.condition === 'new' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                                    product.condition === 'new' ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300'
                                 }`}>
                   {product.condition === 'new' ? t('marketplace.badges.new') : t('marketplace.badges.used')}
                 </span>
@@ -184,22 +184,22 @@ const Marketplace = () => {
 
                             <div className="space-y-3 mb-6">
                                 <div className="flex items-center">
-                                    <MapPin className="w-5 h-5 text-gray-500 mr-2" />
-                                    <span>{product.location}</span>
+                                    <MapPin className="w-5 h-5 text-gray-500 dark:text-gray-400 mr-2" />
+                                    <span className="text-gray-700 dark:text-gray-300">{product.location}</span>
                                 </div>
                                 <div className="flex items-center">
-                                    <User className="w-5 h-5 text-gray-500 mr-2" />
-                                    <span>{product.seller}</span>
+                                    <User className="w-5 h-5 text-gray-500 dark:text-gray-400 mr-2" />
+                                    <span className="text-gray-700 dark:text-gray-300">{product.seller}</span>
                                     <div className="flex items-center ml-2">
                                         <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                        <span className="text-sm text-gray-600 ml-1">{product.rating}</span>
+                                        <span className="text-sm text-gray-600 dark:text-gray-300 ml-1">{product.rating}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="mb-6">
                                 <h3 className="font-semibold mb-2">{t('marketplace.description')}</h3>
-                                <p className="text-gray-700">{product.description}</p>
+                                <p className="text-gray-700 dark:text-gray-300">{product.description}</p>
                             </div>
 
                             <div className="space-y-3">
@@ -241,9 +241,22 @@ const Marketplace = () => {
     );
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Header */}
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             <Header />
+
+            {/* Hero Section */}
+            {/*<section className="relative bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 py-20 lg:py-32">*/}
+            {/*    <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-emerald-600/10 dark:from-gray-600/20 dark:to-gray-800/20"></div>*/}
+            {/*    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">*/}
+            {/*        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">*/}
+            {/*            {t('marketplace.hero.title', { defaultValue: 'Farm Marketplace' })}*/}
+            {/*        </h1>*/}
+            {/*        <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">*/}
+            {/*            {t('marketplace.hero.subtitle', { defaultValue: 'Buy and sell agricultural products, tools, and services directly with local farmers and suppliers.' })}*/}
+            {/*        </p>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
+
             <div
                 className="relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-emerald-800 w-full mt-8">
                 {/* Background Pattern */}

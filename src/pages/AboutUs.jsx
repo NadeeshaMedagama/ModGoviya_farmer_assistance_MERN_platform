@@ -15,6 +15,7 @@ import { Users,
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from "../components/common/LanguageSwitcher";
 
 const AboutUs = () => {
     const { t } = useTranslation();
@@ -71,13 +72,14 @@ const AboutUs = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
             {/* Hero Section */}
             <Header />
 
             <div className="relative bg-gradient-to-r from-green-600 to-blue-600 text-white pt-10">
                 <div className="absolute inset-0 bg-black opacity-20"></div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+
                     <div className="text-center">
                         <h1 className="text-5xl md:text-6xl font-bold mb-6">
                             {t('about.hero.title', { defaultValue: 'About' })} <span className="text-yellow-300">ModGoviya</span>
@@ -94,13 +96,13 @@ const AboutUs = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div>
-                        <h2 className="text-4xl font-bold text-gray-800 mb-6">
+                        <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-6">
                             {t('about.intro.title', { defaultValue: 'Revolutionizing Agriculture Through Technology' })}
                         </h2>
-                        <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                        <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                             {t('about.intro.p1', { defaultValue: 'ModGoviya (Modern Farmer) is a comprehensive digital platform designed to transform traditional farming practices through cutting-edge technology and data-driven insights. We bridge the gap between traditional agricultural wisdom and modern technological solutions.' })}
                         </p>
-                        <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                        <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
                             {t('about.intro.p2', { defaultValue: "Our platform provides farmers with access to real-time weather data, crop monitoring tools, market intelligence, and a vibrant community of agricultural experts and fellow farmers. We believe that technology should serve humanity, and our mission is to make farming more profitable, sustainable, and efficient." })}
                         </p>
                         <div className="grid grid-cols-3 gap-6">
@@ -150,26 +152,26 @@ const AboutUs = () => {
             {/* Mission & Vision Section */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div className="grid md:grid-cols-2 gap-16">
-                    <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+                    <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
                         <div className="flex items-center mb-6">
-                            <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mr-4">
-                                <Target className="w-8 h-8 text-blue-600" />
+                            <div className="bg-blue-100 dark:bg-blue-900/20 w-16 h-16 rounded-full flex items-center justify-center mr-4">
+                                <Target className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                             </div>
-                            <h2 className="text-3xl font-bold text-gray-800">{t('about.mission.title', { defaultValue: 'Our Mission' })}</h2>
+                            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">{t('about.mission.title', { defaultValue: 'Our Mission' })}</h2>
                         </div>
-                        <p className="text-lg text-gray-600 leading-relaxed">
+                        <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                             {t('about.mission.desc', { defaultValue: 'To empower farmers worldwide with innovative technology solutions that enhance productivity, promote sustainable practices, and improve livelihoods. We strive to make advanced agricultural tools accessible to every farmer, regardless of their scale of operation or geographical location.' })}
                         </p>
                     </div>
 
-                    <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+                    <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
                         <div className="flex items-center mb-6">
-                            <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mr-4">
-                                <Eye className="w-8 h-8 text-green-600" />
+                            <div className="bg-green-100 dark:bg-green-900/20 w-16 h-16 rounded-full flex items-center justify-center mr-4">
+                                <Eye className="w-8 h-8 text-green-600 dark:text-green-400" />
                             </div>
-                            <h2 className="text-3xl font-bold text-gray-800">{t('about.vision.title', { defaultValue: 'Our Vision' })}</h2>
+                            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">{t('about.vision.title', { defaultValue: 'Our Vision' })}</h2>
                         </div>
-                        <p className="text-lg text-gray-600 leading-relaxed">
+                        <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                             {t('about.vision.desc', { defaultValue: 'To create a world where technology and traditional farming wisdom work together to ensure food security, environmental sustainability, and economic prosperity for farming communities. We envision a future where every farmer is equipped with the knowledge and tools needed to thrive.' })}
                         </p>
                     </div>
@@ -177,27 +179,27 @@ const AboutUs = () => {
             </div>
 
             {/* Team Section */}
-            <div className="bg-gradient-to-br from-gray-50 to-green-50 py-20">
+            <div className="bg-gradient-to-br from-gray-50 to-green-50 dark:from-gray-800 dark:to-gray-900 py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold text-gray-800 mb-4">{t('about.team.title', { defaultValue: 'Meet Our Team' })}</h2>
-                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                        <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">{t('about.team.title', { defaultValue: 'Meet Our Team' })}</h2>
+                        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                             {t('about.team.subtitle', { defaultValue: 'Our diverse team of agricultural experts, technologists, and industry veterans is dedicated to revolutionizing farming practices' })}
                         </p>
                     </div>
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {teamMembers.map((member, index) => (
-                            <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <div key={index} className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
                                 <div className="text-center">
                                     <img
                                         src={member.image}
                                         alt={member.name}
-                                        className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-green-100"
+                                        className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-green-100 dark:border-green-900/20"
                                     />
-                                    <h3 className="text-xl font-bold text-gray-800 mb-2">{member.name}</h3>
-                                    <p className="text-green-600 font-semibold mb-3">{member.position}</p>
-                                    <p className="text-gray-600 text-sm leading-relaxed">{member.description}</p>
+                                    <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">{member.name}</h3>
+                                    <p className="text-green-600 dark:text-green-400 font-semibold mb-3">{member.position}</p>
+                                    <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{member.description}</p>
                                 </div>
                             </div>
                         ))}
