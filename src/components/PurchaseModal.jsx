@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Form, Button, Alert, Row, Col } from 'react-bootstrap';
+import { Modal, Form, Button, Alert, Row, Col, Badge } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import api from '../utils/axios';
-import { Calendar, Clock, MapPin, MessageSquare, Package, User, Phone, Globe } from 'lucide-react';
+import { 
+    Calendar, Clock, MapPin, MessageSquare, Package, User, Phone, Globe, 
+    CreditCard, Bank, Smartphone, Lock, Shield, Receipt, Download,
+    DollarSign, Euro, PoundSterling, Rupee, AlertTriangle, CheckCircle
+} from 'lucide-react';
 
 const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
     const [formData, setFormData] = useState({
@@ -21,17 +25,76 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
         country: 'Sri Lanka'
     });
     
+    // Enhanced payment fields
+    const [paymentMethod, setPaymentMethod] = useState('credit_card');
+    const [cardData, setCardData] = useState({
+        cardNumber: '',
+        expiryDate: '',
+        cvv: '',
+        cardholderName: '',
+        cardType: ''
+    });
+    
+    // Digital wallet fields
+    const [digitalWallet, setDigitalWallet] = useState('paypal');
+    
+    // BNPL fields
+    const [bnplProvider, setBnplProvider] = useState('klarna');
+    const [installmentPlan, setInstallmentPlan] = useState(3);
+    
+    // Currency and localization
+    const [currency, setCurrency] = useState('USD');
+    const [exchangeRate, setExchangeRate] = useState(1);
+    
+    // Security and verification
+    const [show3DSecure, setShow3DSecure] = useState(false);
+    const [otpCode, setOtpCode] = useState('');
+    const [isVerifying, setIsVerifying] = useState(false);
+    
+    // Order and transaction management
+    const [orderId, setOrderId] = useState(null);
+    const [transactionId, setTransactionId] = useState(null);
+    const [paymentStatus, setPaymentStatus] = useState('pending');
+    const [showInvoice, setShowInvoice] = useState(false);
+    
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [districts, setDistricts] = useState([]);
     const [deliveryTimes, setDeliveryTimes] = useState([]);
-    const [paymentMethod, setPaymentMethod] = useState('bank_transfer');
     const [showPaymentProof, setShowPaymentProof] = useState(false);
-    const [orderId, setOrderId] = useState(null);
     const [paymentProof, setPaymentProof] = useState('');
     const [paymentLoading, setPaymentLoading] = useState(false);
     const [paymentError, setPaymentError] = useState(null);
     const [profileLoading, setProfileLoading] = useState(false);
+    const [processingPayment, setProcessingPayment] = useState(false);
+
+    // Available payment methods
+    const paymentMethods = [
+        { id: 'credit_card', name: 'Credit/Debit Card', icon: CreditCard, description: 'Visa, MasterCard, AmEx' },
+        { id: 'paypal', name: 'PayPal', icon: Smartphone, description: 'Digital wallet payment' },
+        { id: 'apple_pay', name: 'Apple Pay', icon: Smartphone, description: 'Apple device payment' },
+        { id: 'google_pay', name: 'Google Pay', icon: Smartphone, description: 'Android device payment' },
+        { id: 'bank_transfer', name: 'Bank Transfer', icon: Bank, description: 'Direct bank payment' },
+        { id: 'cash_on_delivery', name: 'Cash on Delivery', icon: DollarSign, description: 'Pay when you receive' },
+        { id: 'klarna', name: 'Klarna', icon: Receipt, description: 'Buy now, pay later' },
+        { id: 'afterpay', name: 'Afterpay', icon: Receipt, description: 'Split into 4 payments' }
+    ];
+
+    // Available currencies
+    const currencies = [
+        { code: 'USD', symbol: '$', name: 'US Dollar', rate: 1 },
+        { code: 'EUR', symbol: '€', name: 'Euro', rate: 0.85 },
+        { code: 'GBP', symbol: '£', name: 'British Pound', rate: 0.73 },
+        { code: 'LKR', symbol: 'Rs', name: 'Sri Lankan Rupee', rate: 320 },
+        { code: 'INR', symbol: '₹', name: 'Indian Rupee', rate: 83 }
+    ];
+
+    // BNPL installment plans
+    const installmentPlans = [
+        { months: 3, fee: 0, description: '3 months interest-free' },
+        { months: 6, fee: 2.99, description: '6 months with small fee' },
+        { months: 12, fee: 4.99, description: '12 months with fee' }
+    ];
 
     useEffect(() => {
         if (show) {
@@ -118,6 +181,132 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
         }));
     };
 
+    const handleCardDataChange = (e) => {
+        const { name, value } = e.target;
+        setCardData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleCardNumberChange = (e) => {
+        let value = e.target.value.replace(/\s/g, '');
+        if (value.length <= 16) {
+            value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+            setCardData(prev => ({
+                ...prev,
+                cardNumber: value
+            }));
+        }
+    };
+
+    const handleExpiryChange = (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length <= 4) {
+            if (value.length >= 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2);
+            }
+            setCardData(prev => ({
+                ...prev,
+                expiryDate: value
+            }));
+        }
+    };
+
+    const validateCardData = () => {
+        if (paymentMethod !== 'credit_card') return true;
+        
+        const { cardNumber, expiryDate, cvv, cardholderName } = cardData;
+        
+        if (!cardNumber.replace(/\s/g, '').match(/^\d{16}$/)) {
+            toast.error('Please enter a valid 16-digit card number');
+            return false;
+        }
+        
+        if (!expiryDate.match(/^\d{2}\/\d{2}$/)) {
+            toast.error('Please enter expiry date in MM/YY format');
+            return false;
+        }
+        
+        if (!cvv.match(/^\d{3,4}$/)) {
+            toast.error('Please enter a valid CVV');
+            return false;
+        }
+        
+        if (!cardholderName.trim()) {
+            toast.error('Please enter cardholder name');
+            return false;
+        }
+        
+        return true;
+    };
+
+    const processCreditCardPayment = async () => {
+        // Simulate payment processing with sample test data
+        setProcessingPayment(true);
+        
+        try {
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Check if it's a test card
+            const cardNumber = cardData.cardNumber.replace(/\s/g, '');
+            
+            // Sample test card numbers for testing
+            const testCards = {
+                '4242424242424242': 'success', // Visa success
+                '4000000000000002': 'declined', // Visa declined
+                '4000000000009995': 'insufficient_funds', // Insufficient funds
+                '4000000000009987': 'expired_card', // Expired card
+                '4000000000009979': 'incorrect_cvc', // Incorrect CVC
+                '4000000000000069': 'incorrect_number', // Incorrect number
+                '4000000000000127': 'incorrect_number', // Incorrect number
+                '4000000000000119': 'card_declined', // Card declined
+                '4000000000000001': 'card_declined', // Card declined
+                '4000000000000002': 'card_declined', // Card declined
+                '4000000000000003': 'card_declined', // Card declined
+                '4000000000000004': 'card_declined', // Card declined
+                '4000000000000005': 'card_declined', // Card declined
+                '4000000000000006': 'card_declined', // Card declined
+                '4000000000000007': 'card_declined', // Card declined
+                '4000000000000008': 'card_declined', // Card declined
+                '4000000000000009': 'card_declined', // Card declined
+                '4000000000000010': 'card_declined', // Card declined
+            };
+            
+            const testResult = testCards[cardNumber];
+            
+            if (testResult === 'success') {
+                toast.success('Payment successful! Processing your order...');
+                return true;
+            } else if (testResult === 'declined') {
+                toast.error('Payment declined. Please try another card.');
+                return false;
+            } else if (testResult === 'insufficient_funds') {
+                toast.error('Insufficient funds. Please try another card.');
+                return false;
+            } else if (testResult === 'expired_card') {
+                toast.error('Card expired. Please use a valid card.');
+                return false;
+            } else if (testResult === 'incorrect_cvc') {
+                toast.error('Incorrect CVC. Please check and try again.');
+                return false;
+            } else if (testResult === 'incorrect_number') {
+                toast.error('Incorrect card number. Please check and try again.');
+                return false;
+            } else {
+                // For any other card number, simulate success
+                toast.success('Payment successful! Processing your order...');
+                return true;
+            }
+        } catch (error) {
+            toast.error('Payment processing failed. Please try again.');
+            return false;
+        } finally {
+            setProcessingPayment(false);
+        }
+    };
+
     const handleDateChange = (e) => {
         const selectedDate = new Date(e.target.value);
         const today = new Date();
@@ -142,57 +331,53 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        if (!formData.purchaseDate || !formData.deliveryLocation) {
-            setError('Please fill in all required fields');
+        if (!validateCardData()) {
             return;
         }
-
-        if (!userProfile.name || !userProfile.contactNumber) {
-            setError('Please fill in your name and contact number');
-            return;
-        }
-
-        const token = localStorage.getItem('token');
-        if (!token) {
-            toast.error('Please log in to place an order');
-            window.location.href = '/login';
-            return;
-        }
-
+        
         setLoading(true);
         setError(null);
-
+        
         try {
-            // First update user profile
+            // Process payment first if credit card is selected
+            if (paymentMethod === 'credit_card') {
+                const paymentSuccess = await processCreditCardPayment();
+                if (!paymentSuccess) {
+                    setLoading(false);
+                    return;
+                }
+            }
+            
+            // Update user profile
             await updateUserProfile();
-
+            
+            // Create order
             const orderData = {
                 productId: product._id,
-                quantity: parseInt(formData.quantity),
+                quantity: formData.quantity,
                 purchaseDate: formData.purchaseDate,
                 deliveryTime: formData.deliveryTime,
                 deliveryLocation: formData.deliveryLocation,
                 message: formData.message,
-                paymentMethod
+                paymentMethod: paymentMethod,
+                totalAmount: calculateTotal()
             };
-
+            
             const response = await api.post('/orders/create', orderData);
             
-            toast.success('Order created successfully!');
-            setOrderId(response.data.data._id);
-            setShowPaymentProof(true);
-            
-            // Reset form
-            setFormData({
-                quantity: 1,
-                purchaseDate: '',
-                deliveryTime: '10 AM',
-                deliveryLocation: '',
-                message: ''
-            });
-            
+            if (response.data.success) {
+                toast.success('Order created successfully!');
+                setOrderId(response.data.data._id);
+                
+                if (paymentMethod === 'bank_transfer') {
+                    setShowPaymentProof(true);
+                } else {
+                    // For credit card payments, order is already processed
+                    if (onSuccess) onSuccess();
+                    if (onHide) onHide();
+                }
+            }
         } catch (error) {
-            console.error('Error creating order:', error);
             setError(error.response?.data?.message || 'Failed to create order');
         } finally {
             setLoading(false);
@@ -487,18 +672,143 @@ const PurchaseModal = ({ show, onHide, product, onSuccess }) => {
                             <strong className="text-primary">${calculateTotal()}</strong>
                         </div>
                     </div>
+
+                    {/* Payment Method Selection */}
+                    <div className="border rounded p-3 mb-4">
+                        <h6 className="mb-3">Payment Method</h6>
+                        <Row>
+                            {paymentMethods.map(method => (
+                                <Col md={4} key={method.id}>
+                                    <Form.Check
+                                        type="radio"
+                                        id={method.id}
+                                        name="paymentMethod"
+                                        value={method.id}
+                                        checked={paymentMethod === method.id}
+                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                        label={
+                                            <div className="d-flex align-items-center">
+                                                <method.icon className="me-2" />
+                                                {method.name}
+                                                {method.description && (
+                                                    <Badge bg="secondary" className="ms-2">
+                                                        {method.description}
+                                                    </Badge>
+                                                )}
+                                            </div>
+                                        }
+                                    />
+                                </Col>
+                            ))}
+                        </Row>
+                    </div>
+
+                    {/* Credit Card Form */}
+                    {paymentMethod === 'credit_card' && (
+                        <div className="border rounded p-3 mb-4 bg-light">
+                            <h6 className="mb-3">
+                                <CreditCard className="me-2" />
+                                Credit Card Information
+                            </h6>
+                            <Row>
+                                <Col md={12}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Card Number *</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="cardNumber"
+                                            value={cardData.cardNumber}
+                                            onChange={handleCardNumberChange}
+                                            placeholder="1234 5678 9012 3456"
+                                            maxLength="19"
+                                            required
+                                        />
+                                        <Form.Text className="text-muted">
+                                            Enter 16-digit card number
+                                        </Form.Text>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md={6}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Expiry Date *</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="expiryDate"
+                                            value={cardData.expiryDate}
+                                            onChange={handleExpiryChange}
+                                            placeholder="MM/YY"
+                                            maxLength="5"
+                                            required
+                                        />
+                                        <Form.Text className="text-muted">
+                                            Format: MM/YY
+                                        </Form.Text>
+                                    </Form.Group>
+                                </Col>
+                                <Col md={6}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>CVV *</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="cvv"
+                                            value={cardData.cvv}
+                                            onChange={handleCardDataChange}
+                                            placeholder="123"
+                                            maxLength="4"
+                                            required
+                                        />
+                                        <Form.Text className="text-muted">
+                                            3 or 4 digit security code
+                                        </Form.Text>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md={12}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Cardholder Name *</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="cardholderName"
+                                            value={cardData.cardholderName}
+                                            onChange={handleCardDataChange}
+                                            placeholder="Enter cardholder name as it appears on card"
+                                            required
+                                        />
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            
+                            {/* Test Card Information */}
+                            <Alert variant="info" className="mt-3">
+                                <strong>🧪 Test Cards for Development:</strong><br />
+                                <strong>Success:</strong> 4242 4242 4242 4242<br />
+                                <strong>Declined:</strong> 4000 0000 0000 0002<br />
+                                <strong>Insufficient Funds:</strong> 4000 0000 0000 9995<br />
+                                <strong>Expired Card:</strong> 4000 0000 0000 9987<br />
+                                <strong>Incorrect CVC:</strong> 4000 0000 0000 9979<br />
+                                <strong>Any other number:</strong> Simulates success<br />
+                                <strong>Expiry:</strong> Use any future date (e.g., 12/25)<br />
+                                <strong>CVV:</strong> Use any 3 digits (e.g., 123)
+                            </Alert>
+                        </div>
+                    )}
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={onHide} disabled={loading}>
+                    <Button variant="secondary" onClick={onHide} disabled={loading || processingPayment}>
                         Cancel
                     </Button>
                     <Button 
                         variant="primary" 
                         type="submit" 
-                        disabled={loading || !formData.purchaseDate || !formData.deliveryLocation || !userProfile.name || !userProfile.contactNumber}
+                        disabled={loading || processingPayment || !formData.purchaseDate || !formData.deliveryLocation || !userProfile.name || !userProfile.contactNumber || (paymentMethod === 'credit_card' && (!cardData.cardNumber || !cardData.expiryDate || !cardData.cvv || !cardData.cardholderName))}
                     >
-                        {loading ? 'Creating Order...' : 'Create Order'}
+                        {processingPayment ? 'Processing Payment...' : 
+                         loading ? 'Creating Order...' : 
+                         paymentMethod === 'credit_card' ? 'Pay & Create Order' : 'Create Order'}
                     </Button>
                 </Modal.Footer>
             </Form>
