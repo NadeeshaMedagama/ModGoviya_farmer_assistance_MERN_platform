@@ -9,7 +9,7 @@ const protect = asyncHandler(async (req, res, next) => {
     if (req.headers.authorization?.startsWith('Bearer')) {
         try {
             token = req.headers.authorization.split(' ')[1];
-            
+
             // Check if token exists and is not empty
             if (!token || token === 'null' || token === 'undefined') {
                 // No valid token provided, but this is not an error for optional routes
@@ -19,8 +19,8 @@ const protect = asyncHandler(async (req, res, next) => {
 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             console.log('Decoded token:', decoded);
-            
-            req.user = await User.findById(decoded.userId).select('-password');
+
+            req.user = await User.findById(decoded.id).select('-password');
             if (!req.user) {
                 // User not found, but this is not an error for optional routes
                 req.user = null;
@@ -50,7 +50,7 @@ const requireAuth = asyncHandler(async (req, res, next) => {
     if (req.headers.authorization?.startsWith('Bearer')) {
         try {
             token = req.headers.authorization.split(' ')[1];
-            
+
             // Check if token exists and is not empty
             if (!token || token === 'null' || token === 'undefined') {
                 res.status(401);
@@ -59,8 +59,8 @@ const requireAuth = asyncHandler(async (req, res, next) => {
 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             console.log('Decoded token:', decoded);
-            
-            req.user = await User.findById(decoded.userId).select('-password');
+
+            req.user = await User.findById(decoded.id).select('-password');
             if (!req.user) {
                 res.status(401);
                 throw new Error('Not authorized, user not found');
