@@ -32,7 +32,7 @@ const LoginPage = () => {
                 // Store user info in localStorage for consistency with registration
                 localStorage.setItem('userInfo', JSON.stringify(response.data));
                 
-                login(response.data.token, response.data.user);
+                login(response.data.token, response.data);
                 navigate('/');
 
             } catch (error) {
@@ -58,7 +58,7 @@ const LoginPage = () => {
             localStorage.setItem('userInfo', JSON.stringify(response.data));
             
             // Use the login context to save authentication data
-            login(response.data.token, response.data.user);
+            login(response.data.token, response.data);
             
             // Navigate to home page
             navigate('/');

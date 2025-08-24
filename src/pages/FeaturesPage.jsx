@@ -27,7 +27,7 @@ const FeaturesPage = () => {
         {
             id: 1,
             icon: Sprout,
-            title: t('home.features.cropManagement.title'),
+            title: t('home.features.cropManagement.title', { defaultValue: 'Crop Management' }),
             description: t('home.features.cropManagement.description'),
             benefits: [t('features.benefits.trackMultiple', { defaultValue: 'Track multiple crops' }), t('features.benefits.healthMonitoring', { defaultValue: 'Health monitoring' }), t('features.benefits.yieldPrediction', { defaultValue: 'Yield prediction' })],
             color: "from-green-400 to-emerald-600"
@@ -35,7 +35,7 @@ const FeaturesPage = () => {
         {
             id: 2,
             icon: Cloud,
-            title: t('home.features.weather.title'),
+            title: t('home.features.weather.title', { defaultValue: 'Weather Updates' }),
             description: t('home.features.weather.description'),
             benefits: [t('features.benefits.hourlyUpdates', { defaultValue: 'Hourly updates' }), t('features.benefits.stormAlerts', { defaultValue: 'Storm alerts' }), t('features.benefits.irrigationPlanning', { defaultValue: 'Irrigation planning' })],
             color: "from-blue-400 to-cyan-600"
@@ -43,7 +43,7 @@ const FeaturesPage = () => {
         {
             id: 3,
             icon: ShoppingCart,
-            title: t('home.features.marketplace.title'),
+            title: t('home.features.marketplace.title', { defaultValue: 'Marketplace Updates' }),
             description: t('home.features.marketplace.description'),
             benefits: [t('features.benefits.localConnections', { defaultValue: 'Local connections' }), t('features.benefits.securePayments', { defaultValue: 'Secure payments' }), t('features.benefits.qualityAssurance', { defaultValue: 'Quality assurance' })],
             color: "from-purple-400 to-indigo-600"
@@ -51,7 +51,7 @@ const FeaturesPage = () => {
         {
             id: 4,
             icon: Calendar,
-            title: t('home.features.scheduler.title'),
+            title: t('home.features.scheduler.title', { defaultValue: 'Schedule Updates' }),
             description: t('home.features.scheduler.description'),
             benefits: [t('features.benefits.smartReminders', { defaultValue: 'Smart reminders' }), t('features.benefits.taskAutomation', { defaultValue: 'Task automation' }), t('features.benefits.calendarSync', { defaultValue: 'Calendar sync' })],
             color: "from-orange-400 to-red-600"
@@ -67,7 +67,7 @@ const FeaturesPage = () => {
         {
             id: 6,
             icon: Users,
-            title: t('home.features.community.title'),
+            title: t('home.features.community.title', { defaultValue: 'Community Updates' }),
             description: t('home.features.community.description'),
             benefits: [t('features.benefits.expertAdvice', { defaultValue: 'Expert advice' }), t('features.benefits.peerSupport', { defaultValue: 'Peer support' }), t('features.benefits.knowledgeSharing', { defaultValue: 'Knowledge sharing' })],
             color: "from-teal-400 to-green-600"
