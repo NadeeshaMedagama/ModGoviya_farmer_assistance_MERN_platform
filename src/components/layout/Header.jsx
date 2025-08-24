@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Menu,
     X,
@@ -16,7 +16,7 @@ import { useCart } from '../../contexts/CartContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useTranslation } from 'react-i18next';
-import AuthContext from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Header = () => {
     const location = useLocation(); // Get current location
@@ -29,7 +29,7 @@ const Header = () => {
     const { currentLanguage, changeLanguage, languages, getCurrentLanguageInfo } = useLanguage();
     const { isDarkMode, toggleTheme } = useTheme();
     const { t, i18n } = useTranslation();
-    const { isAuthenticated, user, logout } = useContext(AuthContext) || {};
+    const { isAuthenticated, user, logout } = useAuth();
 
     // Compute display name from stored user info (without altering design)
     const [displayName, setDisplayName] = useState('');
@@ -51,8 +51,8 @@ const Header = () => {
     useEffect(() => {
         try {
             // First check AuthContext user data (from login)
-            if (user && user.name) {
-                setDisplayName(user.name);
+            if (user && (user.fullName || user.name)) {
+                setDisplayName(user.fullName || user.name);
                 return;
             }
             
@@ -60,7 +60,7 @@ const Header = () => {
             const raw = localStorage.getItem('userInfo');
             if (raw) {
                 const parsed = JSON.parse(raw);
-                const nameFromResponse = parsed?.user?.name || parsed?.name;
+                const nameFromResponse = parsed?.user?.fullName || parsed?.user?.name || parsed?.fullName || parsed?.name;
                 if (nameFromResponse) {
                     setDisplayName(nameFromResponse);
                     return;
@@ -350,6 +350,14 @@ const Header = () => {
                                 >
                                     {displayName}
                                 </span>
+                                <Link
+                                    to="/orders"
+                                    className="flex items-center justify-center w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg transition-colors duration-200"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    <Package className="w-4 h-4 mr-2" />
+                                    My Orders
+                                </Link>
                                 <button
                                     onClick={() => {
                                         handleLogout();
