@@ -35,32 +35,32 @@ const ModGoviyaHomepage = () => {
         {
             icon: Package,
             titleKey: t('home.features.cropManagement.title', { defaultValue: 'Crop Management' }),
-            descriptionKey: 'home.features.cropManagement.description'
+            descriptionKey: t('home.features.cropManagement.description', { defaultValue: 'Monitor crop health, track growth stages, manage planting schedules, and log harvest data efficiently.' })
         },
         {
             icon: Cloud,
-            titleKey: 'home.features.weather.title',
-            descriptionKey: 'home.features.weather.description'
+            titleKey: t('home.features.weather.title', { defaultValue: 'Weather Updates' }),
+            descriptionKey: t('home.features.weather.description', { defaultValue: 'Receive accurate, hyper-local forecasts and severe weather alerts to protect your crops and plan your activities.' })
         },
         {
             icon: ShoppingCart,
-            titleKey: 'home.features.marketplace.title',
-            descriptionKey: 'home.features.marketplace.description'
+            titleKey: t('home.features.marketplace.title', { defaultValue: 'Marketplace Updates' }),
+            descriptionKey: t('home.features.marketplace.description', { defaultValue: 'Get real-time price alerts, connect directly with buyers, and stay informed on local market demands.' })
         },
         {
             icon: MessageCircle,
-            titleKey: 'home.features.community.title',
-            descriptionKey: 'home.features.community.description'
+            titleKey: t('home.features.community.title', { defaultValue: 'Community Updates' }),
+            descriptionKey: t('home.features.community.description', { defaultValue: 'Share knowledge, ask questions, and stay connected with a network of local farmers and experts.' })
         },
         {
             icon: Calendar,
-            titleKey: 'home.features.scheduler.title',
-            descriptionKey: 'home.features.scheduler.description'
+            titleKey: t('home.features.scheduler.title', { defaultValue: 'Schedule Updates' }),
+            descriptionKey: t('home.features.scheduler.description', { defaultValue: 'Plan irrigation, fertilization, and pest control with smart reminders tailored to your specific crops.' })
         },
         {
             icon: BookOpen,
-            titleKey: 'home.features.tips.title',
-            descriptionKey: 'home.features.tips.description'
+            titleKey: t('features.resources.title', { defaultValue: 'Farming Resources' }),
+            descriptionKey: t('features.resources.description', { defaultValue: 'Access comprehensive guides, modern farming techniques, organic methods, and latest agricultural research.' })
         }
     ];
 
@@ -131,7 +131,7 @@ const ModGoviyaHomepage = () => {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative bg-green-50 py-20 lg:py-32">
+            <section className="relative bg-green-100 py-20 lg:py-32">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h1 className="text-4xl md:text-6xl font-bold mb-6 ">
                         <span className="text-gray-900">Empowering Farmers with</span>
