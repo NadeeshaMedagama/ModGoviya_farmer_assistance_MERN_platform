@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Calendar, Clock, User, Mail, Phone, Building, MapPin, CheckCircle, ArrowLeft, Globe, Video, Users } from 'lucide-react';
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
+import { scheduleDemo } from '../../api/axios';
 
 const ScheduleDemo = () => {
     const [selectedDate, setSelectedDate] = useState('');
@@ -21,6 +22,7 @@ const ScheduleDemo = () => {
         message: ''
     });
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [demoResponse, setDemoResponse] = useState(null);
 
     // Available time slots
     const timeSlots = [
@@ -68,12 +70,41 @@ const ScheduleDemo = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Simulate form submission
-        setTimeout(() => {
+        setIsSubmitting(true);
+        setError('');
+
+        try {
+            const demoData = {
+                ...formData,
+                selectedDate,
+                selectedTime
+            };
+
+            const response = await scheduleDemo(demoData);
+            
+            if (response.data.success) {
+                setDemoResponse(response.data.data);
             setIsSubmitted(true);
-        }, 1000);
+            } else {
+                setError(response.data.message || 'Failed to schedule demo');
+            }
+        } catch (error) {
+            console.error('Demo scheduling error:', error);
+            if (error.response?.data?.message) {
+                setError(error.response.data.message);
+            } else if (error.response?.data?.errors) {
+                setError(error.response.data.errors[0]?.msg || 'Validation failed');
+            } else {
+                setError('Failed to schedule demo. Please try again.');
+            }
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const generateCalendarDays = () => {
@@ -130,10 +161,46 @@ const ScheduleDemo = () => {
                                     <span className="font-medium">Demo Type:</span>
                                     <span className="ml-2">{demoTypes.find(d => d.id === formData.demoType)?.title}</span>
                                 </div>
+                                <div className="flex items-center">
+                                    <Building className="w-5 h-5 text-blue-600 mr-3" />
+                                    <span className="font-medium">Company:</span>
+                                    <span className="ml-2">{formData.company}</span>
+                                </div>
+                                <div className="flex items-center">
+                                    <User className="w-5 h-5 text-blue-600 mr-3" />
+                                    <span className="font-medium">Contact:</span>
+                                    <span className="ml-2">{formData.firstName} {formData.lastName}</span>
+                                </div>
+                                {demoResponse && (
+                                    <div className="flex items-center">
+                                        <CheckCircle className="w-5 h-5 text-green-600 mr-3" />
+                                        <span className="font-medium">Demo ID:</span>
+                                        <span className="ml-2 font-mono text-sm bg-gray-100 px-2 py-1 rounded">{demoResponse._id}</span>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <button
-                            onClick={() => setIsSubmitted(false)}
+                            onClick={() => {
+                                setIsSubmitted(false);
+                                setDemoResponse(null);
+                                setSelectedDate('');
+                                setSelectedTime('');
+                                setFormData({
+                                    firstName: '',
+                                    lastName: '',
+                                    email: '',
+                                    phone: '',
+                                    company: '',
+                                    jobTitle: '',
+                                    employees: '',
+                                    industry: '',
+                                    timezone: 'UTC-5 (EST)',
+                                    demoType: 'live',
+                                    interests: [],
+                                    message: ''
+                                });
+                            }}
                             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
                         >
                             Schedule Another Demo
@@ -444,13 +511,20 @@ const ScheduleDemo = () => {
                                     </select>
                                 </div>
 
+                                {/* Error Display */}
+                                {error && (
+                                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                                        <p className="text-red-600 text-sm">{error}</p>
+                                    </div>
+                                )}
+
                                 {/* Submit Button */}
                                 <button
                                     type="submit"
-                                    disabled={!selectedDate || !selectedTime || !formData.firstName || !formData.lastName || !formData.email || !formData.company}
+                                    disabled={!selectedDate || !selectedTime || !formData.firstName || !formData.lastName || !formData.email || !formData.company || isSubmitting}
                                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-400 text-white py-4 px-8 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed shadow-lg"
                                 >
-                                    Schedule Demo
+                                    {isSubmitting ? 'Scheduling Demo...' : 'Schedule Demo'}
                                 </button>
 
                                 <p className="text-sm text-gray-500 text-center mt-4">
