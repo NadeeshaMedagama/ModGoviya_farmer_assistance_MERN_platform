@@ -17,65 +17,77 @@ import Footer from "../components/layout/Footer";
 import { useTranslation } from 'react-i18next';
 
 const ModGoviyaHomepage = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const [isReady, setIsReady] = useState(false);
+
+    // Wait for i18n to be ready
+    React.useEffect(() => {
+        if (i18n.isInitialized) {
+            setIsReady(true);
+        } else {
+            const handleInitialized = () => setIsReady(true);
+            i18n.on('initialized', handleInitialized);
+            return () => i18n.off('initialized', handleInitialized);
+        }
+    }, [i18n]);
 
     const features = [
         {
             icon: Package,
-            title: t('home.features.cropManagement.title'),
-            description: t('home.features.cropManagement.description')
+            titleKey: t('home.features.cropManagement.title', { defaultValue: 'Crop Management' }),
+            descriptionKey: 'home.features.cropManagement.description'
         },
         {
             icon: Cloud,
-            title: t('home.features.weather.title'),
-            description: t('home.features.weather.description')
+            titleKey: 'home.features.weather.title',
+            descriptionKey: 'home.features.weather.description'
         },
         {
             icon: ShoppingCart,
-            title: t('home.features.marketplace.title'),
-            description: t('home.features.marketplace.description')
+            titleKey: 'home.features.marketplace.title',
+            descriptionKey: 'home.features.marketplace.description'
         },
         {
             icon: MessageCircle,
-            title: t('home.features.community.title'),
-            description: t('home.features.community.description')
+            titleKey: 'home.features.community.title',
+            descriptionKey: 'home.features.community.description'
         },
         {
             icon: Calendar,
-            title: t('home.features.scheduler.title'),
-            description: t('home.features.scheduler.description')
+            titleKey: 'home.features.scheduler.title',
+            descriptionKey: 'home.features.scheduler.description'
         },
         {
             icon: BookOpen,
-            title: t('home.features.tips.title'),
-            description: t('home.features.tips.description')
+            titleKey: 'home.features.tips.title',
+            descriptionKey: 'home.features.tips.description'
         }
     ];
 
     const benefits = [
-        t('home.benefits.interface'),
-        t('home.benefits.language'),
-        t('home.benefits.local'),
-        t('home.benefits.device')
+        'home.benefits.interface',
+        'home.benefits.language',
+        'home.benefits.local',
+        'home.benefits.device'
     ];
 
     const testimonials = [
         {
-            name: t('home.testimonials.ravi.name'),
-            location: t('home.testimonials.ravi.location'),
-            text: t('home.testimonials.ravi.text'),
+            nameKey: 'home.testimonials.ravi.name',
+            locationKey: 'home.testimonials.ravi.location',
+            textKey: 'home.testimonials.ravi.text',
             rating: 5
         },
         {
-            name: t('home.testimonials.kamala.name'),
-            location: t('home.testimonials.kamala.location'),
-            text: t('home.testimonials.kamala.text'),
+            nameKey: 'home.testimonials.kamala.name',
+            locationKey: 'home.testimonials.kamala.location',
+            textKey: 'home.testimonials.kamala.text',
             rating: 5
         },
         {
-            name: t('home.testimonials.sunil.name'),
-            location: t('home.testimonials.sunil.location'),
-            text: t('home.testimonials.sunil.text'),
+            nameKey: 'home.testimonials.sunil.name',
+            locationKey: 'home.testimonials.sunil.location',
+            textKey: 'home.testimonials.sunil.text',
             rating: 5
         }
     ];
@@ -83,25 +95,36 @@ const ModGoviyaHomepage = () => {
     const steps = [
         {
             number: "01",
-            title: t('home.steps.register.title'),
-            description: t('home.steps.register.description')
+            titleKey: 'home.steps.register.title',
+            descriptionKey: 'home.steps.register.description'
         },
         {
             number: "02",
-            title: t('home.steps.manage.title'),
-            description: t('home.steps.manage.description')
+            titleKey: 'home.steps.manage.title',
+            descriptionKey: 'home.steps.manage.description'
         },
         {
             number: "03",
-            title: t('home.steps.connect.title'),
-            description: t('home.steps.connect.description')
+            titleKey: 'home.steps.connect.title',
+            descriptionKey: 'home.steps.connect.description'
         },
         {
             number: "04",
-            title: t('home.steps.grow.title'),
-            description: t('home.steps.grow.description')
+            titleKey: 'home.steps.grow.title',
+            descriptionKey: 'home.steps.grow.description'
         }
     ];
+
+    if (!isReady) {
+        return (
+            <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600 mx-auto mb-4"></div>
+                    <p className="text-gray-600 dark:text-gray-300">Loading...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-white dark:bg-gray-900">
@@ -156,8 +179,8 @@ const ModGoviyaHomepage = () => {
                                     className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center mb-6">
                                     <feature.icon className="text-green-600 dark:text-green-400" size={24}/>
                                 </div>
-                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{feature.title}</h3>
-                                <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{t(feature.titleKey)}</h3>
+                                <p className="text-gray-600 dark:text-gray-300">{t(feature.descriptionKey)}</p>
                             </div>
                         ))}
                     </div>
@@ -183,8 +206,8 @@ const ModGoviyaHomepage = () => {
                                     className="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-xl font-bold mb-6 mx-auto">
                                     {step.number}
                                 </div>
-                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{step.title}</h3>
-                                <p className="text-gray-600 dark:text-gray-300">{step.description}</p>
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{t(step.titleKey)}</h3>
+                                <p className="text-gray-600 dark:text-gray-300">{t(step.descriptionKey)}</p>
                             </div>
                         ))}
                     </div>
@@ -203,13 +226,13 @@ const ModGoviyaHomepage = () => {
                                 {t('home.whyChoose.description')}
                             </p>
                             <div className="space-y-4">
-                                {benefits.map((benefit, index) => (
+                                {benefits.map((benefitKey, index) => (
                                     <div key={index} className="flex items-center">
                                         <div
                                             className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4">
                                             <Check className="text-green-600" size={14}/>
                                         </div>
-                                        <span className="text-gray-700 dark:text-gray-300">{benefit}</span>
+                                        <span className="text-gray-700 dark:text-gray-300">{t(benefitKey)}</span>
                                     </div>
                                 ))}
                             </div>
@@ -248,12 +271,12 @@ const ModGoviyaHomepage = () => {
                                         <Star key={i} className="text-yellow-400 fill-current" size={20}/>
                                     ))}
                                 </div>
-                                <p className="text-gray-600 dark:text-gray-300 mb-6 italic">"{testimonial.text}"</p>
+                                <p className="text-gray-600 dark:text-gray-300 mb-6 italic">"{t(testimonial.textKey)}"</p>
                                 <div>
-                                    <div className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</div>
+                                    <div className="font-semibold text-gray-900 dark:text-white">{t(testimonial.nameKey)}</div>
                                     <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
                                         <MapPin size={14} className="mr-1"/>
-                                        {testimonial.location}
+                                        {t(testimonial.locationKey)}
                                     </div>
                                 </div>
                             </div>
