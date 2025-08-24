@@ -88,4 +88,8 @@ export const registerUser = async (formData) => {
     });
 };
 
+export const scheduleDemo = async (demoData) => {
+    return api.post('/demo/schedule', demoData);
+};
+
 export default api;
