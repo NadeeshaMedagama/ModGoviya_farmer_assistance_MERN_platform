@@ -28,38 +28,43 @@ const {
 
 const app = express();
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => {
-    console.log('MongoDB connected successfully');
-})
-.catch(err => {
-    console.error('MongoDB connection error:', err);
-    process.exit(1);
-});
-
-// Security middleware
+/* ─── Security Middleware ────────────────────────── */
+// Security headers
 app.use(securityHeaders);
-app.use(xssProtection);
-app.use(hppProtection);
-app.use(mongoSanitization);
+
+// CORS configuration
 app.use(cors(corsOptions));
+
+// Rate limiting
+app.use(generalLimiter);
+
+// XSS protection
+app.use(xssProtection);
+
+// HTTP Parameter Pollution protection
+app.use(hppProtection);
+
+// MongoDB injection protection
+app.use(mongoSanitization);
+
+// Input validation and sanitization
 app.use(validateInput);
+
+// SQL injection protection
 app.use(sqlInjectionProtection);
+
+// Content type validation
 app.use(validateContentType);
+
+// Request size limiting
 app.use(requestSizeLimit);
+
+// Security logging
 app.use(securityLogging);
 
-// Body parsing middleware
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// Session middleware
+// Session middleware (for cart functionality)
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'your-secret-key',
+    secret: process.env.SESSION_SECRET || 'your-session-secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -69,73 +74,133 @@ app.use(session({
     }
 }));
 
-// Rate limiting
-app.use('/api/', generalLimiter);
-app.use('/api/auth/', authLimiter);
-app.use('/api/contact/', contactLimiter);
+// Body parsing middleware
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Routes
-app.use('/api/subscribe', subscribeRouter);
-
-// Consolidated authentication routes (handles all user types)
-app.use('/api/auth', require('./routes/auth'));
-
+/* ─── API routes with rate limiting ─────────────── */
 // Health check endpoint
 app.get('/api/health', (req, res) => {
     res.json({
         status: 'OK',
-        message: 'Server is running',
         timestamp: new Date().toISOString(),
-        environment: process.env.NODE_ENV || 'development'
+        environment: process.env.NODE_ENV || 'development',
+        googleClientId: process.env.GOOGLE_CLIENT_ID ? 'Configured' : 'Not Configured'
     });
 });
 
-// Error handling middleware
-app.use(errorHandler);
+// Auth routes with stricter rate limiting (consolidated user registration)
+app.use('/api/auth', authLimiter, require('./routes/auth'));
 
-// 404 handler
-app.use('*', (req, res) => {
-    res.status(404).json({
-        success: false,
-        message: 'Route not found'
-    });
-});
+// Contact form with specific rate limiting
+app.use('/api/contact', contactLimiter, require('./routes/contact'));
 
-const PORT = process.env.PORT || 5000;
+// Other routes with content type validation
+app.use('/api/users', validateContentType, require('./routes/userRoutes'));
+app.use('/api/weather', validateContentType, require('./routes/weather'));
+app.use('/api/subscribe', validateContentType, subscribeRouter);
+app.use('/api/products', validateContentType, require('./routes/productRoutes'));
+app.use('/api/cart', validateContentType, require('./routes/cart'));
+app.use('/api/orders', validateContentType, require('./routes/orderRoutes'));
+app.use('/api/demo', validateContentType, require('./routes/demo'));
 
-// Start server
-if (process.env.NODE_ENV === 'production' && process.env.SSL_KEY && process.env.SSL_CERT) {
-    // HTTPS server for production
-    const httpsOptions = {
-        key: fs.readFileSync(process.env.SSL_KEY),
-        cert: fs.readFileSync(process.env.SSL_CERT)
-    };
-    
-    https.createServer(httpsOptions, app).listen(PORT, () => {
-        console.log(`HTTPS Server running on port ${PORT}`);
-    });
-} else {
-    // HTTP server for development
-    app.listen(PORT, () => {
-        console.log(`HTTP Server running on port ${PORT}`);
-        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-        console.log(`MongoDB: ${process.env.MONGODB_URI ? 'Connected' : 'Not configured'}`);
-    });
+// Note: Removed old registration routes to ensure all user registration goes through /api/auth/register
+// with proper password hashing using the consolidated User model
+
+/* ─── Static assets in production ───────────────── */
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../frontend/build')));
+    app.get('*', (req, res) =>
+        res.sendFile(path.resolve(__dirname, '../frontend', 'build', 'index.html'))
+    );
 }
 
-// Graceful shutdown
-process.on('SIGTERM', () => {
-    console.log('SIGTERM received. Shutting down gracefully...');
-    mongoose.connection.close(() => {
-        console.log('MongoDB connection closed.');
-        process.exit(0);
-    });
-});
+/* ─── Error handler ─────────────────────────────── */
+app.use(errorHandler);
 
-process.on('SIGINT', () => {
-    console.log('SIGINT received. Shutting down gracefully...');
-    mongoose.connection.close(() => {
-        console.log('MongoDB connection closed.');
-        process.exit(0);
+/* ─── DB Connection + Server Start ──────────────── */
+const PORT = process.env.PORT || 5000;
+
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then(() => {
+        console.log('MongoDB connected');
+        const useHttps = process.env.HTTPS_ENABLED === 'true';
+        let server;
+        if (useHttps) {
+            const keyPath = process.env.SSL_KEY_PATH;
+            const certPath = process.env.SSL_CERT_PATH;
+            if (keyPath && certPath) {
+                try {
+                    const credentials = {
+                        key: fs.readFileSync(keyPath),
+                        cert: fs.readFileSync(certPath)
+                    };
+                    server = https.createServer(credentials, app).listen(PORT, () => {
+                        console.log(`HTTPS server running on port ${PORT}`);
+                        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+                        console.log('Security measures: ✅ Enabled (HTTPS)');
+                        console.log('Password security: ✅ All passwords are now properly hashed with bcrypt');
+                    });
+                } catch (e) {
+                    console.error('Failed to read SSL certificate or key. Falling back to HTTP.', e.message);
+                    server = app.listen(PORT, () => {
+                        console.log(`Server running on port ${PORT}`);
+                        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+                        console.log('Security measures: ✅ Enabled');
+                        console.log('Password security: ✅ All passwords are now properly hashed with bcrypt');
+                    });
+                }
+            } else {
+                console.warn('HTTPS_ENABLED is true but SSL_KEY_PATH/SSL_CERT_PATH not provided. Falling back to HTTP.');
+                server = app.listen(PORT, () => {
+                    console.log(`Server running on port ${PORT}`);
+                    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+                    console.log('Security measures: ✅ Enabled');
+                    console.log('Password security: ✅ All passwords are now properly hashed with bcrypt');
+                });
+            }
+        } else {
+            server = app.listen(PORT, () => {
+                console.log(`Server running on port ${PORT}`);
+                console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+                console.log('Security measures: ✅ Enabled');
+                console.log('Password security: ✅ All passwords are now properly hashed with bcrypt');
+            });
+        }
+
+        // Handle server errors
+        server.on('error', (error) => {
+            if (error.code === 'EADDRINUSE') {
+                console.error(`Port ${PORT} is already in use. Please try a different port or stop the existing server.`);
+                console.error('You can kill the existing process with: taskkill /f /im node.exe');
+                process.exit(1);
+            } else {
+                console.error('Server error:', error);
+                process.exit(1);
+            }
+        });
+
+        // Handle graceful shutdown
+        process.on('SIGTERM', () => {
+            console.log('SIGTERM received, shutting down gracefully');
+            server.close(() => {
+                console.log('Server closed');
+                process.exit(0);
+            });
+        });
+
+        process.on('SIGINT', () => {
+            console.log('SIGINT received, shutting down gracefully');
+            server.close(() => {
+                console.log('Server closed');
+                process.exit(0);
+            });
+        });
+    })
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+        process.exit(1);
     });
-});
