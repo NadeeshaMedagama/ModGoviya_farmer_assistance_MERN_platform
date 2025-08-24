@@ -406,7 +406,7 @@ const WeatherPage = () => {
             <section className="relative bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 py-20 lg:py-32">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-cyan-600/10 dark:from-gray-600/20 dark:to-gray-800/20"></div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+                    <h1 className="text-4xl md:text-6xl font-bold text-green-600 dark:text-white mb-6 leading-tight">
                         {t('weather.hero.title', { defaultValue: 'Weather & Farming Insights' })}
                         </h1>
                     <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
