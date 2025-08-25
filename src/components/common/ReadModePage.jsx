@@ -20,6 +20,7 @@ import {
     AlertTriangle,
     Info
 } from 'lucide-react';
+import Header from "../layout/Header";
 
 const ReadModePage = () => {
     const [selectedArticle, setSelectedArticle] = useState('monsoon');
@@ -266,29 +267,7 @@ const ReadModePage = () => {
             </div>
 
             {/* Header */}
-            <header className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-40 pt-1">
-                <div className="max-w-4xl mx-auto px-4 py-4">
-                    <div className="flex items-center justify-between">
-                        <button className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
-                            <ArrowLeft className="w-5 h-5 mr-2" />
-                            <span>Back to Articles</span>
-                        </button>
-                        <div className="flex items-center space-x-4">
-                            <button
-                                onClick={() => setIsBookmarked(!isBookmarked)}
-                                className={`p-2 rounded-full transition-colors ${
-                                    isBookmarked ? 'text-blue-600 bg-blue-100' : 'text-gray-600 hover:text-gray-900'
-                                }`}
-                            >
-                                <Bookmark className={`w-5 h-5 ${isBookmarked ? 'fill-current' : ''}`} />
-                            </button>
-                            <button className="p-2 rounded-full text-gray-600 hover:text-gray-900 transition-colors">
-                                <Share2 className="w-5 h-5" />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <Header />
 
             <div className="max-w-4xl mx-auto px-4 py-8">
                 <ArticleSelector />
