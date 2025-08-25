@@ -23,6 +23,7 @@ import {
     Quote
 } from 'lucide-react';
 import Footer from "../components/layout/Footer";
+import Header from "../components/layout/Header";
 
 const LearnMore = () => {
     const [activeTab, setActiveTab] = useState('overview');
@@ -169,32 +170,10 @@ const LearnMore = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Navigation */}
-            <nav className="bg-white shadow-sm sticky top-0 z-40">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center h-16">
-                        <div className="flex items-center">
-                            <Link
-                                to="/marketplace"
-                                  className="flex items-center text-green-600 hover:text-green-700 font-medium">
-                                <ArrowLeft className="w-4 h-4 mr-2" />
-                                Back to Marketplace
-                            </Link>
-                        </div>
-                        <div className="flex items-center space-x-8">
-                            <a href="#overview" className="text-gray-700 hover:text-green-600 transition-colors">Overview</a>
-                            <a href="#features" className="text-gray-700 hover:text-green-600 transition-colors">Features</a>
-                            <a href="#how-it-works" className="text-gray-700 hover:text-green-600 transition-colors">How It Works</a>
-                            <a href="#testimonials" className="text-gray-700 hover:text-green-600 transition-colors">Reviews</a>
-                            <button className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
-                                Get Started
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </nav>
+            <Header />
 
             {/* Hero Section */}
-            <section id="section-hero" className={`relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-emerald-800 transition-all duration-1000 ${isVisible['section-hero'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <section id="section-hero" className={`py-12 relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-emerald-800 transition-all duration-1000 ${isVisible['section-hero'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="absolute inset-0 bg-black/10"></div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
                     <div className="text-center">
