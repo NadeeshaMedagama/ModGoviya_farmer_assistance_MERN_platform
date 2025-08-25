@@ -270,7 +270,7 @@ const ReadModePage = () => {
             {/* Header */}
             <Header />
 
-            <div className="max-w-4xl mx-auto px-4 py-8">
+            <div className=" mx-auto px-4 py-24">
                 <ArticleSelector />
 
                 {/* Article Header */}
