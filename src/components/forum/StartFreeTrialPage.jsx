@@ -27,6 +27,7 @@ import {
     Droplets,
     Sun
 } from 'lucide-react';
+import Footer from "../layout/Footer";
 
 const StartFreeTrialPage = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -527,23 +528,7 @@ const StartFreeTrialPage = () => {
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-white py-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center">
-                        <div className="flex items-center justify-center space-x-2 mb-4">
-                            <Sprout className="w-8 h-8 text-green-400" />
-                            <span className="text-2xl font-bold">ModGoviya</span>
-                        </div>
-                        <p className="text-gray-400 mb-6">Empowering Sri Lankan farmers with technology</p>
-                        <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-400">
-                            <Link to="/privacy" className="hover:text-green-400">Privacy Policy</Link>
-                            <Link to="/terms" className="hover:text-green-400">Terms of Service</Link>
-                            <Link to="/contact" className="hover:text-green-400">Contact Support</Link>
-                            <span>© 2024 ModGoviya. All rights reserved.</span>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 };
