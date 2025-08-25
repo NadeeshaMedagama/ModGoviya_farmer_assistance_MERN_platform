@@ -340,9 +340,10 @@ const ModGoviyaHomepage = () => {
                                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                                     Natural and effective ways to protect your crops from pests without chemicals.
                                 </p>
-                                <a href="#" className="text-green-600 font-medium hover:text-green-700">
+                                <Link to="/readmore"
+                                      className="text-green-600 font-medium hover:text-green-700">
                                     Read More →
-                                </a>
+                                </Link>
                             </div>
                         </article>
                     </div>
