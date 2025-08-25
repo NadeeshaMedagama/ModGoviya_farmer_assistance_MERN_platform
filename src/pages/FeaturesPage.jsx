@@ -106,6 +106,13 @@ const FeaturesPage = () => {
         }
     ];
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // This enables smooth scrolling
+        });
+    };
+
     const stats = [
         { number: "50K+", label: t('features.stats.activeFarmers', { defaultValue: 'Active Farmers' }) },
         { number: "95%", label: t('features.stats.cropSuccess', { defaultValue: 'Crop Success Rate' }) },
@@ -184,7 +191,9 @@ const FeaturesPage = () => {
 
                                 <Link
                                     to="/learnmorefeatures">
-                                <button className={`w-full py-3 px-4 bg-gradient-to-r ${feature.color} text-white font-semibold rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0`}>
+                                <button
+                                    onClick={scrollToTop}
+                                    className={`w-full py-3 px-4 bg-gradient-to-r ${feature.color} text-white font-semibold rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0`}>
                                     {t('features.learnMore', { defaultValue: 'Learn More' })}
                                 </button>
                                 </Link>
@@ -257,13 +266,16 @@ const FeaturesPage = () => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link
                             to="/freetrial">
-                        <button className="inline-flex items-center px-8 py-4 bg-white text-green-600 font-semibold rounded-full hover:bg-green-50 transition-all duration-300 transform hover:scale-105 shadow-xl">
+                        <button
+                            onClick={scrollToTop}
+                            className="inline-flex items-center px-8 py-4 bg-white text-green-600 font-semibold rounded-full hover:bg-green-50 transition-all duration-300 transform hover:scale-105 shadow-xl">
                             {t('features.cta.startTrial', { defaultValue: 'Start Free Trial' })}
                             <ArrowRight className="ml-2 w-5 h-5" />
                         </button>
                         </Link>
                         <Link
                             to="/schedule"
+                            onClick={scrollToTop}
                               className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-green-600 transition-all duration-300">
                             {t('features.cta.scheduleDemo', { defaultValue: 'Schedule Demo' })}
                         </Link>
