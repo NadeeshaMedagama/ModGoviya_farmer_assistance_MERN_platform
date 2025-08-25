@@ -255,10 +255,13 @@ const FeaturesPage = () => {
                         {t('features.cta.subtitle', { defaultValue: 'Join thousands of successful farmers who trust ModGoviya to enhance their productivity and profitability.' })}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <Link
+                            to="/freetrial">
                         <button className="inline-flex items-center px-8 py-4 bg-white text-green-600 font-semibold rounded-full hover:bg-green-50 transition-all duration-300 transform hover:scale-105 shadow-xl">
                             {t('features.cta.startTrial', { defaultValue: 'Start Free Trial' })}
                             <ArrowRight className="ml-2 w-5 h-5" />
                         </button>
+                        </Link>
                         <Link
                             to="/schedule"
                               className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-green-600 transition-all duration-300">
