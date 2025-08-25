@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import Footer from "../components/layout/Footer";
 import { useTranslation } from 'react-i18next';
+import Header from "../components/layout/Header";
 
 const CommunityPage = () => {
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -118,7 +119,9 @@ const CommunityPage = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Header Section */}
-            <div className="bg-gradient-to-r from-green-600 to-green-700 text-white">
+            <Header />
+
+            <div className="bg-gradient-to-r from-green-600 to-green-700 text-white py-20">
                 <div className="max-w-7xl mx-auto px-4 py-12">
                     <div className="text-center">
                         <h1 className="text-4xl font-bold mb-4">{t('community.hero.title')}</h1>
