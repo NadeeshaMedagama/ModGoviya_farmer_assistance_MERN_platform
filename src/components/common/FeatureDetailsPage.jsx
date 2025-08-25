@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Sprout,
     Cloud,
@@ -683,12 +684,18 @@ const FeatureDetailsPage = () => {
                         Join thousands of successful farmers who are already using ModGoviya to transform their agricultural operations.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <Link
+                            to="/freetrial">
                         <button className="px-8 py-4 bg-white text-green-600 font-bold rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
                             Start Free Trial
                         </button>
+                        </Link>
+                        <Link
+                            to="/schedule">
                         <button className="px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-green-600 transition-all duration-300">
                             Schedule Demo
                         </button>
+                        </Link>
                     </div>
                     <div className="mt-6 text-sm opacity-80">
                         ✓ No credit card required  ✓ 30-day free trial  ✓ Cancel anytime
