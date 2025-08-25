@@ -21,6 +21,7 @@ import {
     Info
 } from 'lucide-react';
 import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const ReadModePage = () => {
     const [selectedArticle, setSelectedArticle] = useState('monsoon');
@@ -421,6 +422,7 @@ const ReadModePage = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
