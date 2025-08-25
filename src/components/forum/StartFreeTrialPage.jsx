@@ -28,6 +28,7 @@ import {
     Sun
 } from 'lucide-react';
 import Footer from "../layout/Footer";
+import Header from "../layout/Header";
 
 const StartFreeTrialPage = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -162,21 +163,7 @@ const StartFreeTrialPage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
             {/* Header */}
-            <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center h-16">
-                        <div className="flex items-center space-x-2 cursor-pointer">
-                            <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center">
-                                <Sprout className="w-6 h-6 text-white" />
-                            </div>
-                            <span className="text-2xl font-bold text-green-600">ModGoviya</span>
-                        </div>
-                        <div className="text-green-600 hover:text-green-700 font-medium cursor-pointer">
-                            ← Back to Features
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <Header />
 
             {/* Hero Section */}
             <section className="relative py-16 lg:py-24">
