@@ -132,7 +132,7 @@ const StartFreeTrialPage = () => {
         },
         {
             name: "Professional",
-            price: "රු 1,500",
+            price: "Rs: 1,500",
             duration: "per month",
             features: [
                 "Up to 25 acres coverage",
@@ -146,7 +146,7 @@ const StartFreeTrialPage = () => {
         },
         {
             name: "Enterprise",
-            price: "රු 3,500",
+            price: "Rs: 3,500",
             duration: "per month",
             features: [
                 "Unlimited acres coverage",
