@@ -27,6 +27,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './i18n';
 import FeatureDetailsPage from "./components/common/FeatureDetailsPage";
+import StartFreeTrialPage from "./components/forum/StartFreeTrialPage";
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
                     <Route path="/getstart" element={<GetStartedPage />} />
                     <Route path="/learnmorefeatures" element={<FeatureDetailsPage />} />
                     <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/freetrial" element={<StartFreeTrialPage />} />
                   </Routes>
                 </CartProvider>
               </LanguageProvider>
