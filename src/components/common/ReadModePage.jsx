@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
     ArrowLeft,
     Calendar,
@@ -41,6 +42,13 @@ const ReadModePage = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // This enables smooth scrolling
+        });
+    };
 
     const articles = {
         monsoon: {
@@ -349,9 +357,13 @@ const ReadModePage = () => {
                                     Join thousands of farmers who have transformed their farming practices with ModGoviya's expert guidance and community support.
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-4">
-                                    <button className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                                    <Link to ="/community">
+                                    <button
+                                        onClick={scrollToTop}
+                                        className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
                                         Join Our Community
                                     </button>
+                                    </Link>
                                     <button className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors">
                                         Get Expert Consultation
                                     </button>
