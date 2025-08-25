@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -26,7 +25,8 @@ import Checkout from "./pages/Checkout";
 import GetStartedPage from "./services/GetStartedPage";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './i18n'; // Import i18n configuration
+import './i18n';
+import FeatureDetailsPage from "./components/common/FeatureDetailsPage";
 
 function App() {
   return (
@@ -66,6 +66,7 @@ function App() {
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/orders" element={<Orders />} />
                     <Route path="/getstart" element={<GetStartedPage />} />
+                    <Route path="/learnmorefeatures" element={<FeatureDetailsPage />} />
                     <Route path="/checkout" element={<Checkout />} />
                   </Routes>
                 </CartProvider>
