@@ -182,9 +182,12 @@ const FeaturesPage = () => {
                                     ))}
                                 </div>
 
+                                <Link
+                                    to="/learnmorefeatures">
                                 <button className={`w-full py-3 px-4 bg-gradient-to-r ${feature.color} text-white font-semibold rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0`}>
                                     {t('features.learnMore', { defaultValue: 'Learn More' })}
                                 </button>
+                                </Link>
                             </div>
                         );
                     })}
