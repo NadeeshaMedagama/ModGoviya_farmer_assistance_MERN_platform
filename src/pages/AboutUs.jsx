@@ -53,6 +53,13 @@ const AboutUs = () => {
         { icon: Award, value: "25+", label: t('about.stats.awards', { defaultValue: 'Industry Awards' }) }
     ];
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // This enables smooth scrolling
+        });
+    };
+
     const features = [
         {
             icon: Leaf,
@@ -247,9 +254,12 @@ const AboutUs = () => {
                     </div>
 
                     <div className="text-center mt-12">
-                        <Link to="/contact"
+                        <Link to="/contact">
+                            <button
+                                onClick={scrollToTop}
                               className="bg-white text-green-600 px-8 py-3 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg">
                             {t('about.contact.cta', { defaultValue: 'Contact Us Today' })}
+                            </button>
                         </Link>
                     </div>
                 </div>
