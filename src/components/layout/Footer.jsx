@@ -56,14 +56,13 @@ const Footer = () => {
     };
 
     return (
-        <footer className="bg-gray-900 dark:bg-black text-white relative min-h-screen">
-            <div className="absolute inset-0 opacity-5">
-                <div className="absolute inset-0" style={{
-                    backgroundImage: `url("data:image/svg+xml,%3csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%23059669' fill-opacity='1' fill-rule='evenodd'%3e%3cpath d='m0 40l40-40h-40z'/%3e%3cpath d='m40 40v-40h-40z' fill-opacity='0.1'/%3e%3c/g%3e%3c/svg%3e")`,
-                    backgroundSize: '40px 40px'
-                }}></div>
-            </div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <footer className="relative min-h-screen bg-gray-900 dark:bg-black text-white">
+            <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
+                backgroundImage: `url("data:image/svg+xml,%3csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%23059669' fill-opacity='1' fill-rule='evenodd'%3e%3cpath d='m0 40l40-40h-40z'/%3e%3cpath d='m40 40v-40h-40z' fill-opacity='0.1'/%3e%3c/g%3e%3c/svg%3e")`,
+                backgroundSize: '40px 40px'
+            }}></div>
+
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
                     {/* Company Info */}
                     <div className="col-span-1 lg:col-span-2">
@@ -77,10 +76,10 @@ const Footer = () => {
                                     className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-80 animate-pulse"></div>
                             </div>
                             <div className="ml-4">
-                                <span
-                                    className="ml-3 text-2xl font-bold">
-                                    ModGoviya
-                                </span>
+                            <span
+                                className="ml-3 text-2xl font-bold">
+                                ModGoviya
+                            </span>
                                 <div
                                     className="text-xs text-gray-300 dark:text-gray-400 font-medium -mt-1 mx-2">Agriculture
                                     Platform
@@ -92,16 +91,20 @@ const Footer = () => {
                             revolutionizing agriculture for a sustainable future.
                         </p>
                         <div className="flex space-x-4">
-                            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors duration-200">
+                            <a href="#"
+                               className="text-gray-400 hover:text-green-400 transition-colors duration-200">
                                 <Facebook size={24}/>
                             </a>
-                            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors duration-200">
+                            <a href="#"
+                               className="text-gray-400 hover:text-green-400 transition-colors duration-200">
                                 <Twitter size={24}/>
                             </a>
-                            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors duration-200">
+                            <a href="#"
+                               className="text-gray-400 hover:text-green-400 transition-colors duration-200">
                                 <Instagram size={24}/>
                             </a>
-                            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors duration-200">
+                            <a href="#"
+                               className="text-gray-400 hover:text-green-400 transition-colors duration-200">
                                 <Linkedin size={24}/>
                             </a>
                         </div>
@@ -180,7 +183,8 @@ const Footer = () => {
                     <div className="max-w-md mx-auto text-center mb-8">
                         <h3 className="text-xl font-semibold mb-3 text-green-400">Stay Updated</h3>
                         <p className="text-gray-300 dark:text-gray-400 mb-6">
-                            Get the latest farming tips, weather updates, and market insights delivered to your inbox.
+                            Get the latest farming tips, weather updates, and market insights delivered to your
+                            inbox.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3">
                             <input

@@ -137,12 +137,10 @@ const ModGoviyaHomepage = () => {
         <div className="relative min-h-screen">
             <Header/>
 
-            <div className="absolute inset-0 opacity-5">
-                <div className="absolute inset-0" style={{
+                <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
                     backgroundImage: `url("data:image/svg+xml,%3csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%23059669' fill-opacity='1' fill-rule='evenodd'%3e%3cpath d='m0 40l40-40h-40z'/%3e%3cpath d='m40 40v-40h-40z' fill-opacity='0.1'/%3e%3c/g%3e%3c/svg%3e")`,
                     backgroundSize: '40px 40px'
                 }}></div>
-            </div>
 
             {/* Hero Section */}
             {/* Enhanced Hero Section */}
