@@ -92,6 +92,13 @@ const ModGoviyaHomepage = () => {
         }
     ];
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // This enables smooth scrolling
+        });
+    };
+
     const steps = [
         {
             number: "01",
@@ -308,9 +315,13 @@ const ModGoviyaHomepage = () => {
                                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                                     Learn how to protect your crops and maximize yield during the rainy season.
                                 </p>
-                                <a href="#" className="text-green-600 font-medium hover:text-green-700">
+                                <Link to="/readmore">
+                                    <button
+                                        onClick={scrollToTop}
+                                      className="text-green-600 font-medium hover:text-green-700">
                                     Read More →
-                                </a>
+                                    </button>
+                                </Link>
                             </div>
                         </article>
 
@@ -324,9 +335,13 @@ const ModGoviyaHomepage = () => {
                                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                                     Discover modern irrigation methods that save water and increase efficiency.
                                 </p>
-                                <a href="#" className="text-green-600 font-medium hover:text-green-700">
+                                <Link to="/readmore">
+                                    <button
+                                        onClick={scrollToTop}
+                                      className="text-green-600 font-medium hover:text-green-700">
                                     Read More →
-                                </a>
+                                    </button>
+                                </Link>
                             </div>
                         </article>
 
@@ -340,9 +355,12 @@ const ModGoviyaHomepage = () => {
                                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                                     Natural and effective ways to protect your crops from pests without chemicals.
                                 </p>
-                                <Link to="/readmore"
+                                <Link to="/readmore">
+                                    <button
+                                        onClick={scrollToTop}
                                       className="text-green-600 font-medium hover:text-green-700">
                                     Read More →
+                                    </button>
                                 </Link>
                             </div>
                         </article>
