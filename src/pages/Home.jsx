@@ -134,46 +134,115 @@ const ModGoviyaHomepage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-white dark:bg-gray-900">
-            <Header />
+        <div className="relative min-h-screen">
+            <Header/>
+
+            <div className="absolute inset-0 opacity-5">
+                <div className="absolute inset-0" style={{
+                    backgroundImage: `url("data:image/svg+xml,%3csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%23059669' fill-opacity='1' fill-rule='evenodd'%3e%3cpath d='m0 40l40-40h-40z'/%3e%3cpath d='m40 40v-40h-40z' fill-opacity='0.1'/%3e%3c/g%3e%3c/svg%3e")`,
+                    backgroundSize: '40px 40px'
+                }}></div>
+            </div>
 
             {/* Hero Section */}
-            <section className="relative bg-green-100 py-20 lg:py-32">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-4xl md:text-6xl font-bold mb-6 ">
-                        <span className="text-gray-900">Empowering Farmers with</span>
-                        <br/>
-                        <span className="text-green-600 mt-4 inline-block">Modern Technology</span>
+            {/* Enhanced Hero Section */}
+            <section
+                className="relative bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-green-900/10 dark:to-gray-900 py-20 lg:py-32 overflow-hidden">
+                {/* Background decorative elements */}
+                <div className="absolute inset-0">
+                    <div className="absolute top-10 left-10 w-72 h-72 bg-green-200/20 rounded-full blur-3xl"></div>
+                    <div
+                        className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-200/20 rounded-full blur-3xl"></div>
+                    <div
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-green-100/10 to-emerald-100/10 rounded-full blur-3xl"></div>
+                </div>
+
+                {/* Grid pattern overlay */}
+                <div className="absolute inset-0 opacity-5">
+                    <div className="absolute inset-0" style={{
+                        backgroundImage: `url("data:image/svg+xml,%3csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cg fill='%23059669' fill-opacity='1'%3e%3ccircle cx='7' cy='7' r='1'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e")`,
+                        backgroundSize: '60px 60px'
+                    }}></div>
+                </div>
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                    {/* Badge */}
+                    <div
+                        className="inline-flex items-center px-4 py-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full border border-green-200 dark:border-green-700 mb-8">
+                        <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                        <span className="text-sm font-medium text-green-700 dark:text-green-300">Trusted by 10,000+ Farmers</span>
+                    </div>
+
+                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
+                        <span className="text-gray-900 dark:text-white block">Empowering Farmers with</span>
+                        <span
+                            className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent mt-4 inline-block pb-3">
+                Modern Technology
+            </span>
                     </h1>
-                    <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                        Join thousands of farmers using ModGoviya to revolutionize their farming practices with smart tools, weather insights, and community support.
+
+                    <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
+                        Join thousands of farmers using ModGoviya to revolutionize their farming practices with smart
+                        tools, weather insights, and community support.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+                    <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                         <Link
                             to="/register"
-                            className="inline-flex items-center px-8 py-4 bg-green-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200"
+                            className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-green-500/20"
                         >
-                            Get Started
-                            <ArrowRight className="ml-2 w-5 h-5" />
+                            <span className="mr-3">Get Started</span>
+                            <ArrowRight
+                                className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-200"/>
+                            <div
+                                className="absolute inset-0 bg-gradient-to-r from-green-700 to-emerald-700 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
                         </Link>
                         <Link
                             to="/features"
-                            className="inline-flex items-center px-8 py-4 border-2 border-green-600 text-green-600 font-semibold rounded-lg hover:bg-green-600 hover:text-white transition-all duration-200"
+                            className="group inline-flex items-center px-8 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-2 border-green-600 text-green-600 dark:text-green-400 font-semibold rounded-xl hover:bg-green-600 hover:text-white dark:hover:bg-green-600 dark:hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                         >
-                            Browse Features
+                            <span>Browse Features</span>
                         </Link>
+                    </div>
+
+                    {/* Stats row */}
+                    <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
+                        <div className="text-center">
+                            <div className="text-3xl font-bold text-green-600 dark:text-green-400">10K+</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Active Farmers</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-3xl font-bold text-green-600 dark:text-green-400">50+</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Smart Tools</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-3xl font-bold text-green-600 dark:text-green-400">24/7</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Support</div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Key Features Section */}
-            <section className="py-20 bg-white dark:bg-gray-900">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            {/* Enhanced Key Features Section */}
+            <section className="py-24 bg-white dark:bg-gray-900 relative">
+                {/* Background pattern */}
+                <div className="absolute inset-0 opacity-5">
+                    <div className="absolute inset-0" style={{
+                        backgroundImage: `url("data:image/svg+xml,%3csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%23059669' fill-opacity='1' fill-rule='evenodd'%3e%3cpath d='m0 40l40-40h-40z'/%3e%3cpath d='m40 40v-40h-40z' fill-opacity='0.1'/%3e%3c/g%3e%3c/svg%3e")`,
+                        backgroundSize: '40px 40px'
+                    }}></div>
+                </div>
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="text-center mb-20">
+                        <div
+                            className="inline-flex items-center px-4 py-2 bg-green-100 dark:bg-green-900/30 rounded-full mb-6">
+                            <span className="text-sm font-semibold text-green-700 dark:text-green-300">FEATURES</span>
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
                             {t('home.featuresSection.title')}
                         </h2>
-                        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
                             {t('home.featuresSection.subtitle')}
                         </p>
                     </div>
@@ -181,15 +250,49 @@ const ModGoviyaHomepage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {features.map((feature, index) => (
                             <div key={index}
-                                 className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow">
+                                 className="group relative bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-2xl hover:border-green-200 dark:hover:border-green-600 transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+
+                                {/* Background gradient on hover */}
                                 <div
-                                    className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center mb-6">
-                                    <feature.icon className="text-green-600 dark:text-green-400" size={24}/>
+                                    className="absolute inset-0 bg-gradient-to-br from-green-50/50 to-emerald-50/50 dark:from-green-900/10 dark:to-emerald-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                                {/* Icon container with enhanced styling */}
+                                <div className="relative z-10 mb-6">
+                                    <div
+                                        className="w-14 h-14 bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                                        <feature.icon
+                                            className="text-green-600 dark:text-green-400 group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors duration-300"
+                                            size={28}/>
+                                    </div>
                                 </div>
-                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{t(feature.titleKey)}</h3>
-                                <p className="text-gray-600 dark:text-gray-300">{t(feature.descriptionKey)}</p>
+
+                                <div className="relative z-10">
+                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors duration-300">
+                                        {t(feature.titleKey)}
+                                    </h3>
+                                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                        {t(feature.descriptionKey)}
+                                    </p>
+                                </div>
+
+                                {/* Decorative corner accent */}
+                                <div
+                                    className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-400/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             </div>
                         ))}
+                    </div>
+
+                    {/* Bottom CTA */}
+                    <div className="text-center mt-16">
+                        <p className="text-gray-600 dark:text-gray-400 mb-6">Ready to transform your farming
+                            experience?</p>
+                        <Link
+                            to="/register"
+                            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                        >
+                            Start Your Journey
+                            <ArrowRight className="ml-2 w-4 h-4"/>
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -244,7 +347,8 @@ const ModGoviyaHomepage = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-700 p-8 rounded-2xl">
+                        <div
+                            className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-700 p-8 rounded-2xl">
                             <div className="text-center">
                                 <div className="text-4xl font-bold text-green-600 mb-2">10,000+</div>
                                 <div className="text-gray-600 dark:text-gray-300 mb-4">Active Farmers</div>
@@ -280,7 +384,8 @@ const ModGoviyaHomepage = () => {
                                 </div>
                                 <p className="text-gray-600 dark:text-gray-300 mb-6 italic">"{t(testimonial.textKey)}"</p>
                                 <div>
-                                    <div className="font-semibold text-gray-900 dark:text-white">{t(testimonial.nameKey)}</div>
+                                    <div
+                                        className="font-semibold text-gray-900 dark:text-white">{t(testimonial.nameKey)}</div>
                                     <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
                                         <MapPin size={14} className="mr-1"/>
                                         {t(testimonial.locationKey)}
@@ -318,8 +423,8 @@ const ModGoviyaHomepage = () => {
                                 <Link to="/readmore">
                                     <button
                                         onClick={scrollToTop}
-                                      className="text-green-600 font-medium hover:text-green-700">
-                                    Read More →
+                                        className="text-green-600 font-medium hover:text-green-700">
+                                        Read More →
                                     </button>
                                 </Link>
                             </div>
@@ -338,8 +443,8 @@ const ModGoviyaHomepage = () => {
                                 <Link to="/readmore">
                                     <button
                                         onClick={scrollToTop}
-                                      className="text-green-600 font-medium hover:text-green-700">
-                                    Read More →
+                                        className="text-green-600 font-medium hover:text-green-700">
+                                        Read More →
                                     </button>
                                 </Link>
                             </div>
@@ -358,8 +463,8 @@ const ModGoviyaHomepage = () => {
                                 <Link to="/readmore">
                                     <button
                                         onClick={scrollToTop}
-                                      className="text-green-600 font-medium hover:text-green-700">
-                                    Read More →
+                                        className="text-green-600 font-medium hover:text-green-700">
+                                        Read More →
                                     </button>
                                 </Link>
                             </div>
@@ -369,7 +474,7 @@ const ModGoviyaHomepage = () => {
             </section>
 
             {/* Footer */}
-            <Footer />
+            <Footer/>
         </div>
     );
 };
