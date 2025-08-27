@@ -56,8 +56,13 @@ const Footer = () => {
     };
 
     return (
-        <footer className="bg-gray-900 dark:bg-black text-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <footer className="relative min-h-screen bg-gray-900 dark:bg-black text-white">
+            <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
+                backgroundImage: `url("data:image/svg+xml,%3csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%23059669' fill-opacity='1' fill-rule='evenodd'%3e%3cpath d='m0 40l40-40h-40z'/%3e%3cpath d='m40 40v-40h-40z' fill-opacity='0.1'/%3e%3c/g%3e%3c/svg%3e")`,
+                backgroundSize: '40px 40px'
+            }}></div>
+
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
                     {/* Company Info */}
                     <div className="col-span-1 lg:col-span-2">
@@ -71,11 +76,14 @@ const Footer = () => {
                                     className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-80 animate-pulse"></div>
                             </div>
                             <div className="ml-4">
-                                <span
-                                    className="ml-3 text-2xl font-bold">
-                                    ModGoviya
-                                </span>
-                                <div className="text-xs text-gray-300 dark:text-gray-400 font-medium -mt-1 mx-2">Agriculture Platform</div>
+                            <span
+                                className="ml-3 text-2xl font-bold">
+                                ModGoviya
+                            </span>
+                                <div
+                                    className="text-xs text-gray-300 dark:text-gray-400 font-medium -mt-1 mx-2">Agriculture
+                                    Platform
+                                </div>
                             </div>
                         </div>
                         <p className="text-gray-300 dark:text-gray-400 mb-6 max-w-md my-3">
@@ -83,16 +91,20 @@ const Footer = () => {
                             revolutionizing agriculture for a sustainable future.
                         </p>
                         <div className="flex space-x-4">
-                            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors duration-200">
+                            <a href="#"
+                               className="text-gray-400 hover:text-green-400 transition-colors duration-200">
                                 <Facebook size={24}/>
                             </a>
-                            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors duration-200">
+                            <a href="#"
+                               className="text-gray-400 hover:text-green-400 transition-colors duration-200">
                                 <Twitter size={24}/>
                             </a>
-                            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors duration-200">
+                            <a href="#"
+                               className="text-gray-400 hover:text-green-400 transition-colors duration-200">
                                 <Instagram size={24}/>
                             </a>
-                            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors duration-200">
+                            <a href="#"
+                               className="text-gray-400 hover:text-green-400 transition-colors duration-200">
                                 <Linkedin size={24}/>
                             </a>
                         </div>
@@ -124,11 +136,21 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold mb-6 text-green-400">Resources</h3>
                         <ul className="space-y-3">
-                        <li><a href="/blog" className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Blog</a></li>
-                            <li><a href="/guides" className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Farming Guides</a></li>
-                            <li><a href="/tutorials" className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Tutorials</a></li>
-                            <li><a href="/faq" className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">FAQ</a></li>
-                            <li><a href="/support" className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Help Center</a></li>
+                            <li><a href="/blog"
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Blog</a>
+                            </li>
+                            <li><a href="/guides"
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Farming
+                                Guides</a></li>
+                            <li><a href="/tutorials"
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Tutorials</a>
+                            </li>
+                            <li><a href="/faq"
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">FAQ</a>
+                            </li>
+                            <li><a href="/support"
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Help
+                                Center</a></li>
                         </ul>
                     </div>
 
@@ -161,7 +183,8 @@ const Footer = () => {
                     <div className="max-w-md mx-auto text-center mb-8">
                         <h3 className="text-xl font-semibold mb-3 text-green-400">Stay Updated</h3>
                         <p className="text-gray-300 dark:text-gray-400 mb-6">
-                            Get the latest farming tips, weather updates, and market insights delivered to your inbox.
+                            Get the latest farming tips, weather updates, and market insights delivered to your
+                            inbox.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3">
                             <input
@@ -183,12 +206,12 @@ const Footer = () => {
                                     </>
                                 ) : isSubscribed ? (
                                     <>
-                                        <Check size={18} />
+                                        <Check size={18}/>
                                         <span>Subscribed!</span>
                                     </>
                                 ) : (
                                     <>
-                                        <Send size={18} />
+                                        <Send size={18}/>
                                         <span>Subscribe</span>
                                     </>
                                 )}
@@ -202,14 +225,20 @@ const Footer = () => {
                     </div>
 
                     {/* Bottom Footer */}
-                    <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-gray-800 dark:border-gray-700">
+                    <div
+                        className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-gray-800 dark:border-gray-700">
                         <p className="text-gray-400 dark:text-gray-500 text-sm">
                             © 2025 ModGoviya. All rights reserved.
                         </p>
                         <div className="flex space-x-6 mt-4 md:mt-0">
-                            <a href="/terms" className="text-gray-400 dark:text-gray-500 hover:text-white text-sm transition-colors duration-200">Terms & Conditions</a>
-                            <a href="/privacy" className="text-gray-400 dark:text-gray-500 hover:text-white text-sm transition-colors duration-200">Privacy Policy</a>
-                            <a href="/support" className="text-gray-400 dark:text-gray-500 hover:text-white text-sm transition-colors duration-200">Support</a>
+                            <a href="/terms"
+                               className="text-gray-400 dark:text-gray-500 hover:text-white text-sm transition-colors duration-200">Terms
+                                & Conditions</a>
+                            <a href="/privacy"
+                               className="text-gray-400 dark:text-gray-500 hover:text-white text-sm transition-colors duration-200">Privacy
+                                Policy</a>
+                            <a href="/support"
+                               className="text-gray-400 dark:text-gray-500 hover:text-white text-sm transition-colors duration-200">Support</a>
                         </div>
                     </div>
                 </div>
