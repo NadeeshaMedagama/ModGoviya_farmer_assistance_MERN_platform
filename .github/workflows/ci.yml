@@ -8,7 +8,6 @@ on:
 
 jobs:
   backend:
-    if: ${{ hashFiles('ModGoviya/backend/package.json') != '' }}
     name: Backend Checks
     runs-on: ubuntu-latest
     defaults:
@@ -22,22 +21,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: 'npm'
+          cache-dependency-path: ModGoviya/backend/package-lock.json
 
       - name: Install dependencies
-        run: |
-          npm ci || npm install
+        run: npm ci
 
       - name: Security audit (non-blocking)
-        run: |
-          npm audit --production --audit-level=high || true
+        run: npm audit --production --audit-level=high || true
 
       - name: Verify backend entry exists
-        run: |
-          node -e "require('fs').accessSync('server.js'); console.log('server.js found')"
+        run: node -e "require('fs').accessSync('server.js'); console.log('server.js found')"
 
   frontend:
-    if: ${{ hashFiles('ModGoviya/frontend/package.json') != '' }}
     name: Frontend Build
     runs-on: ubuntu-latest
     defaults:
@@ -51,11 +47,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: 'npm'
+          cache-dependency-path: ModGoviya/frontend/package-lock.json
 
       - name: Install dependencies
-        run: |
-          npm ci || npm install
+        run: npm ci
 
       - name: Build
         run: npm run build
