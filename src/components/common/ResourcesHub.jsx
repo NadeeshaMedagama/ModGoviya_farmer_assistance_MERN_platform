@@ -424,7 +424,9 @@ const ResourcesHub = () => {
                         Get instant help from our support team
                     </p>
                     <Link to="/chatsupport">
-                    <button className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+                    <button
+                        onClick={scrollToTop}
+                        className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
                         Start Chat
                     </button>
                     </Link>
