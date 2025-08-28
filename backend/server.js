@@ -103,6 +103,7 @@ app.use('/api/products', validateContentType, require('./routes/productRoutes'))
 app.use('/api/cart', validateContentType, require('./routes/cart'));
 app.use('/api/orders', validateContentType, require('./routes/orderRoutes'));
 app.use('/api/demo', validateContentType, require('./routes/demo'));
+app.use('/api/trial', validateContentType, require('./routes/trial'));
 
 // Note: Removed old registration routes to ensure all user registration goes through /api/auth/register
 // with proper password hashing using the consolidated User model
