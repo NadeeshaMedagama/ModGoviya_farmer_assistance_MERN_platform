@@ -106,6 +106,7 @@ app.use('/api/demo', validateContentType, require('./routes/demo'));
 app.use('/api/register', validateContentType, require('./routes/registration'));
 app.use('/api/trial', validateContentType, require('./routes/trial'));
 app.use('/api/consultations', validateContentType, require('./routes/consultation'));
+app.use('/api/community', validateContentType, require('./routes/community'));
 
 // Note: Removed old registration routes to ensure all user registration goes through /api/auth/register
 // with proper password hashing using the consolidated User model
