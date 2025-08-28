@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Mail,
     Phone,
@@ -277,22 +278,24 @@ const StartTrading = () => {
     );
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900">
             {/* Header */}
             <Header />
 
-            <div className="bg-white shadow-sm border-b mt-20">
+            <div className="bg-white shadow-sm border-b mt-20 dark:bg-gray-900 dark:border-gray-700">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center">
                             <div className="bg-green-600 p-2 rounded-lg mr-3">
                                 <Sprout className="w-6 h-6 text-white" />
                             </div>
-                            <h1 className="text-2xl font-bold text-gray-900">Start Trading</h1>
+                            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Start Trading</h1>
                         </div>
-                        <button className="text-green-600 hover:text-green-700 font-medium">
+                        <Link to="/login">
+                        <button className="text-green-600 hover:text-green-700 font-medium dark:text-emerald-400 dark:hover:text-emerald-300">
                             Already have an account? Sign In
                         </button>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -300,12 +303,12 @@ const StartTrading = () => {
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <StepIndicator />
 
-                <div className="bg-white rounded-2xl shadow-xl p-8">
+                <div className="bg-white rounded-2xl shadow-xl p-8 dark:bg-gray-800 dark:border dark:border-gray-700">
                     {/* Step 1: Choose Account Type */}
                     {currentStep === 1 && (
                         <div className="text-center">
-                            <h2 className="text-3xl font-bold text-gray-900 mb-4">Choose Your Account Type</h2>
-                            <p className="text-gray-600 mb-8">Select the option that best describes your trading needs</p>
+                            <h2 className="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Choose Your Account Type</h2>
+                            <p className="text-gray-600 mb-8 dark:text-gray-300">Select the option that best describes your trading needs</p>
 
                             <div className="grid md:grid-cols-3 gap-6">
                                 {userTypes.map((type) => (
@@ -314,18 +317,18 @@ const StartTrading = () => {
                                         onClick={() => setUserType(type.id)}
                                         className={`cursor-pointer rounded-xl p-6 border-2 transition-all duration-300 hover:scale-105 ${
                                             userType === type.id
-                                                ? 'border-green-500 bg-green-50 shadow-lg'
-                                                : 'border-gray-200 hover:border-green-300'
+                                                ? 'border-green-500 bg-green-50 shadow-lg dark:bg-emerald-900/20 dark:border-emerald-700'
+                                                : 'border-gray-200 hover:border-green-300 dark:border-gray-700 dark:bg-gray-800'
                                         }`}
                                     >
                                         <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${type.color} flex items-center justify-center text-white mx-auto mb-4`}>
                                             {type.icon}
                                         </div>
-                                        <h3 className="text-xl font-semibold text-gray-900 mb-2">{type.title}</h3>
-                                        <p className="text-gray-600 text-sm mb-4">{type.subtitle}</p>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">{type.title}</h3>
+                                        <p className="text-gray-600 text-sm mb-4 dark:text-gray-300">{type.subtitle}</p>
                                         <ul className="text-left space-y-2">
                                             {type.features.map((feature, idx) => (
-                                                <li key={idx} className="flex items-center text-sm text-gray-700">
+                                                <li key={idx} className="flex items-center text-sm text-gray-700 dark:text-gray-300">
                                                     <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
                                                     {feature}
                                                 </li>
@@ -349,35 +352,35 @@ const StartTrading = () => {
 
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">First Name *</label>
                                     <input
                                         type="text"
                                         value={formData.firstName}
                                         onChange={(e) => handleInputChange('firstName', e.target.value)}
                                         className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                                            errors.firstName ? 'border-red-300' : 'border-gray-300'
-                                        }`}
+                                            errors.firstName ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                                        } bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400`}
                                         placeholder="Enter your first name"
                                     />
                                     {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Last Name *</label>
                                     <input
                                         type="text"
                                         value={formData.lastName}
                                         onChange={(e) => handleInputChange('lastName', e.target.value)}
                                         className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                                            errors.lastName ? 'border-red-300' : 'border-gray-300'
-                                        }`}
+                                            errors.lastName ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                                        } bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400`}
                                         placeholder="Enter your last name"
                                     />
                                     {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address *</label>
                                     <div className="relative">
                                         <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                                         <input
@@ -385,8 +388,8 @@ const StartTrading = () => {
                                             value={formData.email}
                                             onChange={(e) => handleInputChange('email', e.target.value)}
                                             className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                                                errors.email ? 'border-red-300' : 'border-gray-300'
-                                            }`}
+                                                errors.email ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                                            } bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400`}
                                             placeholder="Enter your email"
                                         />
                                     </div>
@@ -394,7 +397,7 @@ const StartTrading = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone Number *</label>
                                     <div className="relative">
                                         <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                                         <input
@@ -402,8 +405,8 @@ const StartTrading = () => {
                                             value={formData.phone}
                                             onChange={(e) => handleInputChange('phone', e.target.value)}
                                             className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                                                errors.phone ? 'border-red-300' : 'border-gray-300'
-                                            }`}
+                                                errors.phone ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                                            } bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400`}
                                             placeholder="+94 77 123 4567"
                                         />
                                     </div>
@@ -411,7 +414,7 @@ const StartTrading = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Password *</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password *</label>
                                     <div className="relative">
                                         <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                                         <input
@@ -419,14 +422,14 @@ const StartTrading = () => {
                                             value={formData.password}
                                             onChange={(e) => handleInputChange('password', e.target.value)}
                                             className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                                                errors.password ? 'border-red-300' : 'border-gray-300'
-                                            }`}
+                                                errors.password ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                                            } bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400`}
                                             placeholder="Create a strong password"
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-300"
                                         >
                                             {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                         </button>
@@ -435,7 +438,7 @@ const StartTrading = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password *</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirm Password *</label>
                                     <div className="relative">
                                         <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                                         <input
@@ -443,14 +446,14 @@ const StartTrading = () => {
                                             value={formData.confirmPassword}
                                             onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                                             className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                                                errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
-                                            }`}
+                                                errors.confirmPassword ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                                            } bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400`}
                                             placeholder="Confirm your password"
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-300"
                                         >
                                             {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                         </button>
