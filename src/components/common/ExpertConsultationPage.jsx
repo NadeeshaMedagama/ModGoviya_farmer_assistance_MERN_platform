@@ -32,13 +32,17 @@ import {
     Languages,
     Clock3,
     CalendarIcon,
-    X
+    X,
+    Sun,
+    Moon
 } from 'lucide-react';
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import api from "../../api/axios";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const ExpertConsultationPage = () => {
+    const { isDarkMode, toggleTheme } = useTheme();
     const [selectedExpert, setSelectedExpert] = useState(null);
     const [selectedService, setSelectedService] = useState('video-call');
     const [selectedDate, setSelectedDate] = useState('');
@@ -266,6 +270,19 @@ const ExpertConsultationPage = () => {
             <div className="relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-600 opacity-10"></div>
                 <div className="relative max-w-7xl mx-auto px-4 py-32">
+                    <div className="absolute top-6 right-6">
+                        <button
+                            onClick={toggleTheme}
+                            aria-label="Toggle dark mode"
+                            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur border border-gray-200 dark:border-gray-700 shadow hover:bg-white dark:hover:bg-gray-700 transition-colors"
+                        >
+                            {isDarkMode ? (
+                                <Sun className="w-5 h-5 text-yellow-500" />
+                            ) : (
+                                <Moon className="w-5 h-5 text-gray-700" />
+                            )}
+                        </button>
+                    </div>
                     <div className="text-center mb-16">
                         <div className="inline-flex items-center bg-emerald-100 dark:bg-emerald-900/30 px-4 py-2 rounded-full text-sm font-medium text-emerald-700 dark:text-emerald-300 mb-6">
                             <Award className="w-4 h-4 mr-2" />
