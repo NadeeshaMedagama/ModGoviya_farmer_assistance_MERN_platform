@@ -24,6 +24,7 @@ import {
     Video
 } from 'lucide-react';
 import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const ResourcesHub = () => {
     const [activeTab, setActiveTab] = useState('all');
@@ -559,6 +560,7 @@ const ResourcesHub = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
