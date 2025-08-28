@@ -29,6 +29,7 @@ import './i18n';
 import FeatureDetailsPage from "./components/common/FeatureDetailsPage";
 import StartFreeTrialPage from "./components/forum/StartFreeTrialPage";
 import ReadModePage from "./components/common/ReadModePage";
+import ExpertConsultationPage from "./components/common/ExpertConsultationPage";
 
 function App() {
   return (
@@ -72,6 +73,7 @@ function App() {
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/freetrial" element={<StartFreeTrialPage />} />
                     <Route path="/readmore" element={<ReadModePage />} />
+                    <Route path="/expertconsult" element={<ExpertConsultationPage />} />
                   </Routes>
                 </CartProvider>
               </LanguageProvider>
