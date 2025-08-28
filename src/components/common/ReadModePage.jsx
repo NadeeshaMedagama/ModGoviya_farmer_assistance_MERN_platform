@@ -364,9 +364,11 @@ const ReadModePage = () => {
                                         Join Our Community
                                     </button>
                                     </Link>
+                                    <Link to="/expertconsult">
                                     <button className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors">
                                         Get Expert Consultation
                                     </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
