@@ -436,10 +436,12 @@ const ResourcesHub = () => {
                     <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
                         Connect with other farmers, share experiences, and learn from the community
                     </p>
+                    <Link to="/community">
                     <button className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 flex items-center mx-auto">
                         <Users className="mr-2" size={18} />
                         Join Community
                     </button>
+                    </Link>
                 </div>
             </div>
         </div>
@@ -530,7 +532,6 @@ const ResourcesHub = () => {
                                 {tabs.map((tab) => {
                                     const Icon = tab.icon;
                                     return (
-                                        <Link to="/community">
                                         <button
                                             key={tab.id}
                                             onClick={() => setActiveTab(tab.id)}
@@ -543,7 +544,6 @@ const ResourcesHub = () => {
                                             <Icon size={16} className="mr-2"/>
                                             {tab.label}
                                         </button>
-                                        </Link>
                                     );
                                 })}
                             </div>
