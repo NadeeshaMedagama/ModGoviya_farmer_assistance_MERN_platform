@@ -23,6 +23,7 @@ import {
 import Footer from "../components/layout/Footer";
 import { useTranslation } from 'react-i18next';
 import Header from "../components/layout/Header";
+import api from '../api/axios';
 
 const CommunityPage = () => {
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -33,7 +34,7 @@ const CommunityPage = () => {
     const [newPost, setNewPost] = useState({ title: '', category: '', content: '', anonymous: false });
     const { t } = useTranslation();
 
-    // Mock data for demonstration
+    // Categories (unchanged UI labels and icons)
     const categories = [
         { id: 'all', name: t('community.categories.all'), icon: Users, color: 'bg-green-500' },
         { id: 'crops', name: t('community.categories.crops'), icon: Wheat, color: 'bg-yellow-500' },
@@ -44,55 +45,19 @@ const CommunityPage = () => {
         { id: 'market', name: t('community.categories.market'), icon: TrendingUp, color: 'bg-purple-500' }
     ];
 
-    const posts = [
-        {
-            id: 1,
-            title: 'Best fertilizer for rice cultivation in monsoon season?',
-            content: "I'm planning to start rice cultivation next month. What fertilizers work best during heavy rainfall? Any specific brands you recommend?",
-            author: 'Sunil Perera',
-            location: 'Anuradhapura',
-            category: 'crops',
-            replies: 15,
-            likes: 8,
-            views: 45,
-            timeAgo: '2 hours ago',
-            trending: true,
-            comments: [
-                {
-                    id: 1,
-                    author: 'Kamala Silva',
-                    content: 'I recommend using organic compost mixed with NPK 15:15:15. Works great in my paddy fields.',
-                    timeAgo: '1 hour ago',
-                    likes: 3
-                }
-            ]
-        },
-        {
-            id: 2,
-            title: 'Coconut tree disease - leaves turning yellow',
-            content: 'My coconut trees are showing yellow leaves and some are falling. What could be the cause? Attached photos for reference.',
-            author: 'Nimal Fernando',
-            location: 'Kurunegala',
-            category: 'pest',
-            replies: 22,
-            likes: 12,
-            views: 78,
-            timeAgo: '5 hours ago',
-            urgent: true
-        },
-        {
-            id: 3,
-            title: "Today's vegetable prices at Dambulla market",
-            content: 'Tomato - Rs.120/kg, Carrot - Rs.80/kg, Cabbage - Rs.60/kg, Beans - Rs.180/kg. Prices are stable compared to last week.',
-            author: 'Market Reporter',
-            location: 'Dambulla',
-            category: 'market',
-            replies: 8,
-            likes: 25,
-            views: 156,
-            timeAgo: '1 day ago'
-        }
-    ];
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const response = await api.get('/community');
+                setPosts(Array.isArray(response.data) ? response.data : []);
+            } catch (e) {
+                console.error('Failed to load community posts', e);
+            }
+        };
+        fetchPosts();
+    }, []);
 
     const topContributors = [
         { name: 'Dr. Ajith Kumar', posts: 45, reputation: 892 },
@@ -107,12 +72,17 @@ const CommunityPage = () => {
         return matchesCategory && matchesSearch;
     });
 
-    const handleNewPost = () => {
+    const handleNewPost = async () => {
         if (newPost.title && newPost.category && newPost.content) {
-            // In real app, this would make an API call
-            console.log('New post created:', newPost);
-            setShowNewPost(false);
-            setNewPost({ title: '', category: '', content: '', anonymous: false });
+            try {
+                await api.post('/community', newPost);
+                const response = await api.get('/community');
+                setPosts(Array.isArray(response.data) ? response.data : []);
+                setShowNewPost(false);
+                setNewPost({ title: '', category: '', content: '', anonymous: false });
+            } catch (e) {
+                console.error('Failed to create post', e);
+            }
         }
     };
 
