@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {
     ArrowLeft,
@@ -23,12 +23,16 @@ import {
 } from 'lucide-react';
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
+import ThemeContext from '../../contexts/ThemeContext'; // Adjust path as needed
 
 const ReadModePage = () => {
     const [selectedArticle, setSelectedArticle] = useState('monsoon');
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [readingProgress, setReadingProgress] = useState(0);
+
+    // Get theme context
+    const { isDarkMode, toggleTheme } = useContext(ThemeContext);
 
     // Simulate reading progress
     useEffect(() => {
@@ -46,7 +50,7 @@ const ReadModePage = () => {
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth' // This enables smooth scrolling
+            behavior: 'smooth'
         });
     };
 
@@ -278,7 +282,7 @@ const ReadModePage = () => {
             {/* Header */}
             <Header />
 
-            <div className=" mx-auto px-4 py-24">
+            <div className="mx-auto px-4 py-24">
                 <ArticleSelector />
 
                 {/* Article Header */}
@@ -357,17 +361,17 @@ const ReadModePage = () => {
                                     Join thousands of farmers who have transformed their farming practices with ModGoviya's expert guidance and community support.
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-4">
-                                    <Link to ="/community">
-                                    <button
-                                        onClick={scrollToTop}
-                                        className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
-                                        Join Our Community
-                                    </button>
+                                    <Link to="/community">
+                                        <button
+                                            onClick={scrollToTop}
+                                            className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                                            Join Our Community
+                                        </button>
                                     </Link>
                                     <Link to="/expertconsult">
-                                    <button className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors">
-                                        Get Expert Consultation
-                                    </button>
+                                        <button className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors">
+                                            Get Expert Consultation
+                                        </button>
                                     </Link>
                                 </div>
                             </div>
