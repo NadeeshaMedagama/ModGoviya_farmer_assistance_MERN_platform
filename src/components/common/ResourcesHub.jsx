@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     BookOpen,
     Sprout,
@@ -25,10 +26,12 @@ import {
 } from 'lucide-react';
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
+import { useTranslation } from 'react-i18next';
 
 const ResourcesHub = () => {
     const [activeTab, setActiveTab] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
+    const { t } = useTranslation();
 
     const blogPosts = [
         {
@@ -66,6 +69,13 @@ const ResourcesHub = () => {
             image: "🌦️"
         }
     ];
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
 
     const farmingGuides = [
         {
@@ -463,7 +473,7 @@ const ResourcesHub = () => {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             {/* Header */}
-            <Header />
+            <Header/>
 
             <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black/10"></div>
@@ -475,8 +485,9 @@ const ResourcesHub = () => {
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28">
                     <div className="text-center">
                         <div className="flex items-center justify-center mb-6">
-                            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mr-4">
-                                <Leaf className="w-10 h-10 text-white" />
+                            <div
+                                className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mr-4">
+                                <Leaf className="w-10 h-10 text-white"/>
                             </div>
                             <div>
                                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
@@ -488,7 +499,8 @@ const ResourcesHub = () => {
                             </div>
                         </div>
                         <p className="text-xl text-green-100 max-w-3xl mx-auto">
-                            Discover expert guides, tutorials, and resources to transform your farming journey with modern agricultural techniques
+                            Discover expert guides, tutorials, and resources to transform your farming journey with
+                            modern agricultural techniques
                         </p>
                     </div>
                 </div>
@@ -498,10 +510,12 @@ const ResourcesHub = () => {
             <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="py-4">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+                        <div
+                            className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
                             {/* Search Bar */}
                             <div className="relative max-w-md">
-                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                                        size={20}/>
                                 <input
                                     type="text"
                                     placeholder="Search resources..."
@@ -516,6 +530,7 @@ const ResourcesHub = () => {
                                 {tabs.map((tab) => {
                                     const Icon = tab.icon;
                                     return (
+                                        <Link to="/community">
                                         <button
                                             key={tab.id}
                                             onClick={() => setActiveTab(tab.id)}
@@ -525,9 +540,10 @@ const ResourcesHub = () => {
                                                     : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                                             }`}
                                         >
-                                            <Icon size={16} className="mr-2" />
+                                            <Icon size={16} className="mr-2"/>
                                             {tab.label}
                                         </button>
+                                        </Link>
                                     );
                                 })}
                             </div>
@@ -542,25 +558,37 @@ const ResourcesHub = () => {
             </div>
 
             {/* CTA Section */}
-            <div className="bg-gradient-to-r from-green-600 to-emerald-600 py-16">
+            <div className="bg-gradient-to-r from-green-600 to-emerald-600 py-20">
                 <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-                    <h2 className="text-3xl font-bold text-white mb-4">
-                        Ready to Transform Your Farming?
+                    <h2 className="text-4xl font-bold text-white mb-6">
+                        {t('features.cta.title', {defaultValue: 'Ready to Transform Your Farming Journey?'})}
                     </h2>
                     <p className="text-xl text-green-100 mb-8">
-                        Join thousands of Sri Lankan farmers who are already using ModGoviya to increase their productivity
+                        {t('features.cta.subtitle', {defaultValue: 'Join thousands of successful farmers who trust ModGoviya to enhance their productivity and profitability.'})}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button className="bg-white text-green-600 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors duration-200">
-                            Get Started Free
-                        </button>
-                        <button className="border-2 border-white text-white font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-green-600 transition-all duration-200">
-                            Contact Sales
-                        </button>
+                        <Link
+                            to="/freetrial">
+                            <button
+                                onClick={scrollToTop}
+                                className="inline-flex items-center px-8 py-4 bg-white text-green-600 font-semibold rounded-full hover:bg-green-50 transition-all duration-300 transform hover:scale-105 shadow-xl">
+                                {t('features.cta.startTrial', {defaultValue: 'Start Free Trial'})}
+                                <ArrowRight className="ml-2 w-5 h-5"/>
+                            </button>
+                        </Link>
+                        <Link
+                            to="/schedule"
+                            onClick={scrollToTop}
+                            className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-green-600 transition-all duration-300">
+                            {t('features.cta.scheduleDemo', {defaultValue: 'Schedule Demo'})}
+                        </Link>
+                    </div>
+                    <div className="mt-8 text-green-100">
+                        <p>✓ {t('features.cta.noCard', {defaultValue: 'No credit card required'})} ✓ {t('features.cta.trial', {defaultValue: '30-day free trial'})} ✓ {t('features.cta.cancel', {defaultValue: 'Cancel anytime'})}</p>
                     </div>
                 </div>
             </div>
-            <Footer />
+            <Footer/>
         </div>
     );
 };
