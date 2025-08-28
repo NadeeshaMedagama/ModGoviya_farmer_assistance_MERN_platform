@@ -23,6 +23,7 @@ import {
     Download,
     Video
 } from 'lucide-react';
+import Header from "../layout/Header";
 
 const ResourcesHub = () => {
     const [activeTab, setActiveTab] = useState('all');
@@ -461,6 +462,8 @@ const ResourcesHub = () => {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             {/* Header */}
+            <Header />
+
             <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black/10"></div>
                 <div className="absolute inset-0 opacity-10" style={{
@@ -468,7 +471,7 @@ const ResourcesHub = () => {
                     backgroundSize: '60px 60px'
                 }}></div>
 
-                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28">
                     <div className="text-center">
                         <div className="flex items-center justify-center mb-6">
                             <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mr-4">
