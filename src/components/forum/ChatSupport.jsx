@@ -43,15 +43,49 @@ const ChatSupport = () => {
     const [isRecording, setIsRecording] = useState(false);
     const [isMinimized, setIsMinimized] = useState(false);
     const [showQuickActions, setShowQuickActions] = useState(true);
+    const [chatHeight, setChatHeight] = useState('calc(100vh - 4rem)');
     const messagesEndRef = useRef(null);
     const inputRef = useRef(null);
+    const messagesContainerRef = useRef(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
+    const calculateOptimalHeight = () => {
+        if (messagesContainerRef.current) {
+            const messagesCount = messages.length;
+            const quickActionsHeight = showQuickActions ? 120 : 0;
+            const headerHeight = 64;
+            const inputHeight = 140;
+            const messageHeight = 80; // Average height per message
+            const footerHeight = 80;
+
+            // Calculate dynamic height based on message count
+            const calculatedHeight = Math.min(
+                window.innerHeight - headerHeight - footerHeight,
+                Math.max(
+                    400, // Minimum height
+                    (messagesCount * messageHeight) + quickActionsHeight + inputHeight + 100
+                )
+            );
+
+            setChatHeight(`${calculatedHeight}px`);
+        }
+    };
+
     useEffect(() => {
         scrollToBottom();
+        calculateOptimalHeight();
+    }, [messages, showQuickActions]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            calculateOptimalHeight();
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, [messages]);
 
     // Knowledge base for agricultural responses
@@ -127,6 +161,9 @@ const ChatSupport = () => {
         setIsTyping(true);
         setShowQuickActions(false);
 
+        // Trigger height recalculation
+        setTimeout(() => calculateOptimalHeight(), 100);
+
         // Simulate typing delay
         setTimeout(() => {
             const aiResponse = getAIResponse(inputMessage);
@@ -139,6 +176,9 @@ const ChatSupport = () => {
 
             setMessages(prev => [...prev, newBotMessage]);
             setIsTyping(false);
+
+            // Trigger height recalculation after bot response
+            setTimeout(() => calculateOptimalHeight(), 100);
         }, 1500);
     };
 
@@ -162,6 +202,9 @@ const ChatSupport = () => {
         setInputMessage(actionText);
         setShowQuickActions(false);
         inputRef.current?.focus();
+
+        // Recalculate height when quick actions are hidden
+        setTimeout(() => calculateOptimalHeight(), 100);
     };
 
     const toggleRecording = () => {
@@ -181,7 +224,7 @@ const ChatSupport = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-20">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-24">
             {/* Header */}
             <Header />
 
@@ -223,21 +266,21 @@ const ChatSupport = () => {
                 </div>
             </div>
 
-            <div className="max-w-4xl mx-auto h-[calc(100vh-4rem)] flex flex-col">
+            <div className="max-w-4xl mx-auto flex flex-col transition-all duration-500 ease-in-out" style={{ height: chatHeight }}>
                 {/* Chat Container */}
-                <div className={`flex-1 transition-all duration-300 ${isMinimized ? 'h-16' : ''}`}>
+                <div className={`flex-1 transition-all duration-300 ${isMinimized ? 'h-16' : ''} overflow-hidden`}>
                     {!isMinimized && (
                         <>
                             {/* Quick Actions */}
                             {showQuickActions && (
-                                <div className="p-6 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+                                <div className="p-6 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 animate-in slide-in-from-top duration-500">
                                     <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">Quick Actions</h3>
                                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                                         {quickActions.map((action, index) => (
                                             <button
                                                 key={index}
                                                 onClick={() => handleQuickAction(action.text)}
-                                                className="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-left"
+                                                className="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 text-left transform hover:scale-105"
                                             >
                                                 <span className="text-2xl">{action.icon}</span>
                                                 <span className="text-sm font-medium text-gray-900 dark:text-white">{action.text}</span>
@@ -248,9 +291,16 @@ const ChatSupport = () => {
                             )}
 
                             {/* Messages Area */}
-                            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                            <div
+                                ref={messagesContainerRef}
+                                className="flex-1 overflow-y-auto p-6 space-y-6 transition-all duration-500 ease-in-out"
+                                style={{
+                                    maxHeight: `${parseInt(chatHeight) - (showQuickActions ? 200 : 80) - 140}px`,
+                                    minHeight: '300px'
+                                }}
+                            >
                                 {messages.map((message) => (
-                                    <div key={message.id} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                                    <div key={message.id} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-in slide-in-from-bottom duration-300`}>
                                         <div className={`flex items-start space-x-3 max-w-3xl ${message.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
                                             {/* Avatar */}
                                             <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
@@ -306,7 +356,7 @@ const ChatSupport = () => {
 
                                 {/* Typing Indicator */}
                                 {isTyping && (
-                                    <div className="flex justify-start">
+                                    <div className="flex justify-start animate-in slide-in-from-bottom duration-300">
                                         <div className="flex items-start space-x-3">
                                             <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
                                                 <Bot className="w-5 h-5 text-white" />
@@ -329,7 +379,7 @@ const ChatSupport = () => {
 
                 {/* Message Input */}
                 {!isMinimized && (
-                    <div className="p-6 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700">
+                    <div className="p-6 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 transition-all duration-300">
                         <div className="flex items-end space-x-4">
                             <div className="flex-1">
                                 <div className="relative">
