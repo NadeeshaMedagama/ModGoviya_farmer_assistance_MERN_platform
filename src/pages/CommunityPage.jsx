@@ -87,7 +87,7 @@ const CommunityPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             {/* Header Section */}
             <Header />
 
@@ -121,8 +121,8 @@ const CommunityPage = () => {
                     {/* Sidebar */}
                     <div className="lg:col-span-1">
                         {/* Categories */}
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-                            <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('community.categories.title')}</h3>
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 dark:bg-gray-800 dark:border-gray-700">
+                            <h3 className="text-lg font-semibold text-gray-800 mb-4 dark:text-gray-100">{t('community.categories.title')}</h3>
                             <div className="space-y-2">
                                 {categories.map((category) => {
                                     const IconComponent = category.icon;
@@ -132,8 +132,8 @@ const CommunityPage = () => {
                                             onClick={() => setSelectedCategory(category.id)}
                                             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
                                                 selectedCategory === category.id
-                                                    ? 'bg-green-50 text-green-700 border border-green-200'
-                                                    : 'text-gray-600 hover:bg-gray-50'
+                                                    ? 'bg-green-50 text-green-700 border border-green-200 dark:bg-emerald-900/20 dark:text-emerald-300 dark:border-emerald-700'
+                                                    : 'text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700'
                                             }`}
                                         >
                                             <div className={`p-1 rounded ${category.color} text-white`}>
@@ -147,8 +147,8 @@ const CommunityPage = () => {
                         </div>
 
                         {/* Top Contributors */}
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 dark:bg-gray-800 dark:border-gray-700">
+                            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center dark:text-gray-100">
                                 <Star className="text-yellow-500 mr-2" size={20} />
                                 {t('community.topContributors')}
                             </h3>
@@ -159,8 +159,8 @@ const CommunityPage = () => {
                                             {index + 1}
                                         </div>
                                         <div className="flex-1">
-                                            <div className="font-medium text-sm text-gray-800">{contributor.name}</div>
-                                            <div className="text-xs text-gray-500">{contributor.posts} {t('community.contributor.posts')} • {contributor.reputation} {t('community.contributor.points')}</div>
+                                            <div className="font-medium text-sm text-gray-800 dark:text-gray-100">{contributor.name}</div>
+                                            <div className="text-xs text-gray-500 dark:text-gray-400">{contributor.posts} {t('community.contributor.posts')} • {contributor.reputation} {t('community.contributor.points')}</div>
                                         </div>
                                     </div>
                                 ))}
@@ -173,7 +173,7 @@ const CommunityPage = () => {
                         {!selectedPost && !showNewPost && (
                             <>
                                 {/* Search and Controls */}
-                                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 dark:bg-gray-800 dark:border-gray-700">
                                     <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                                         <div className="flex-1 relative">
                                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
@@ -182,13 +182,13 @@ const CommunityPage = () => {
                                                 placeholder={t('community.searchPlaceholder')}
                                                 value={searchTerm}
                                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:border-gray-600 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
                                             />
                                         </div>
                                         <select
                                             value={sortBy}
                                             onChange={(e) => setSortBy(e.target.value)}
-                                            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:border-gray-600 dark:text-gray-100"
                                         >
                                             <option value="recent">{t('community.sort.recent')}</option>
                                             <option value="popular">{t('community.sort.popular')}</option>
@@ -208,7 +208,7 @@ const CommunityPage = () => {
                                 {/* Posts List */}
                                 <div className="space-y-4">
                                     {filteredPosts.map((post) => (
-                                        <div key={post.id} className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                                        <div key={post.id} className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow dark:bg-gray-800 dark:border-gray-700">
                                             <div className="p-6">
                                                 <div className="flex items-start justify-between mb-3">
                                                     <div className="flex-1">
@@ -231,13 +231,13 @@ const CommunityPage = () => {
                                                             </span>
                                                         </div>
                                                         <h3
-                                                            className="text-lg font-semibold text-gray-800 hover:text-green-600 cursor-pointer mb-2"
+                                                            className="text-lg font-semibold text-gray-800 hover:text-green-600 cursor-pointer mb-2 dark:text-gray-100"
                                                             onClick={() => setSelectedPost(post)}
                                                         >
                                                             {post.title}
                                                         </h3>
-                                                        <p className="text-gray-600 text-sm line-clamp-2 mb-3">{post.content}</p>
-                                                        <div className="flex items-center space-x-4 text-sm text-gray-500">
+                                                        <p className="text-gray-600 text-sm line-clamp-2 mb-3 dark:text-gray-300">{post.content}</p>
+                                                        <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
                                                             <div className="flex items-center space-x-1">
                                                                 <Users size={16} />
                                                                 <span>{post.author}</span>
@@ -254,8 +254,8 @@ const CommunityPage = () => {
                                                     </div>
                                                 </div>
 
-                                                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                                                    <div className="flex items-center space-x-6 text-sm text-gray-500">
+                                                <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+                                                    <div className="flex items-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
                                                         <div className="flex items-center space-x-1">
                                                             <MessageCircle size={16} />
                                                             <span>{post.replies} {t('community.labels.replies')}</span>
@@ -270,13 +270,13 @@ const CommunityPage = () => {
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center space-x-2">
-                                                        <button className="p-2 text-gray-400 hover:text-green-600 rounded-lg hover:bg-green-50 transition-colors">
+                                                        <button className="p-2 text-gray-400 hover:text-green-600 rounded-lg hover:bg-green-50 transition-colors dark:hover:bg-gray-700">
                                                             <Bookmark size={16} />
                                                         </button>
-                                                        <button className="p-2 text-gray-400 hover:text-green-600 rounded-lg hover:bg-green-50 transition-colors">
+                                                        <button className="p-2 text-gray-400 hover:text-green-600 rounded-lg hover:bg-green-50 transition-colors dark:hover:bg-gray-700">
                                                             <Share2 size={16} />
                                                         </button>
-                                                        <button className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors">
+                                                        <button className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors dark:hover:bg-gray-700">
                                                             <Flag size={16} />
                                                         </button>
                                                     </div>
@@ -290,12 +290,12 @@ const CommunityPage = () => {
 
                         {/* New Post Form */}
                         {showNewPost && (
-                            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 dark:bg-gray-800 dark:border-gray-700">
                                 <div className="flex items-center justify-between mb-6">
-                                    <h2 className="text-xl font-semibold text-gray-800">{t('community.form.title')}</h2>
+                                    <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">{t('community.form.title')}</h2>
                                     <button
                                         onClick={() => setShowNewPost(false)}
-                                        className="text-gray-500 hover:text-gray-700"
+                                        className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                                     >
                                         ✕
                                     </button>
@@ -303,22 +303,22 @@ const CommunityPage = () => {
 
                                 <div className="space-y-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">{t('community.form.discussionTitle')}</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">{t('community.form.discussionTitle')}</label>
                                         <input
                                             type="text"
                                             value={newPost.title}
                                             onChange={(e) => setNewPost({...newPost, title: e.target.value})}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:border-gray-600 dark:text-gray-100"
                                             placeholder={t('community.form.discussionTitlePlaceholder')}
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">{t('community.form.category')}</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">{t('community.form.category')}</label>
                                         <select
                                             value={newPost.category}
                                             onChange={(e) => setNewPost({...newPost, category: e.target.value})}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:border-gray-600 dark:text-gray-100"
                                         >
                                             <option value="">{t('community.form.selectCategory')}</option>
                                             {categories.filter(c => c.id !== 'all').map(category => (
@@ -328,12 +328,12 @@ const CommunityPage = () => {
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">{t('community.form.description')}</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">{t('community.form.description')}</label>
                                         <textarea
                                             value={newPost.content}
                                             onChange={(e) => setNewPost({...newPost, content: e.target.value})}
                                             rows={6}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:border-gray-600 dark:text-gray-100"
                                             placeholder={t('community.form.descriptionPlaceholder')}
                                         />
                                     </div>
@@ -344,9 +344,9 @@ const CommunityPage = () => {
                                             id="anonymous"
                                             checked={newPost.anonymous}
                                             onChange={(e) => setNewPost({...newPost, anonymous: e.target.checked})}
-                                            className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                                            className="rounded border-gray-300 text-green-600 focus:ring-green-500 dark:border-gray-600"
                                         />
-                                        <label htmlFor="anonymous" className="text-sm text-gray-700">{t('community.form.postAnonymously')}</label>
+                                        <label htmlFor="anonymous" className="text-sm text-gray-700 dark:text-gray-300">{t('community.form.postAnonymously')}</label>
                                     </div>
 
                                     <div className="flex space-x-4 pt-4">
@@ -358,7 +358,7 @@ const CommunityPage = () => {
                                         </button>
                                         <button
                                             onClick={() => setShowNewPost(false)}
-                                            className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg transition-colors"
+                                            className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg transition-colors dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-100"
                                         >
                                             {t('common.cancel')}
                                         </button>
@@ -369,8 +369,8 @@ const CommunityPage = () => {
 
                         {/* Post Detail View */}
                         {selectedPost && (
-                            <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-                                <div className="p-6 border-b border-gray-200">
+                            <div className="bg-white rounded-xl shadow-sm border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                                <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                                     <button
                                         onClick={() => setSelectedPost(null)}
                                         className="text-green-600 hover:text-green-700 mb-4 flex items-center space-x-2"
@@ -391,11 +391,11 @@ const CommunityPage = () => {
                                         )}
                                     </div>
 
-                                    <h1 className="text-2xl font-bold text-gray-800 mb-4">{selectedPost.title}</h1>
-                                    <p className="text-gray-700 mb-4">{selectedPost.content}</p>
+                                    <h1 className="text-2xl font-bold text-gray-800 mb-4 dark:text-gray-100">{selectedPost.title}</h1>
+                                    <p className="text-gray-700 mb-4 dark:text-gray-300">{selectedPost.content}</p>
 
                                     <div className="flex items-center justify-between">
-                                        <div className="flex items-center space-x-4 text-sm text-gray-500">
+                                        <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
                                             <div className="flex items-center space-x-1">
                                                 <Users size={16} />
                                                 <span>{selectedPost.author}</span>
@@ -415,10 +415,10 @@ const CommunityPage = () => {
                                                 <ThumbsUp size={16} />
                                                 <span>{selectedPost.likes}</span>
                                             </button>
-                                            <button className="flex items-center space-x-1 text-gray-500 hover:text-gray-700">
+                                            <button className="flex items-center space-x-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                                                 <Bookmark size={16} />
                                             </button>
-                                            <button className="flex items-center space-x-1 text-gray-500 hover:text-gray-700">
+                                            <button className="flex items-center space-x-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                                                 <Share2 size={16} />
                                             </button>
                                         </div>
@@ -427,17 +427,17 @@ const CommunityPage = () => {
 
                                 {/* Comments Section */}
                                 <div className="p-6">
-                                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-4 dark:text-gray-100">
                                         {selectedPost.replies} {t('community.labels.replies')}
                                     </h3>
 
                                     {selectedPost.comments && selectedPost.comments.map((comment) => (
-                                        <div key={comment.id} className="border-l-2 border-green-200 pl-4 mb-4">
+                                        <div key={comment.id} className="border-l-2 border-green-200 pl-4 mb-4 dark:border-green-800">
                                             <div className="flex items-center space-x-2 mb-2">
-                                                <span className="font-medium text-gray-800">{comment.author}</span>
-                                                <span className="text-sm text-gray-500">{comment.timeAgo}</span>
+                                                <span className="font-medium text-gray-800 dark:text-gray-100">{comment.author}</span>
+                                                <span className="text-sm text-gray-500 dark:text-gray-400">{comment.timeAgo}</span>
                                             </div>
-                                            <p className="text-gray-700 mb-2">{comment.content}</p>
+                                            <p className="text-gray-700 mb-2 dark:text-gray-300">{comment.content}</p>
                                             <button className="flex items-center space-x-1 text-sm text-green-600 hover:text-green-700">
                                                 <ThumbsUp size={14} />
                                                 <span>{comment.likes}</span>
@@ -450,7 +450,7 @@ const CommunityPage = () => {
                                         <textarea
                                             placeholder={t('community.reply.placeholder')}
                                             rows={3}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 mb-3"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 mb-3 dark:bg-gray-900 dark:border-gray-600 dark:text-gray-100"
                                         />
                                         <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
                                             {t('community.reply.post')}
@@ -464,20 +464,20 @@ const CommunityPage = () => {
             </div>
 
             {/* Community Guidelines Footer */}
-            <div className="bg-gray-100 border-t border-gray-200 mt-12">
+            <div className="bg-gray-100 border-t border-gray-200 mt-12 dark:bg-gray-800 dark:border-gray-700">
                 <div className="max-w-7xl mx-auto px-4 py-8">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('community.guidelines.title')}</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-600">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4 dark:text-gray-100">{t('community.guidelines.title')}</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-600 dark:text-gray-300">
                         <div>
-                            <h4 className="font-medium text-gray-800 mb-2">{t('community.guidelines.respect.title')}</h4>
+                            <h4 className="font-medium text-gray-800 mb-2 dark:text-gray-100">{t('community.guidelines.respect.title')}</h4>
                             <p>{t('community.guidelines.respect.desc')}</p>
                         </div>
                         <div>
-                            <h4 className="font-medium text-gray-800 mb-2">{t('community.guidelines.relevant.title')}</h4>
+                            <h4 className="font-medium text-gray-800 mb-2 dark:text-gray-100">{t('community.guidelines.relevant.title')}</h4>
                             <p>{t('community.guidelines.relevant.desc')}</p>
                         </div>
                         <div>
-                            <h4 className="font-medium text-gray-800 mb-2">{t('community.guidelines.report.title')}</h4>
+                            <h4 className="font-medium text-gray-800 mb-2 dark:text-gray-100">{t('community.guidelines.report.title')}</h4>
                             <p>{t('community.guidelines.report.desc')}</p>
                         </div>
                     </div>
