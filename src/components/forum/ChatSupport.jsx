@@ -27,6 +27,7 @@ import {
     Download
 } from 'lucide-react';
 import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const ChatSupport = () => {
     const [messages, setMessages] = useState([
@@ -224,10 +225,8 @@ const ChatSupport = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-24">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
             {/* Header */}
-            <Header />
-
             <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
@@ -489,6 +488,7 @@ const ChatSupport = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
