@@ -36,6 +36,7 @@ import {
 } from 'lucide-react';
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
+import api from "../../api/axios";
 
 const ExpertConsultationPage = () => {
     const [selectedExpert, setSelectedExpert] = useState(null);
@@ -201,22 +202,49 @@ const ExpertConsultationPage = () => {
         setShowBookingForm(true);
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
-        // Here you would typically send the booking data to your backend
-        alert('Consultation booked successfully! You will receive a confirmation email shortly.');
-        setShowBookingForm(false);
-        // Reset form
-        setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            farmSize: '',
-            location: '',
-            cropType: '',
-            issue: '',
-            priority: 'medium'
-        });
+        try {
+            if (!selectedExpert || !selectedService || !selectedDate || !selectedTime) {
+                alert('Please complete expert, service, date and time selections.');
+                return;
+            }
+
+            const payload = {
+                expertId: selectedExpert.id,
+                expertName: selectedExpert.name,
+                serviceType: selectedService,
+                selectedDate: new Date(selectedDate).toISOString(),
+                selectedTime: selectedTime,
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+                farmSize: formData.farmSize,
+                location: formData.location,
+                cropType: formData.cropType,
+                issue: formData.issue,
+                priority: formData.priority
+            };
+
+            await api.post('/consultations', payload);
+
+            alert('Consultation booked successfully! You will receive a confirmation email shortly.');
+            setShowBookingForm(false);
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                farmSize: '',
+                location: '',
+                cropType: '',
+                issue: '',
+                priority: 'medium'
+            });
+        } catch (err) {
+            console.error('Booking failed', err);
+            const message = err?.response?.data?.message || 'Failed to book consultation. Please try again.';
+            alert(message);
+        }
     };
 
     const handleInputChange = (e) => {
