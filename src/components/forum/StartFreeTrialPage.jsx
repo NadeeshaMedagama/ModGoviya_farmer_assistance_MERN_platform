@@ -189,27 +189,27 @@ const StartFreeTrialPage = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900">
             {/* Header */}
             <Header />
 
             {/* Hero Section */}
             <section className="relative py-16 lg:py-24">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-emerald-600/5"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-emerald-600/5 dark:from-emerald-900/20 dark:to-teal-900/10"></div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
                         <div className="inline-flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium mb-6">
                             <Clock className="w-4 h-4 mr-2" />
                             Limited Time: 30-Day Free Trial + Premium Features
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-gray-100 mb-6 leading-tight">
                             Transform Your Farm with
                             <span className="block text-green-600">ModGoviya Today</span>
                         </h1>
-                        <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                        <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
                             Join 50,000+ successful farmers who've increased their yield by 35% and reduced costs by 25% with our AI-powered farming assistant.
                         </p>
-                        <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-gray-600">
+                        <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-gray-600 dark:text-gray-300">
                             <div className="flex items-center">
                                 <Check className="w-5 h-5 text-green-500 mr-2" />
                                 No credit card required
@@ -227,17 +227,17 @@ const StartFreeTrialPage = () => {
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                         {/* Registration Form */}
-                        <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-green-100">
+                        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 lg:p-10 border border-green-100 dark:border-gray-700">
                             <div className="text-center mb-8">
-                                <h2 className="text-3xl font-bold text-gray-900 mb-2">Start Your Free Trial</h2>
-                                <p className="text-gray-600">Get instant access to all premium features</p>
+                                <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Start Your Free Trial</h2>
+                                <p className="text-gray-600 dark:text-gray-300">Get instant access to all premium features</p>
                             </div>
 
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 {/* Personal Information */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">First Name</label>
                                         <div className="relative">
                                             <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                                             <input
@@ -245,20 +245,20 @@ const StartFreeTrialPage = () => {
                                                 name="firstName"
                                                 value={formData.firstName}
                                                 onChange={handleInputChange}
-                                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                                                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400"
                                                 placeholder="Enter first name"
                                                 required
                                             />
                                         </div>
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
                                         <input
                                             type="text"
                                             name="lastName"
                                             value={formData.lastName}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400"
                                             placeholder="Enter last name"
                                             required
                                         />
@@ -266,7 +266,7 @@ const StartFreeTrialPage = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
                                     <div className="relative">
                                         <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                                         <input
@@ -274,7 +274,7 @@ const StartFreeTrialPage = () => {
                                             name="email"
                                             value={formData.email}
                                             onChange={handleInputChange}
-                                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                                            className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400"
                                             placeholder="farmer@example.com"
                                             required
                                         />
@@ -282,7 +282,7 @@ const StartFreeTrialPage = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone Number</label>
                                     <div className="relative">
                                         <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                                         <input
@@ -290,7 +290,7 @@ const StartFreeTrialPage = () => {
                                             name="phone"
                                             value={formData.phone}
                                             onChange={handleInputChange}
-                                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                                            className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400"
                                             placeholder="+94 XX XXX XXXX"
                                             required
                                         />
@@ -300,14 +300,14 @@ const StartFreeTrialPage = () => {
                                 {/* Farm Information */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Farm Location</label>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Farm Location</label>
                                         <div className="relative">
                                             <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                                             <select
                                                 name="farmLocation"
                                                 value={formData.farmLocation}
                                                 onChange={handleInputChange}
-                                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                                                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                                                 required
                                             >
                                                 <option value="">Select district</option>
@@ -322,12 +322,12 @@ const StartFreeTrialPage = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Farm Size</label>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Farm Size</label>
                                         <select
                                             name="farmSize"
                                             value={formData.farmSize}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                                             required
                                         >
                                             <option value="">Select size</option>
@@ -340,7 +340,7 @@ const StartFreeTrialPage = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Primary Crops</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Primary Crops</label>
                                     <div className="relative">
                                         <Wheat className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                                         <input
@@ -348,7 +348,7 @@ const StartFreeTrialPage = () => {
                                             name="primaryCrops"
                                             value={formData.primaryCrops}
                                             onChange={handleInputChange}
-                                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                                            className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400"
                                             placeholder="Rice, vegetables, tea, etc."
                                             required
                                         />
@@ -357,21 +357,21 @@ const StartFreeTrialPage = () => {
 
                                 {/* Password */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
                                     <div className="relative">
                                         <input
                                             type={showPassword ? "text" : "password"}
                                             name="password"
                                             value={formData.password}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                                            className="w-full px-4 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400"
                                             placeholder="Create a strong password"
                                             required
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                                         >
                                             {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                         </button>
@@ -386,11 +386,11 @@ const StartFreeTrialPage = () => {
                                             name="agreeToTerms"
                                             checked={formData.agreeToTerms}
                                             onChange={handleInputChange}
-                                            className="mt-1 w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                                            className="mt-1 w-4 h-4 text-green-600 border-gray-300 dark:border-gray-600 rounded focus:ring-green-500"
                                             required
                                         />
-                                        <span className="text-sm text-gray-600">
-                                            I agree to the <Link to="/terms" className="text-green-600 hover:text-green-700">Terms of Service</Link> and <Link to="/privacy" className="text-green-600 hover:text-green-700">Privacy Policy</Link>
+                                        <span className="text-sm text-gray-600 dark:text-gray-300">
+                                            I agree to the <Link to="/terms" className="text-green-600 hover:text-green-700 dark:text-emerald-400 dark:hover:text-emerald-300">Terms of Service</Link> and <Link to="/privacy" className="text-green-600 hover:text-green-700 dark:text-emerald-400 dark:hover:text-emerald-300">Privacy Policy</Link>
                                         </span>
                                     </label>
                                     <label className="flex items-start space-x-3">
@@ -399,9 +399,9 @@ const StartFreeTrialPage = () => {
                                             name="newsletter"
                                             checked={formData.newsletter}
                                             onChange={handleInputChange}
-                                            className="mt-1 w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                                            className="mt-1 w-4 h-4 text-green-600 border-gray-300 dark:border-gray-600 rounded focus:ring-green-500"
                                         />
-                                        <span className="text-sm text-gray-600">
+                                        <span className="text-sm text-gray-600 dark:text-gray-300">
                                             Send me farming tips and product updates (optional)
                                         </span>
                                     </label>
@@ -424,21 +424,21 @@ const StartFreeTrialPage = () => {
                         {/* Benefits & Features */}
                         <div className="space-y-8">
                             {/* What You'll Get */}
-                            <div className="bg-white rounded-2xl p-8 shadow-lg border border-green-100">
-                                <h3 className="text-2xl font-bold text-gray-900 mb-6">What You'll Get Instantly</h3>
+                            <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-green-100 dark:border-gray-700">
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">What You'll Get Instantly</h3>
                                 <div className="grid grid-cols-1 gap-4">
                                     {benefits.map((benefit, index) => {
                                         const IconComponent = benefit.icon;
                                         return (
                                             <div key={index} className="flex items-start space-x-4">
                                                 <div className="flex-shrink-0">
-                                                    <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                                    <div className="w-10 h-10 bg-green-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center">
                                                         <IconComponent className="w-5 h-5 text-green-600" />
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <h4 className="font-semibold text-gray-900">{benefit.title}</h4>
-                                                    <p className="text-gray-600 text-sm">{benefit.description}</p>
+                                                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">{benefit.title}</h4>
+                                                    <p className="text-gray-600 dark:text-gray-300 text-sm">{benefit.description}</p>
                                                 </div>
                                             </div>
                                         );
@@ -447,7 +447,7 @@ const StartFreeTrialPage = () => {
                             </div>
 
                             {/* Testimonials */}
-                            <div className="bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl p-8 text-white">
+                            <div className="bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl p-8 text-white dark:from-emerald-700 dark:to-green-700">
                                 <h3 className="text-2xl font-bold mb-6">What Farmers Are Saying</h3>
                                 <div className="space-y-6">
                                     {testimonials.slice(0, 2).map((testimonial, index) => (
