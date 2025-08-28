@@ -35,6 +35,7 @@ import {
     X
 } from 'lucide-react';
 import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const ExpertConsultationPage = () => {
     const [selectedExpert, setSelectedExpert] = useState(null);
@@ -759,6 +760,7 @@ const ExpertConsultationPage = () => {
                     </div>
                 </div>
             )}
+            <Footer />
         </div>
     );
 };
