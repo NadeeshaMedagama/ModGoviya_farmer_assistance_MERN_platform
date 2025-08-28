@@ -31,6 +31,7 @@ import StartFreeTrialPage from "./components/forum/StartFreeTrialPage";
 import ReadModePage from "./components/common/ReadModePage";
 import ExpertConsultationPage from "./components/common/ExpertConsultationPage";
 import ResourcesHub from "./components/common/ResourcesHub";
+import ChatSupport from "./components/forum/ChatSupport";
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
                     <Route path="/readmore" element={<ReadModePage />} />
                     <Route path="/expertconsult" element={<ExpertConsultationPage />} />
                     <Route path="/resourcehub" element={<ResourcesHub />} />
+                    <Route path="/chatsupport" element={<ChatSupport />} />
                   </Routes>
                 </CartProvider>
               </LanguageProvider>
