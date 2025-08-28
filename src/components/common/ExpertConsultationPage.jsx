@@ -31,8 +31,10 @@ import {
     Globe,
     Languages,
     Clock3,
+    CalendarIcon,
     X
 } from 'lucide-react';
+import Header from "../layout/Header";
 
 const ExpertConsultationPage = () => {
     const [selectedExpert, setSelectedExpert] = useState(null);
@@ -230,9 +232,11 @@ const ExpertConsultationPage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-green-50 dark:from-gray-900 dark:via-gray-800 dark:to-emerald-900">
             {/* Hero Section */}
+            <Header />
+
             <div className="relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-600 opacity-10"></div>
-                <div className="relative max-w-7xl mx-auto px-4 py-20">
+                <div className="relative max-w-7xl mx-auto px-4 py-32">
                     <div className="text-center mb-16">
                         <div className="inline-flex items-center bg-emerald-100 dark:bg-emerald-900/30 px-4 py-2 rounded-full text-sm font-medium text-emerald-700 dark:text-emerald-300 mb-6">
                             <Award className="w-4 h-4 mr-2" />
@@ -273,7 +277,7 @@ const ExpertConsultationPage = () => {
             <div className="max-w-7xl mx-auto px-4 pb-20">
                 {/* Expert Selection */}
                 <div className="mb-16">
-                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center py-10">
                         Choose Your Agricultural Expert
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
