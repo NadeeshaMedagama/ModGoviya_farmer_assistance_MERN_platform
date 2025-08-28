@@ -34,7 +34,7 @@ To democratize access to agricultural technology and information, enabling farme
 - **Weather Pattern Analysis** - Historical and predictive weather insights
 - **Market Price Trends** - Real-time commodity pricing information
 
-### 📂 [Architecture_Diagram_Document](https://drive.google.com/file/d/1spxFtih2_SjX8dJBjobsGZjl4OgQtNI3/view?usp=sharing)
+### 📂 [Architecture_Diagram_Document](https://drive.google.com/file/d/1LsgKgDbHnDu222uFmX2L-D7PeFL-_9vp/view?usp=sharing)
 
 ## 🛠️ Technology Stack
 
