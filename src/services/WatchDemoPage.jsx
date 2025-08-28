@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Play,
     Pause,
@@ -262,14 +263,18 @@ const WatchDemoPage = () => {
                                 </div>
                             </div>
                             <div className="mt-6 md:mt-0 flex space-x-3">
+                                <Link to="/freetrial">
                                 <button className="flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-xl hover:bg-green-700 transition-colors">
                                     <ArrowRight className="w-4 h-4 mr-2" />
                                     Start Free Trial
                                 </button>
+                                </Link>
+                                <Link to="/contact">
                                 <button className="flex items-center px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors">
                                     <MessageCircle className="w-4 h-4 mr-2" />
                                     Contact Sales
                                 </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -473,14 +478,18 @@ const WatchDemoPage = () => {
                         Join thousands of successful farmers who trust ModGoviya to enhance their productivity and profitability.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                        <Link to="/freetrial">
                         <button className="inline-flex items-center px-8 py-4 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-all duration-300 transform hover:scale-105">
                             <Zap className="w-5 h-5 mr-2" />
                             Start Free Trial
                         </button>
+                        </Link>
+                        <Link to="/schedule">
                         <button className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-gray-900 transition-all duration-300">
                             <Phone className="w-5 h-5 mr-2" />
                             Schedule Demo Call
                         </button>
+                        </Link>
                     </div>
                     <div className="flex items-center justify-center space-x-8 text-sm text-gray-400">
                         <div className="flex items-center">

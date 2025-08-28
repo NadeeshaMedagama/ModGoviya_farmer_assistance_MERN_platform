@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import api from '../../utils/axios';
 import { Link } from 'react-router-dom';
 import {
     Sprout,
@@ -56,10 +57,37 @@ const StartFreeTrialPage = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission
-        console.log('Form submitted:', formData);
+        if (formData.password !== formData.confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+        try {
+            const payload = { ...formData };
+            delete payload.confirmPassword;
+            const response = await api.post('/trial', payload);
+            if (response.data?.success) {
+                alert('Your trial request has been submitted.');
+                setFormData({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    phone: '',
+                    password: '',
+                    confirmPassword: '',
+                    farmLocation: '',
+                    farmSize: '',
+                    primaryCrops: '',
+                    experience: '',
+                    agreeToTerms: false,
+                    newsletter: true
+                });
+            }
+        } catch (error) {
+            console.error('Trial signup failed:', error);
+            alert(error.response?.data?.message || 'Failed to submit. Please try again.');
+        }
     };
 
     const benefits = [
