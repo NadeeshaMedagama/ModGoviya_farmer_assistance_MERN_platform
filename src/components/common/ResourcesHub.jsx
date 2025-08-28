@@ -423,9 +423,11 @@ const ResourcesHub = () => {
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
                         Get instant help from our support team
                     </p>
+                    <Link to="/chatsupport">
                     <button className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
                         Start Chat
                     </button>
+                    </Link>
                     <p className="text-sm text-gray-500 mt-2">Available 24/7</p>
                 </div>
             </div>
@@ -437,7 +439,9 @@ const ResourcesHub = () => {
                         Connect with other farmers, share experiences, and learn from the community
                     </p>
                     <Link to="/community">
-                    <button className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 flex items-center mx-auto">
+                    <button
+                        onClick={scrollToTop}
+                        className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 flex items-center mx-auto">
                         <Users className="mr-2" size={18} />
                         Join Community
                     </button>
