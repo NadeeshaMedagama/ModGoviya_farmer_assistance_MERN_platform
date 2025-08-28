@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Facebook,
     Twitter,
@@ -136,21 +137,24 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold mb-6 text-green-400">Resources</h3>
                         <ul className="space-y-3">
-                            <li><a href="/blog"
-                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Blog</a>
+                            <li><Link to="/resourcehub"
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Blog
+                            </Link>
                             </li>
-                            <li><a href="/guides"
+                            <li><Link to="/resourcehub"
                                    className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Farming
-                                Guides</a></li>
-                            <li><a href="/tutorials"
-                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Tutorials</a>
+                                Guides</Link></li>
+                            <li><Link to="/resourcehub"
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Tutorials
+                            </Link>
                             </li>
-                            <li><a href="/faq"
-                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">FAQ</a>
+                            <li><Link to="/resourcehub"
+                                   className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">FAQ
+                            </Link>
                             </li>
-                            <li><a href="/support"
+                            <li><Link to="/resourcehub"
                                    className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Help
-                                Center</a></li>
+                                Center</Link></li>
                         </ul>
                     </div>
 
