@@ -13,6 +13,7 @@ import {
     Printer,
     Share2
 } from 'lucide-react';
+import Footer from "../layout/Footer";
 
 const TermsAndConditions = () => {
     const [activeSection, setActiveSection] = useState('');
@@ -385,6 +386,7 @@ const TermsAndConditions = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
