@@ -11,10 +11,14 @@ import {
     Check,
     Star,
     MapPin,
+    Sprout,
+    Tractor,
+    Users,
 } from 'lucide-react';
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import { useTranslation } from 'react-i18next';
+import EnhancedHeroSection from "../components/enhanced/EnhancedHeroSection";
 
 const ModGoviyaHomepage = () => {
     const { t, i18n } = useTranslation();
@@ -142,84 +146,26 @@ const ModGoviyaHomepage = () => {
                     backgroundSize: '40px 40px'
                 }}></div>
 
+            {/* Floating Elements */}
+            <div className="absolute top-10 left-10 animate-float-slow">
+                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                    <Sprout className="h-6 w-6 text-green-200"/>
+                </div>
+            </div>
+            <div className="absolute top-20 right-20 animate-float-delayed">
+                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                    <Tractor className="h-6 w-6 text-green-200"/>
+                </div>
+            </div>
+            <div className="absolute bottom-10 left-20 animate-float-slow">
+                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                    <Users className="h-6 w-6 text-green-200"/>
+                </div>
+            </div>
+
             {/* Hero Section */}
             {/* Enhanced Hero Section */}
-            <section
-                className="relative bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-green-900/10 dark:to-gray-900 py-20 lg:py-32 overflow-hidden">
-                {/* Background decorative elements */}
-                <div className="absolute inset-0">
-                    <div className="absolute top-10 left-10 w-72 h-72 bg-green-200/20 rounded-full blur-3xl"></div>
-                    <div
-                        className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-200/20 rounded-full blur-3xl"></div>
-                    <div
-                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-green-100/10 to-emerald-100/10 rounded-full blur-3xl"></div>
-                </div>
-
-                {/* Grid pattern overlay */}
-                <div className="absolute inset-0 opacity-5">
-                    <div className="absolute inset-0" style={{
-                        backgroundImage: `url("data:image/svg+xml,%3csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cg fill='%23059669' fill-opacity='1'%3e%3ccircle cx='7' cy='7' r='1'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e")`,
-                        backgroundSize: '60px 60px'
-                    }}></div>
-                </div>
-
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-                    {/* Badge */}
-                    <div
-                        className="inline-flex items-center px-4 py-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full border border-green-200 dark:border-green-700 mb-8">
-                        <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-                        <span className="text-sm font-medium text-green-700 dark:text-green-300">Trusted by 10,000+ Farmers</span>
-                    </div>
-
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
-                        <span className="text-gray-900 dark:text-white block">Empowering Farmers with</span>
-                        <span
-                            className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent mt-4 inline-block pb-3">
-                Modern Technology
-            </span>
-                    </h1>
-
-                    <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
-                        Join thousands of farmers using ModGoviya to revolutionize their farming practices with smart
-                        tools, weather insights, and community support.
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                        <Link
-                            to="/register"
-                            className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-green-500/20"
-                        >
-                            <span className="mr-3">Get Started</span>
-                            <ArrowRight
-                                className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-200"/>
-                            <div
-                                className="absolute inset-0 bg-gradient-to-r from-green-700 to-emerald-700 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-                        </Link>
-                        <Link
-                            to="/features"
-                            className="group inline-flex items-center px-8 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-2 border-green-600 text-green-600 dark:text-green-400 font-semibold rounded-xl hover:bg-green-600 hover:text-white dark:hover:bg-green-600 dark:hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                        >
-                            <span>Browse Features</span>
-                        </Link>
-                    </div>
-
-                    {/* Stats row */}
-                    <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
-                        <div className="text-center">
-                            <div className="text-3xl font-bold text-green-600 dark:text-green-400">10K+</div>
-                            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Active Farmers</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="text-3xl font-bold text-green-600 dark:text-green-400">50+</div>
-                            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Smart Tools</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="text-3xl font-bold text-green-600 dark:text-green-400">24/7</div>
-                            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Support</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <EnhancedHeroSection />
 
             {/* Enhanced Key Features Section */}
             <section className="py-24 bg-white dark:bg-gray-900 relative">
