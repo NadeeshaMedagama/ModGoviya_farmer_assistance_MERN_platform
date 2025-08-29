@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     HelpCircle,
     MessageSquare,
@@ -27,6 +28,7 @@ import {
     Headphones
 } from 'lucide-react';
 import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const SupportPage = () => {
     const [activeTab, setActiveTab] = useState('faq');
@@ -72,6 +74,13 @@ const SupportPage = () => {
             answer: "We support all major Sri Lankan crops including rice, tea, rubber, coconut, vegetables, fruits, and spices. Our platform provides specific guidance for each crop type with localized growing tips and market information."
         }
     ];
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // This enables smooth scrolling
+        });
+    };
 
     const supportCategories = [
         {
@@ -151,9 +160,12 @@ const SupportPage = () => {
                         <p className="text-gray-600 dark:text-gray-400 mb-4">
                             Get instant help from our support team. Available 24/7 for urgent issues.
                         </p>
+                        <Link
+                            to="/chatsupport">
                         <button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 rounded-lg font-medium hover:from-green-600 hover:to-emerald-600 transition-all duration-200">
                             Start Chat
                         </button>
+                        </Link>
                     </div>
 
                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
@@ -632,20 +644,34 @@ const SupportPage = () => {
                         Our dedicated support team is always ready to assist you with any questions or challenges you may face.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button className="bg-white text-green-600 px-8 py-4 rounded-lg font-medium hover:bg-green-50 transition-all duration-200 flex items-center justify-center space-x-2">
+
+                        <Link
+                            to="/chatsupport">
+                        <button
+                            onClick={scrollToTop}
+                            className="bg-white text-green-600 px-8 py-4 rounded-lg font-medium hover:bg-green-50 transition-all duration-200 flex items-center justify-center space-x-2">
                             <MessageSquare className="w-5 h-5" />
                             <span>Start Live Chat</span>
                         </button>
-                        <button className="bg-green-800 bg-opacity-50 text-white px-8 py-4 rounded-lg font-medium hover:bg-opacity-70 transition-all duration-200 flex items-center justify-center space-x-2 backdrop-blur-sm">
+                        </Link>
+
+                        <Link
+                            to="/schedule">
+                        <button
+                            onClick={scrollToTop}
+                            className="bg-green-800 bg-opacity-50 text-white px-8 py-4 rounded-lg font-medium hover:bg-opacity-70 transition-all duration-200 flex items-center justify-center space-x-2 backdrop-blur-sm">
                             <Phone className="w-5 h-5" />
                             <span>Schedule a Call</span>
                         </button>
+                        </Link>
+
                     </div>
                     <p className="mt-6 text-green-200 text-sm">
                         Average response time: Less than 5 minutes during business hours
                     </p>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
