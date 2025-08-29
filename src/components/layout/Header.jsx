@@ -31,6 +31,13 @@ const Header = () => {
     const { t, i18n } = useTranslation();
     const { isAuthenticated, user, logout } = useAuth();
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // This enables smooth scrolling
+        });
+    };
+
     // Compute display name from stored user info (without altering design)
     const [displayName, setDisplayName] = useState('');
 
@@ -55,7 +62,7 @@ const Header = () => {
                 setDisplayName(user.fullName || user.name);
                 return;
             }
-            
+
             // Fallback: check localStorage userInfo (from registration)
             const raw = localStorage.getItem('userInfo');
             if (raw) {
@@ -66,7 +73,7 @@ const Header = () => {
                     return;
                 }
             }
-            
+
             // If no name found, clear display name
             setDisplayName('');
         } catch {
@@ -108,18 +115,18 @@ const Header = () => {
         localStorage.removeItem('userInfo');
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
-        
+
         // Call logout from AuthContext
         if (logout) {
             logout();
         }
-        
+
         // Clear display name
         setDisplayName('');
-        
+
         // Close dropdown
         setIsUserDropdownOpen(false);
-        
+
         // Navigate to home page
         navigate('/');
     };
@@ -211,6 +218,7 @@ const Header = () => {
                         {/* Professional Cart Icon */}
                         <Link
                             to="/cart"
+                            onClick={scrollToTop}
                             className="relative p-2.5 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:text-emerald-400 dark:hover:bg-emerald-900/20 rounded-lg transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         >
                             <ShoppingCart className="w-6 h-6" />
