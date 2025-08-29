@@ -20,6 +20,7 @@ import {
     ArrowLeft,
     MessageSquare
 } from 'lucide-react';
+import Header from "../layout/Header";
 
 const PrivacyPolicy = () => {
     const [activeSection, setActiveSection] = useState('');
@@ -78,19 +79,21 @@ const PrivacyPolicy = () => {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             {/* Header */}
+            <Header />
+
             <div className="bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 text-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28">
                     <div className="text-center">
                         {/* Back to Home Button */}
-                        <div className="flex justify-start mb-8">
-                            <button
-                                onClick={scrollToTop}
-                                className="inline-flex items-center px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200"
-                            >
-                                <ArrowLeft size={18} className="mr-2" />
-                                Back to Home
-                            </button>
-                        </div>
+                        {/*<div className="flex justify-start mb-8">*/}
+                        {/*    <button*/}
+                        {/*        onClick={scrollToTop}*/}
+                        {/*        className="inline-flex items-center px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200"*/}
+                        {/*    >*/}
+                        {/*        <ArrowLeft size={18} className="mr-2" />*/}
+                        {/*        Back to Home*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
 
                         <div className="flex justify-center mb-6">
                             <div className="relative">
