@@ -95,6 +95,13 @@ const LearnMore = () => {
         { number: "98%", label: "Satisfaction Rate", icon: Star }
     ];
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // This enables smooth scrolling
+        });
+    };
+
     const testimonials = [
         {
             name: "Raj Patel",
@@ -429,22 +436,29 @@ const LearnMore = () => {
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+
                         <Link to="/trade">
-                        <button className="group bg-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                        <button
+                            onClick={scrollToTop}
+                            className="group bg-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
               <span className="flex items-center justify-center">
                 Start Trading Now
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
               </span>
                         </button>
                         </Link>
+
                         <Link to="/contact">
-                        <button className="group bg-gray-100 text-gray-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-200 transform hover:scale-105 transition-all duration-300">
+                        <button
+                            onClick={scrollToTop}
+                            className="group bg-gray-100 text-gray-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-200 transform hover:scale-105 transition-all duration-300">
               <span className="flex items-center justify-center">
                 <Phone className="mr-2 h-5 w-5" />
                 Contact Sales
               </span>
                         </button>
                         </Link>
+
                     </div>
 
                     <div className="bg-gray-50 rounded-2xl p-8">
