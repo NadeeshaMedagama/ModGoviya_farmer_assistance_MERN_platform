@@ -15,10 +15,12 @@ import {
 } from 'lucide-react';
 import Footer from "../layout/Footer";
 import Header from "../layout/Header";
+import { useTheme } from '../../contexts/ThemeContext'; // Adjust path as needed
 
 const TermsAndConditions = () => {
     const [activeSection, setActiveSection] = useState('');
     const [lastUpdated] = useState('January 15, 2025');
+    const { isDarkMode } = useTheme(); // Get theme context
 
     useEffect(() => {
         const handleScroll = () => {
@@ -66,26 +68,26 @@ const TermsAndConditions = () => {
             {/* Header */}
             <Header />
 
-            <div className="pt-24 pb-6 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+            <div className={`pt-24 pb-6 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} shadow-sm border-b`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-2">
                         <div className="flex items-center">
                             <button
                                 onClick={() => window.history.back()}
-                                className="flex items-center text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                                className={`flex items-center ${isDarkMode ? 'text-gray-300 hover:text-green-400' : 'text-gray-600 hover:text-green-600'} transition-colors`}
                             >
                                 <ArrowLeft className="w-5 h-5 mr-2" />
                                 <span>Back to Home</span>
                             </button>
                         </div>
                         <div className="flex items-center space-x-4">
-                            <button className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                            <button className={`p-2 ${isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-400 hover:text-gray-600'} transition-colors`}>
                                 <Download className="w-5 h-5" />
                             </button>
-                            <button className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                            <button className={`p-2 ${isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-400 hover:text-gray-600'} transition-colors`}>
                                 <Printer className="w-5 h-5" />
                             </button>
-                            <button className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                            <button className={`p-2 ${isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-400 hover:text-gray-600'} transition-colors`}>
                                 <Share2 className="w-5 h-5" />
                             </button>
                         </div>
@@ -114,8 +116,8 @@ const TermsAndConditions = () => {
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Table of Contents - Sidebar */}
                     <div className="lg:w-1/4">
-                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 sticky top-8">
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Table of Contents</h3>
+                        <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-sm p-6 sticky top-8`}>
+                            <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Table of Contents</h3>
                             <nav className="space-y-2">
                                 {sections.map((section) => {
                                     const IconComponent = section.icon;
@@ -125,8 +127,8 @@ const TermsAndConditions = () => {
                                             onClick={() => scrollToSection(section.id)}
                                             className={`w-full text-left flex items-center px-3 py-2 rounded-md text-sm transition-colors ${
                                                 activeSection === section.id
-                                                    ? 'bg-green-50 dark:bg-green-900 text-green-700 dark:text-green-300 border-l-2 border-green-500'
-                                                    : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                                                    ? 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-l-2 border-green-500'
+                                                    : `${isDarkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-50'}`
                                             }`}
                                         >
                                             <IconComponent className="w-4 h-4 mr-3" />
@@ -140,17 +142,17 @@ const TermsAndConditions = () => {
 
                     {/* Main Content */}
                     <div className="lg:w-3/4">
-                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8">
+                        <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-sm p-8`}>
                             {/* Introduction */}
                             <div className="mb-12">
-                                <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                                <p className={`text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
                                     Welcome to ModGoviya, Sri Lanka's premier digital agriculture platform. These Terms and Conditions ("Terms") govern your access to and use of our services, including our website, mobile applications, marketplace, weather services, and community features.
                                 </p>
                             </div>
 
                             {/* Section 1: Acceptance of Terms */}
                             <section id="acceptance" data-section="acceptance" className="mb-10">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
                                     <Shield className="w-6 h-6 mr-3 text-green-600" />
                                     1. Acceptance of Terms
                                 </h2>
@@ -162,7 +164,7 @@ const TermsAndConditions = () => {
 
                             {/* Section 2: Our Services */}
                             <section id="services" data-section="services" className="mb-10">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
                                     <Leaf className="w-6 h-6 mr-3 text-green-600" />
                                     2. Our Services
                                 </h2>
@@ -181,7 +183,7 @@ const TermsAndConditions = () => {
 
                             {/* Section 3: User Registration */}
                             <section id="registration" data-section="registration" className="mb-10">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
                                     <Users className="w-6 h-6 mr-3 text-green-600" />
                                     3. User Registration and Accounts
                                 </h2>
@@ -203,7 +205,7 @@ const TermsAndConditions = () => {
 
                             {/* Section 4: User Conduct */}
                             <section id="conduct" data-section="conduct" className="mb-10">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
                                     <Scale className="w-6 h-6 mr-3 text-green-600" />
                                     4. User Conduct
                                 </h2>
@@ -223,7 +225,7 @@ const TermsAndConditions = () => {
 
                             {/* Section 5: Content & Intellectual Property */}
                             <section id="content" data-section="content" className="mb-10">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
                                     <FileText className="w-6 h-6 mr-3 text-green-600" />
                                     5. Content & Intellectual Property
                                 </h2>
@@ -241,7 +243,7 @@ const TermsAndConditions = () => {
 
                             {/* Section 6: Marketplace Terms */}
                             <section id="marketplace" data-section="marketplace" className="mb-10">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
                                     <ChevronRight className="w-6 h-6 mr-3 text-green-600" />
                                     6. Marketplace Terms
                                 </h2>
@@ -262,7 +264,7 @@ const TermsAndConditions = () => {
 
                             {/* Section 7: Weather & Advisory Services */}
                             <section id="weather" data-section="weather" className="mb-10">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
                                     <AlertTriangle className="w-6 h-6 mr-3 text-green-600" />
                                     7. Weather & Advisory Services
                                 </h2>
@@ -280,7 +282,7 @@ const TermsAndConditions = () => {
 
                             {/* Section 8: Privacy & Data Protection */}
                             <section id="privacy" data-section="privacy" className="mb-10">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
                                     <Shield className="w-6 h-6 mr-3 text-green-600" />
                                     8. Privacy & Data Protection
                                 </h2>
@@ -292,7 +294,7 @@ const TermsAndConditions = () => {
 
                             {/* Section 9: Limitation of Liability */}
                             <section id="liability" data-section="liability" className="mb-10">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
                                     <Scale className="w-6 h-6 mr-3 text-green-600" />
                                     9. Limitation of Liability
                                 </h2>
@@ -310,7 +312,7 @@ const TermsAndConditions = () => {
 
                             {/* Section 10: Termination */}
                             <section id="termination" data-section="termination" className="mb-10">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
                                     <AlertTriangle className="w-6 h-6 mr-3 text-green-600" />
                                     10. Termination
                                 </h2>
@@ -322,7 +324,7 @@ const TermsAndConditions = () => {
 
                             {/* Section 11: Governing Law */}
                             <section id="governing" data-section="governing" className="mb-10">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
                                     <Scale className="w-6 h-6 mr-3 text-green-600" />
                                     11. Governing Law
                                 </h2>
@@ -334,27 +336,27 @@ const TermsAndConditions = () => {
 
                             {/* Section 12: Contact Information */}
                             <section id="contact" data-section="contact" className="mb-10">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
                                     <Users className="w-6 h-6 mr-3 text-green-600" />
                                     12. Contact Information
                                 </h2>
                                 <div className="prose prose-gray dark:prose-invert max-w-none">
                                     <p>For questions about these Terms or our services, please contact us:</p>
-                                    <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg mt-4">
-                                        <p className="mb-2"><strong>ModGoviya Legal Team</strong></p>
-                                        <p className="mb-1">Email: legal@modgoviya.lk</p>
-                                        <p className="mb-1">Phone: +94 11 234 5678</p>
-                                        <p className="mb-1">Address: Colombo, Sri Lanka</p>
-                                        <p>Website: www.modgoviya.lk</p>
+                                    <div className={`${isDarkMode ? 'bg-green-900/30' : 'bg-green-50'} p-4 rounded-lg mt-4`}>
+                                        <p className={`mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}><strong>ModGoviya Legal Team</strong></p>
+                                        <p className={`mb-1 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Email: legal@modgoviya.lk</p>
+                                        <p className={`mb-1 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Phone: +94 11 234 5678</p>
+                                        <p className={`mb-1 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Address: Colombo, Sri Lanka</p>
+                                        <p className={isDarkMode ? 'text-gray-300' : 'text-gray-700'}>Website: www.modgoviya.lk</p>
                                     </div>
                                 </div>
                             </section>
 
                             {/* Updates Notice */}
-                            <div className="border-t border-gray-200 dark:border-gray-700 pt-8 mt-12">
-                                <div className="bg-amber-50 dark:bg-amber-900 border border-amber-200 dark:border-amber-800 rounded-lg p-6">
-                                    <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-200 mb-2">Important Notice</h3>
-                                    <p className="text-amber-700 dark:text-amber-300">
+                            <div className={`border-t ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} pt-8 mt-12`}>
+                                <div className={`${isDarkMode ? 'bg-amber-900/30 border-amber-800' : 'bg-amber-50 border-amber-200'} border rounded-lg p-6`}>
+                                    <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-amber-200' : 'text-amber-800'} mb-2`}>Important Notice</h3>
+                                    <p className={isDarkMode ? 'text-amber-300' : 'text-amber-700'}>
                                         These Terms may be updated from time to time. We will notify users of significant changes via email or platform notifications. Continued use of ModGoviya after changes constitutes acceptance of the updated Terms.
                                     </p>
                                 </div>
@@ -365,12 +367,12 @@ const TermsAndConditions = () => {
             </div>
 
             {/* Footer CTA */}
-            <div className="bg-gray-100 dark:bg-gray-800 py-12">
+            <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'} py-12`}>
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                    <h3 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
                         Ready to Transform Your Farm?
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-6`}>
                         Join thousands of Sri Lankan farmers using ModGoviya to grow their agricultural business.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -382,7 +384,7 @@ const TermsAndConditions = () => {
                         </button>
                         <button
                             onClick={() => window.open('/contact', '_blank')}
-                            className="px-6 py-3 border border-green-600 text-green-600 dark:text-green-400 rounded-lg hover:bg-green-50 dark:hover:bg-green-900 transition-all duration-200 font-medium"
+                            className={`px-6 py-3 border border-green-600 ${isDarkMode ? 'text-green-400 hover:bg-green-900' : 'text-green-600 hover:bg-green-50'} rounded-lg transition-all duration-200 font-medium`}
                         >
                             Contact Us
                         </button>
