@@ -155,12 +155,12 @@ const Checkout = () => {
 
     if (cart.items.length === 0 && !orderComplete) {
         return (
-            <div className="min-h-screen bg-gray-50">
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
                 <Header />
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <div className="text-center py-12">
                         <div className="text-gray-400 text-6xl mb-4">🛒</div>
-                        <h3 className="text-xl font-semibold text-gray-600 mb-2">
+                        <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-300 mb-2">
                             Your cart is empty
                         </h3>
                         <Link
@@ -177,7 +177,7 @@ const Checkout = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             <Header />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
@@ -185,13 +185,13 @@ const Checkout = () => {
                 <div className="mb-8">
                     <Link
                         to="/cart"
-                        className="inline-flex items-center text-green-600 hover:text-green-700 mb-4"
+                        className="inline-flex items-center text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400 mb-4"
                     >
                         <ArrowLeft className="w-4 h-4 mr-2" />
                         Back to Cart
                     </Link>
-                    <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-                        <ShoppingBag className="w-8 h-8 mr-3 text-green-600" />
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
+                        <ShoppingBag className="w-8 h-8 mr-3 text-green-600 dark:text-green-500" />
                         Checkout
                     </h1>
                 </div>
@@ -201,25 +201,25 @@ const Checkout = () => {
                     <div className="mb-8">
                         <div className="flex items-center justify-center">
                             <div className="flex items-center space-x-4">
-                                <div className={`flex items-center ${currentStep >= 1 ? 'text-green-600' : 'text-gray-400'}`}>
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 1 ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
+                                <div className={`flex items-center ${currentStep >= 1 ? 'text-green-600 dark:text-green-500' : 'text-gray-400 dark:text-gray-500'}`}>
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 1 ? 'bg-green-600 text-white' : 'bg-gray-200 dark:bg-gray-700'}`}>
                                         1
                                     </div>
-                                    <span className="ml-2 font-medium">Shipping</span>
+                                    <span className="ml-2 font-medium dark:text-gray-300">Shipping</span>
                                 </div>
-                                <div className={`w-8 h-1 ${currentStep >= 2 ? 'bg-green-600' : 'bg-gray-200'}`}></div>
-                                <div className={`flex items-center ${currentStep >= 2 ? 'text-green-600' : 'text-gray-400'}`}>
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 2 ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
+                                <div className={`w-8 h-1 ${currentStep >= 2 ? 'bg-green-600 dark:bg-green-500' : 'bg-gray-200 dark:bg-gray-700'}`}></div>
+                                <div className={`flex items-center ${currentStep >= 2 ? 'text-green-600 dark:text-green-500' : 'text-gray-400 dark:text-gray-500'}`}>
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 2 ? 'bg-green-600 text-white' : 'bg-gray-200 dark:bg-gray-700'}`}>
                                         2
                                     </div>
-                                    <span className="ml-2 font-medium">Payment</span>
+                                    <span className="ml-2 font-medium dark:text-gray-300">Payment</span>
                                 </div>
-                                <div className={`w-8 h-1 ${currentStep >= 3 ? 'bg-green-600' : 'bg-gray-200'}`}></div>
-                                <div className={`flex items-center ${currentStep >= 3 ? 'text-green-600' : 'text-gray-400'}`}>
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 3 ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
+                                <div className={`w-8 h-1 ${currentStep >= 3 ? 'bg-green-600 dark:bg-green-500' : 'bg-gray-200 dark:bg-gray-700'}`}></div>
+                                <div className={`flex items-center ${currentStep >= 3 ? 'text-green-600 dark:text-green-500' : 'text-gray-400 dark:text-gray-500'}`}>
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 3 ? 'bg-green-600 text-white' : 'bg-gray-200 dark:bg-gray-700'}`}>
                                         3
                                     </div>
-                                    <span className="ml-2 font-medium">Confirmation</span>
+                                    <span className="ml-2 font-medium dark:text-gray-300">Confirmation</span>
                                 </div>
                             </div>
                         </div>
@@ -228,8 +228,8 @@ const Checkout = () => {
 
                 {/* Error Message */}
                 {errors.general && (
-                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                        <p className="text-red-600">{errors.general}</p>
+                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg dark:bg-red-900/20 dark:border-red-800">
+                        <p className="text-red-600 dark:text-red-400">{errors.general}</p>
                     </div>
                 )}
 
@@ -238,15 +238,15 @@ const Checkout = () => {
                     <div className="lg:col-span-2">
                         {/* Step 1: Shipping Information */}
                         {currentStep === 1 && (
-                            <div className="bg-white shadow-sm rounded-xl p-6">
+                            <div className="bg-white shadow-sm rounded-xl p-6 dark:bg-gray-800 dark:shadow-none">
                                 <div className="flex items-center mb-6">
-                                    <MapPin className="w-6 h-6 text-green-600 mr-3" />
-                                    <h2 className="text-xl font-bold text-gray-900">Shipping Information</h2>
+                                    <MapPin className="w-6 h-6 text-green-600 dark:text-green-500 mr-3" />
+                                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">Shipping Information</h2>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             First Name *
                                         </label>
                                         <div className="relative">
@@ -256,15 +256,15 @@ const Checkout = () => {
                                                 name="firstName"
                                                 value={formData.firstName}
                                                 onChange={handleInputChange}
-                                                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${errors.firstName ? 'border-red-300' : 'border-gray-300'}`}
+                                                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 ${errors.firstName ? 'border-red-300 dark:border-red-500' : 'border-gray-300'}`}
                                                 placeholder="Enter first name"
                                             />
                                         </div>
-                                        {errors.firstName && <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>}
+                                        {errors.firstName && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.firstName}</p>}
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             Last Name *
                                         </label>
                                         <input
@@ -272,14 +272,14 @@ const Checkout = () => {
                                             name="lastName"
                                             value={formData.lastName}
                                             onChange={handleInputChange}
-                                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${errors.lastName ? 'border-red-300' : 'border-gray-300'}`}
+                                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 ${errors.lastName ? 'border-red-300 dark:border-red-500' : 'border-gray-300'}`}
                                             placeholder="Enter last name"
                                         />
-                                        {errors.lastName && <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>}
+                                        {errors.lastName && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.lastName}</p>}
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             Email Address *
                                         </label>
                                         <div className="relative">
@@ -289,15 +289,15 @@ const Checkout = () => {
                                                 name="email"
                                                 value={formData.email}
                                                 onChange={handleInputChange}
-                                                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${errors.email ? 'border-red-300' : 'border-gray-300'}`}
+                                                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 ${errors.email ? 'border-red-300 dark:border-red-500' : 'border-gray-300'}`}
                                                 placeholder="Enter email address"
                                             />
                                         </div>
-                                        {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+                                        {errors.email && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>}
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             Phone Number *
                                         </label>
                                         <div className="relative">
@@ -307,15 +307,15 @@ const Checkout = () => {
                                                 name="phone"
                                                 value={formData.phone}
                                                 onChange={handleInputChange}
-                                                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${errors.phone ? 'border-red-300' : 'border-gray-300'}`}
+                                                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 ${errors.phone ? 'border-red-300 dark:border-red-500' : 'border-gray-300'}`}
                                                 placeholder="+94 XX XXX XXXX"
                                             />
                                         </div>
-                                        {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
+                                        {errors.phone && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.phone}</p>}
                                     </div>
 
                                     <div className="md:col-span-2">
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             Address *
                                         </label>
                                         <input
@@ -323,14 +323,14 @@ const Checkout = () => {
                                             name="address"
                                             value={formData.address}
                                             onChange={handleInputChange}
-                                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${errors.address ? 'border-red-300' : 'border-gray-300'}`}
+                                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 ${errors.address ? 'border-red-300 dark:border-red-500' : 'border-gray-300'}`}
                                             placeholder="Enter full address"
                                         />
-                                        {errors.address && <p className="mt-1 text-sm text-red-600">{errors.address}</p>}
+                                        {errors.address && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.address}</p>}
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             City *
                                         </label>
                                         <input
@@ -338,14 +338,14 @@ const Checkout = () => {
                                             name="city"
                                             value={formData.city}
                                             onChange={handleInputChange}
-                                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${errors.city ? 'border-red-300' : 'border-gray-300'}`}
+                                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 ${errors.city ? 'border-red-300 dark:border-red-500' : 'border-gray-300'}`}
                                             placeholder="Enter city"
                                         />
-                                        {errors.city && <p className="mt-1 text-sm text-red-600">{errors.city}</p>}
+                                        {errors.city && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.city}</p>}
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             Postal Code *
                                         </label>
                                         <input
@@ -353,14 +353,14 @@ const Checkout = () => {
                                             name="postalCode"
                                             value={formData.postalCode}
                                             onChange={handleInputChange}
-                                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${errors.postalCode ? 'border-red-300' : 'border-gray-300'}`}
+                                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 ${errors.postalCode ? 'border-red-300 dark:border-red-500' : 'border-gray-300'}`}
                                             placeholder="Enter postal code"
                                         />
-                                        {errors.postalCode && <p className="mt-1 text-sm text-red-600">{errors.postalCode}</p>}
+                                        {errors.postalCode && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.postalCode}</p>}
                                     </div>
 
                                     <div className="md:col-span-2">
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             Order Notes (Optional)
                                         </label>
                                         <textarea
@@ -368,7 +368,7 @@ const Checkout = () => {
                                             value={formData.orderNotes}
                                             onChange={handleInputChange}
                                             rows="3"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                                             placeholder="Any special instructions for your order"
                                         ></textarea>
                                     </div>
@@ -387,11 +387,11 @@ const Checkout = () => {
 
                         {/* Step 2: Payment Information */}
                         {currentStep === 2 && (
-                            <div className="bg-white shadow-sm rounded-xl p-6">
+                            <div className="bg-white shadow-sm rounded-xl p-6 dark:bg-gray-800 dark:shadow-none">
                                 <div className="flex items-center mb-6">
-                                    <CreditCard className="w-6 h-6 text-green-600 mr-3" />
-                                    <h2 className="text-xl font-bold text-gray-900">Payment Information</h2>
-                                    <div className="ml-auto flex items-center text-sm text-gray-500">
+                                    <CreditCard className="w-6 h-6 text-green-600 dark:text-green-500 mr-3" />
+                                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">Payment Information</h2>
+                                    <div className="ml-auto flex items-center text-sm text-gray-500 dark:text-gray-400">
                                         <Shield className="w-4 h-4 mr-1" />
                                         Secure Payment
                                     </div>
@@ -399,7 +399,7 @@ const Checkout = () => {
 
                                 <div className="space-y-6">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             Card Number *
                                         </label>
                                         <div className="relative">
@@ -409,17 +409,17 @@ const Checkout = () => {
                                                 name="cardNumber"
                                                 value={formData.cardNumber}
                                                 onChange={handleCardNumberChange}
-                                                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${errors.cardNumber ? 'border-red-300' : 'border-gray-300'}`}
+                                                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 ${errors.cardNumber ? 'border-red-300 dark:border-red-500' : 'border-gray-300'}`}
                                                 placeholder="1234 5678 9012 3456"
                                                 maxLength="19"
                                             />
                                         </div>
-                                        {errors.cardNumber && <p className="mt-1 text-sm text-red-600">{errors.cardNumber}</p>}
+                                        {errors.cardNumber && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.cardNumber}</p>}
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                 Expiry Date *
                                             </label>
                                             <input
@@ -427,15 +427,15 @@ const Checkout = () => {
                                                 name="expiryDate"
                                                 value={formData.expiryDate}
                                                 onChange={handleInputChange}
-                                                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${errors.expiryDate ? 'border-red-300' : 'border-gray-300'}`}
+                                                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 ${errors.expiryDate ? 'border-red-300 dark:border-red-500' : 'border-gray-300'}`}
                                                 placeholder="MM/YY"
                                                 maxLength="5"
                                             />
-                                            {errors.expiryDate && <p className="mt-1 text-sm text-red-600">{errors.expiryDate}</p>}
+                                            {errors.expiryDate && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.expiryDate}</p>}
                                         </div>
 
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                 CVV *
                                             </label>
                                             <div className="relative">
@@ -445,17 +445,17 @@ const Checkout = () => {
                                                     name="cvv"
                                                     value={formData.cvv}
                                                     onChange={handleInputChange}
-                                                    className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${errors.cvv ? 'border-red-300' : 'border-gray-300'}`}
+                                                    className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 ${errors.cvv ? 'border-red-300 dark:border-red-500' : 'border-gray-300'}`}
                                                     placeholder="123"
                                                     maxLength="3"
                                                 />
                                             </div>
-                                            {errors.cvv && <p className="mt-1 text-sm text-red-600">{errors.cvv}</p>}
+                                            {errors.cvv && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.cvv}</p>}
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             Cardholder Name *
                                         </label>
                                         <input
@@ -463,17 +463,17 @@ const Checkout = () => {
                                             name="cardName"
                                             value={formData.cardName}
                                             onChange={handleInputChange}
-                                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${errors.cardName ? 'border-red-300' : 'border-gray-300'}`}
+                                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 ${errors.cardName ? 'border-red-300 dark:border-red-500' : 'border-gray-300'}`}
                                             placeholder="Name as it appears on card"
                                         />
-                                        {errors.cardName && <p className="mt-1 text-sm text-red-600">{errors.cardName}</p>}
+                                        {errors.cardName && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.cardName}</p>}
                                     </div>
                                 </div>
 
                                 <div className="flex justify-between mt-6">
                                     <button
                                         onClick={handlePreviousStep}
-                                        className="px-8 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium"
+                                        className="px-8 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                                     >
                                         Back to Shipping
                                     </button>
@@ -500,19 +500,19 @@ const Checkout = () => {
 
                         {/* Step 3: Order Confirmation */}
                         {currentStep === 3 && orderComplete && (
-                            <div className="bg-white shadow-sm rounded-xl p-8 text-center">
-                                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <CheckCircle className="w-8 h-8 text-green-600" />
+                            <div className="bg-white shadow-sm rounded-xl p-8 text-center dark:bg-gray-800 dark:shadow-none">
+                                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 dark:bg-green-900/20">
+                                    <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-500" />
                                 </div>
-                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Order Confirmed!</h2>
-                                <p className="text-gray-600 mb-4">
+                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Order Confirmed!</h2>
+                                <p className="text-gray-600 dark:text-gray-400 mb-4">
                                     Thank you for your order. We've received your payment and will start processing your order shortly.
                                 </p>
-                                <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                                    <p className="text-sm text-gray-600">Order ID</p>
-                                    <p className="text-lg font-bold text-gray-900">{orderId}</p>
+                                <div className="bg-gray-50 rounded-lg p-4 mb-6 dark:bg-gray-700">
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">Order ID</p>
+                                    <p className="text-lg font-bold text-gray-900 dark:text-white">{orderId}</p>
                                 </div>
-                                <div className="space-y-2 text-sm text-gray-600 mb-6">
+                                <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400 mb-6">
                                     <p>• A confirmation email has been sent to {formData.email}</p>
                                     <p>• You can track your order status in your account</p>
                                     <p>• Estimated delivery: 3-5 business days</p>
@@ -526,7 +526,7 @@ const Checkout = () => {
                                     </Link>
                                     <Link
                                         to="/marketplace"
-                                        className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium"
+                                        className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                                     >
                                         Continue Shopping
                                     </Link>
@@ -538,8 +538,8 @@ const Checkout = () => {
                     {/* Order Summary Sidebar */}
                     {!orderComplete && (
                         <div>
-                            <div className="bg-white shadow-sm rounded-xl p-6 sticky top-6">
-                                <h2 className="text-lg font-bold text-gray-900 mb-4">Order Summary</h2>
+                            <div className="bg-white shadow-sm rounded-xl p-6 sticky top-6 dark:bg-gray-800 dark:shadow-none">
+                                <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Order Summary</h2>
 
                                 {/* Order Items */}
                                 <div className="space-y-4 mb-6">
@@ -551,14 +551,14 @@ const Checkout = () => {
                                                 className="w-12 h-12 object-cover rounded-lg"
                                             />
                                             <div className="flex-1">
-                                                <h4 className="text-sm font-medium text-gray-900 line-clamp-2">
+                                                <h4 className="text-sm font-medium text-gray-900 dark:text-white line-clamp-2">
                                                     {item.product.title}
                                                 </h4>
-                                                <p className="text-sm text-gray-600">
+                                                <p className="text-sm text-gray-600 dark:text-gray-400">
                                                     Qty: {item.quantity}
                                                 </p>
                                             </div>
-                                            <div className="text-sm font-medium text-gray-900">
+                                            <div className="text-sm font-medium text-gray-900 dark:text-white">
                                                 Rs: {(item.product.price * item.quantity).toLocaleString()}
                                             </div>
                                         </div>
@@ -566,23 +566,23 @@ const Checkout = () => {
                                 </div>
 
                                 {/* Price Breakdown */}
-                                <div className="space-y-3 border-t border-gray-200 pt-4">
+                                <div className="space-y-3 border-t border-gray-200 pt-4 dark:border-gray-700">
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-gray-600">Subtotal</span>
-                                        <span className="font-medium">Rs: {calculateTotal().toLocaleString()}</span>
+                                        <span className="text-gray-600 dark:text-gray-400">Subtotal</span>
+                                        <span className="font-medium dark:text-white">Rs: {calculateTotal().toLocaleString()}</span>
                                     </div>
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-gray-600">Shipping</span>
-                                        <span className="font-medium">Rs: 0</span>
+                                        <span className="text-gray-600 dark:text-gray-400">Shipping</span>
+                                        <span className="font-medium dark:text-white">Rs: 0</span>
                                     </div>
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-gray-600">Tax</span>
-                                        <span className="font-medium">Rs: 0</span>
+                                        <span className="text-gray-600 dark:text-gray-400">Tax</span>
+                                        <span className="font-medium dark:text-white">Rs: 0</span>
                                     </div>
-                                    <div className="border-t border-gray-200 pt-3">
+                                    <div className="border-t border-gray-200 pt-3 dark:border-gray-700">
                                         <div className="flex justify-between">
-                                            <span className="font-bold text-gray-900">Total</span>
-                                            <span className="font-bold text-green-600 text-lg">
+                                            <span className="font-bold text-gray-900 dark:text-white">Total</span>
+                                            <span className="font-bold text-green-600 text-lg dark:text-green-500">
                                                 Rs: {calculateTotal().toLocaleString()}
                                             </span>
                                         </div>
@@ -590,8 +590,8 @@ const Checkout = () => {
                                 </div>
 
                                 {/* Security Notice */}
-                                <div className="mt-6 flex items-start space-x-2 text-xs text-gray-500">
-                                    <Shield className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                                <div className="mt-6 flex items-start space-x-2 text-xs text-gray-500 dark:text-gray-400">
+                                    <Shield className="w-4 h-4 text-green-600 dark:text-green-500 flex-shrink-0 mt-0.5" />
                                     <p>
                                         Your payment information is encrypted and secure. We never store your card details.
                                     </p>
