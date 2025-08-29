@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {
     ArrowRight,
@@ -24,11 +24,15 @@ import {
 } from 'lucide-react';
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
+import { useTheme } from '../contexts/ThemeContext'; // Adjust path as needed
 
 const LearnMore = () => {
     const [activeTab, setActiveTab] = useState('overview');
     const [activeTestimonial, setActiveTestimonial] = useState(0);
     const [isVisible, setIsVisible] = useState({});
+
+    // Get theme context
+    const { isDarkMode } = useTheme();
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -94,13 +98,6 @@ const LearnMore = () => {
         { number: "1,000+", label: "Daily Listings", icon: Sprout },
         { number: "98%", label: "Satisfaction Rate", icon: Star }
     ];
-
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth' // This enables smooth scrolling
-        });
-    };
 
     const testimonials = [
         {
@@ -175,7 +172,7 @@ const LearnMore = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
             {/* Navigation */}
             <Header />
 
@@ -197,7 +194,7 @@ const LearnMore = () => {
                         <div className="flex justify-center">
                             <Link
                                 to="/watchdemo"
-                                  className="group bg-white text-green-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-50 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center">
+                                className="group bg-white text-green-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-50 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center">
                                 <Play className="w-5 h-5 mr-3" />
                                 Watch Demo Video
                                 <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
@@ -208,17 +205,17 @@ const LearnMore = () => {
             </section>
 
             {/* Stats Section */}
-            <section id="section-stats" className={`py-16 bg-white transition-all duration-1000 delay-200 ${isVisible['section-stats'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <section id="section-stats" className={`py-16 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} transition-all duration-1000 delay-200 ${isVisible['section-stats'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                         {stats.map((stat, index) => (
                             <div key={index} className="text-center">
                                 <div className="flex justify-center mb-4">
-                                    <div className="bg-green-100 rounded-full p-4">
-                                        <stat.icon className="w-8 h-8 text-green-600" />
+                                    <div className="bg-green-100 dark:bg-green-900/30 rounded-full p-4">
+                                        <stat.icon className="w-8 h-8 text-green-600 dark:text-green-400" />
                                     </div>
                                 </div>
-                                <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                                <div className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                                     {stat.number.includes('+') ? (
                                         <>
                                             <AnimatedCounter end={parseInt(stat.number.replace(/[^0-9]/g, ''))} />
@@ -228,7 +225,7 @@ const LearnMore = () => {
                                         stat.number
                                     )}
                                 </div>
-                                <div className="text-gray-600 font-medium">{stat.label}</div>
+                                <div className="text-gray-600 dark:text-gray-400 font-medium">{stat.label}</div>
                             </div>
                         ))}
                     </div>
@@ -236,13 +233,13 @@ const LearnMore = () => {
             </section>
 
             {/* Features Section */}
-            <section id="section-features" className={`py-20 bg-gray-50 transition-all duration-1000 delay-300 ${isVisible['section-features'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <section id="section-features" className={`py-20 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-all duration-1000 delay-300 ${isVisible['section-features'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
                             Why Choose Our Platform?
                         </h2>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
                             Experience the future of agricultural trading with our comprehensive suite of features designed
                             to empower farmers and streamline the entire supply chain.
                         </p>
@@ -250,16 +247,16 @@ const LearnMore = () => {
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {features.map((feature, index) => (
-                            <div key={index} className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                                <div className="bg-green-100 rounded-full p-4 w-16 h-16 mb-6 group-hover:bg-green-200 transition-colors">
-                                    <feature.icon className="w-8 h-8 text-green-600" />
+                            <div key={index} className={`group ${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2`}>
+                                <div className="bg-green-100 dark:bg-green-900/30 rounded-full p-4 w-16 h-16 mb-6 group-hover:bg-green-200 dark:group-hover:bg-green-800/50 transition-colors">
+                                    <feature.icon className="w-8 h-8 text-green-600 dark:text-green-400" />
                                 </div>
-                                <h3 className="text-xl font-semibold text-gray-900 mb-4">{feature.title}</h3>
-                                <p className="text-gray-600 mb-6">{feature.description}</p>
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{feature.title}</h3>
+                                <p className="text-gray-600 dark:text-gray-400 mb-6">{feature.description}</p>
                                 <ul className="space-y-2">
                                     {feature.details.map((detail, idx) => (
-                                        <li key={idx} className="flex items-center text-sm text-gray-500">
-                                            <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                                        <li key={idx} className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                            <CheckCircle className="w-4 h-4 text-green-500 dark:text-green-400 mr-2" />
                                             {detail}
                                         </li>
                                     ))}
@@ -271,36 +268,36 @@ const LearnMore = () => {
             </section>
 
             {/* How It Works Section */}
-            <section id="section-how-it-works" className={`py-20 bg-white transition-all duration-1000 delay-400 ${isVisible['section-how-it-works'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <section id="section-how-it-works" className={`py-20 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} transition-all duration-1000 delay-400 ${isVisible['section-how-it-works'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
                             How It Works
                         </h2>
-                        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                             Get started in just four simple steps and join thousands of successful traders on our platform.
                         </p>
                     </div>
 
                     <div className="relative">
                         {/* Connection Lines */}
-                        <div className="hidden lg:block absolute top-24 left-0 right-0 h-0.5 bg-gradient-to-r from-green-200 via-green-400 to-green-200"></div>
+                        <div className="hidden lg:block absolute top-24 left-0 right-0 h-0.5 bg-gradient-to-r from-green-200 via-green-400 to-green-200 dark:from-green-700 dark:via-green-500 dark:to-green-700"></div>
 
                         <div className="grid lg:grid-cols-4 gap-8 lg:gap-4">
                             {howItWorks.map((step, index) => (
                                 <div key={index} className="relative text-center">
-                                    <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                                    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300`}>
                                         <div className="relative mx-auto w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-xl mb-6 shadow-lg">
                                             {step.step}
                                             {index < howItWorks.length - 1 && (
-                                                <ChevronRight className="hidden lg:block absolute -right-8 top-1/2 transform -translate-y-1/2 text-green-400 w-6 h-6" />
+                                                <ChevronRight className="hidden lg:block absolute -right-8 top-1/2 transform -translate-y-1/2 text-green-400 dark:text-green-500 w-6 h-6" />
                                             )}
                                         </div>
-                                        <div className="bg-green-100 rounded-full p-4 w-16 h-16 mx-auto mb-6">
-                                            <step.icon className="w-8 h-8 text-green-600" />
+                                        <div className="bg-green-100 dark:bg-green-900/30 rounded-full p-4 w-16 h-16 mx-auto mb-6">
+                                            <step.icon className="w-8 h-8 text-green-600 dark:text-green-400" />
                                         </div>
-                                        <h3 className="text-lg font-semibold text-gray-900 mb-4">{step.title}</h3>
-                                        <p className="text-gray-600">{step.description}</p>
+                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{step.title}</h3>
+                                        <p className="text-gray-600 dark:text-gray-400">{step.description}</p>
                                     </div>
                                 </div>
                             ))}
@@ -310,25 +307,25 @@ const LearnMore = () => {
             </section>
 
             {/* Testimonials Section */}
-            <section id="section-testimonials" className={`py-20 bg-gray-50 transition-all duration-1000 delay-500 ${isVisible['section-testimonials'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <section id="section-testimonials" className={`py-20 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-all duration-1000 delay-500 ${isVisible['section-testimonials'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
                             What Our Users Say
                         </h2>
-                        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                             Hear from farmers and traders who have transformed their businesses using our platform.
                         </p>
                     </div>
 
                     <div className="relative">
-                        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                        <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-xl p-8 md:p-12`}>
                             <div className="flex items-center justify-center mb-8">
-                                <Quote className="w-12 h-12 text-green-200" />
+                                <Quote className="w-12 h-12 text-green-200 dark:text-green-400" />
                             </div>
 
                             <div className="text-center">
-                                <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed italic">
+                                <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed italic">
                                     "{testimonials[activeTestimonial].content}"
                                 </p>
 
@@ -345,8 +342,8 @@ const LearnMore = () => {
                                         className="w-16 h-16 rounded-full mr-4 object-cover"
                                     />
                                     <div className="text-left">
-                                        <h4 className="font-semibold text-gray-900">{testimonials[activeTestimonial].name}</h4>
-                                        <p className="text-gray-600">{testimonials[activeTestimonial].role}</p>
+                                        <h4 className="font-semibold text-gray-900 dark:text-white">{testimonials[activeTestimonial].name}</h4>
+                                        <p className="text-gray-600 dark:text-gray-400">{testimonials[activeTestimonial].role}</p>
                                     </div>
                                 </div>
                             </div>
@@ -358,7 +355,7 @@ const LearnMore = () => {
                                     key={index}
                                     onClick={() => setActiveTestimonial(index)}
                                     className={`w-3 h-3 rounded-full transition-colors ${
-                                        index === activeTestimonial ? 'bg-green-600' : 'bg-gray-300'
+                                        index === activeTestimonial ? 'bg-green-600' : 'bg-gray-300 dark:bg-gray-600'
                                     }`}
                                 />
                             ))}
@@ -426,52 +423,45 @@ const LearnMore = () => {
             </section>
 
             {/* CTA Section */}
-            <section id="section-cta" className={`py-20 bg-white transition-all duration-1000 delay-700 ${isVisible['section-cta'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <section id="section-cta" className={`py-20 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} transition-all duration-1000 delay-700 ${isVisible['section-cta'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-4xl font-bold text-gray-900 mb-6">
+                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
                         Ready to Transform Your Agricultural Business?
                     </h2>
-                    <p className="text-xl text-gray-600 mb-8">
+                    <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
                         Join thousands of successful farmers and traders who have already discovered the power of our platform.
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-
                         <Link to="/trade">
-                        <button
-                            onClick={scrollToTop}
-                            className="group bg-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                            <button className="group bg-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
               <span className="flex items-center justify-center">
                 Start Trading Now
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
               </span>
-                        </button>
+                            </button>
                         </Link>
-
                         <Link to="/contact">
-                        <button
-                            onClick={scrollToTop}
-                            className="group bg-gray-100 text-gray-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-200 transform hover:scale-105 transition-all duration-300">
+                            <button className="group bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-200 dark:hover:bg-gray-600 transform hover:scale-105 transition-all duration-300 dark:hover:text-white">
               <span className="flex items-center justify-center">
                 <Phone className="mr-2 h-5 w-5" />
                 Contact Sales
               </span>
-                        </button>
+                            </button>
                         </Link>
-
                     </div>
 
-                    <div className="bg-gray-50 rounded-2xl p-8">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Need Help Getting Started?</h3>
-                        <p className="text-gray-600 mb-6">
+                    <div className={`${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'} rounded-2xl p-8`}>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Need Help Getting Started?</h3>
+                        <p className="text-gray-600 dark:text-gray-400 mb-6">
                             Our support team is here to guide you through every step of the process.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="mailto:support@farmingmarketplace.com" className="flex items-center justify-center text-green-600 hover:text-green-700 font-medium">
+                            <a href="mailto:support@farmingmarketplace.com" className="flex items-center justify-center text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium">
                                 <Mail className="w-4 h-4 mr-2" />
                                 support@farmingmarketplace.com
                             </a>
-                            <a href="tel:+94123456789" className="flex items-center justify-center text-green-600 hover:text-green-700 font-medium">
+                            <a href="tel:+94123456789" className="flex items-center justify-center text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium">
                                 <Phone className="w-4 h-4 mr-2" />
                                 +94 12 345 6789
                             </a>
