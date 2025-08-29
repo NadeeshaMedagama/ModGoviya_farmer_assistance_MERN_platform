@@ -22,6 +22,13 @@ const Footer = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // This enables smooth scrolling
+        });
+    };
+
     const handleSubscribe = async () => {
         setError(null);     // Clear previous errors
         if (!email) {
@@ -137,24 +144,50 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold mb-6 text-green-400">Resources</h3>
                         <ul className="space-y-3">
-                            <li><Link to="/resourcehub"
+
+                            <li><Link to="/resourcehub">
+                                <button
+                                    onClick={scrollToTop}
                                    className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Blog
+                            </button>
                             </Link>
                             </li>
-                            <li><Link to="/resourcehub"
+
+                            <li>
+                                <Link to="/resourcehub">
+                                <button
+                                        onClick={scrollToTop}
                                    className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Farming
-                                Guides</Link></li>
-                            <li><Link to="/resourcehub"
+                                Guides
+                                </button>
+                                </Link>
+                            </li>
+
+                            <li><Link to="/resourcehub">
+                                <button
+                                    onClick={scrollToTop}
                                    className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Tutorials
+                                </button>
                             </Link>
                             </li>
-                            <li><Link to="/resourcehub"
+
+                            <li><Link to="/resourcehub">
+                                <button
+                                    onClick={scrollToTop}
                                    className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">FAQ
+                                </button>
                             </Link>
                             </li>
-                            <li><Link to="/resourcehub"
+
+                            <li><Link to="/resourcehub">
+                                <button
+                                    onClick={scrollToTop}
                                    className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Help
-                                Center</Link></li>
+                                Center
+                                </button>
+                            </Link>
+                            </li>
+
                         </ul>
                     </div>
 
