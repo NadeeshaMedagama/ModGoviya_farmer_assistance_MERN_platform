@@ -51,6 +51,7 @@ import {
     SortAsc
 } from 'lucide-react';
 import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const SupportCategoriesPage = () => {
     const [selectedCategory, setSelectedCategory] = useState('account');
@@ -949,6 +950,7 @@ const SupportCategoriesPage = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
