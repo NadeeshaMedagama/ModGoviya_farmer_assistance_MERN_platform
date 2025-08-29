@@ -21,6 +21,7 @@ import {
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext'; // Adjust path as needed
 
 const WeatherPage = () => {
     const [location, setLocation] = useState('');
@@ -29,6 +30,9 @@ const WeatherPage = () => {
     const [loading, setLoading] = useState(false);
     const [alerts, setAlerts] = useState([]);
     const { t } = useTranslation();
+
+    // Get theme context
+    const { isDarkMode } = useTheme();
 
     // API configuration
     const API_KEY = '316ac904c3c082b761a5b8d0795f894d'; // Replace with your actual API key
@@ -397,28 +401,27 @@ const WeatherPage = () => {
         }
     }, []);
 
-    // Render method remains the same as in your original code
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
             <Header />
 
             {/* Hero Section */}
-            <section className="relative bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 py-20 lg:py-32">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-cyan-600/10 dark:from-gray-600/20 dark:to-gray-800/20"></div>
+            <section className={`relative ${isDarkMode ? 'bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800' : 'bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100'} py-20 lg:py-32`}>
+                <div className={`absolute inset-0 ${isDarkMode ? 'bg-gradient-to-r from-gray-600/20 to-gray-800/20' : 'bg-gradient-to-r from-blue-600/10 to-cyan-600/10'}`}></div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-4xl md:text-6xl font-bold text-green-600 dark:text-white mb-6 leading-tight">
+                    <h1 className={`text-4xl md:text-6xl font-bold ${isDarkMode ? 'text-white' : 'text-green-600'} mb-6 leading-tight`}>
                         {t('weather.hero.title', { defaultValue: 'Weather & Farming Insights' })}
-                        </h1>
-                    <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+                    </h1>
+                    <p className={`text-xl ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-8 max-w-3xl mx-auto`}>
                         {t('weather.hero.subtitle', { defaultValue: 'Get accurate weather forecasts and farming recommendations to protect your crops and optimize your farming schedule.' })}
                     </p>
-                    </div>
+                </div>
             </section>
 
             <div className="max-w-7xl mx-auto px-4 py-8">
                 {/* Location Input */}
-                <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6 mb-8`}>
+                    <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'} mb-4 flex items-center gap-2`}>
                         <MapPin className="w-5 h-5 text-green-500" />
                         {t('weather.location', { defaultValue: 'Location' })}
                     </h2>
@@ -429,7 +432,11 @@ const WeatherPage = () => {
                                 placeholder={t('weather.locationPlaceholder', { defaultValue: 'Enter city, village, or coordinates...' })}
                                 value={location}
                                 onChange={(e) => setLocation(e.target.value)}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg"
+                                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg ${
+                                    isDarkMode
+                                        ? 'bg-gray-700 border-gray-600 text-white'
+                                        : 'border-gray-300 text-gray-900'
+                                }`}
                             />
                         </div>
                         <button
@@ -453,18 +460,20 @@ const WeatherPage = () => {
 
                 {/* Alerts */}
                 {alerts.length > 0 && (
-                    <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6 mb-8`}>
+                        <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'} mb-4 flex items-center gap-2`}>
                             <AlertTriangle className="w-5 h-5 text-red-500" />
                             {t('weather.alerts')}
                         </h2>
                         <div className="space-y-4">
                             {alerts.map((alert, index) => (
                                 <div key={index} className={`p-4 rounded-lg border-l-4 ${
-                                    alert.priority === 'high' ? 'bg-red-50 border-red-500' : 'bg-yellow-50 border-yellow-500'
+                                    alert.priority === 'high'
+                                        ? `${isDarkMode ? 'bg-red-900/30 border-red-700 text-red-300' : 'bg-red-50 border-red-500 text-red-800'}`
+                                        : `${isDarkMode ? 'bg-yellow-900/30 border-yellow-700 text-yellow-300' : 'bg-yellow-50 border-yellow-500 text-yellow-800'}`
                                 }`}>
-                                    <h3 className="font-semibold text-gray-800">{alert.title}</h3>
-                                    <p className="text-gray-600 mt-1">{alert.message}</p>
+                                    <h3 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>{alert.title}</h3>
+                                    <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mt-1`}>{alert.message}</p>
                                 </div>
                             ))}
                         </div>
@@ -473,15 +482,15 @@ const WeatherPage = () => {
 
                 {/* Current Weather */}
                 {currentWeather && (
-                    <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+                    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6 mb-8`}>
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
+                            <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'} flex items-center gap-2`}>
                                 <Thermometer className="w-5 h-5 text-blue-500" />
                                 {t('weather.currentWeather')}
                             </h2>
                             <button
                                 onClick={handleLocationSearch}
-                                className="p-2 text-gray-500 hover:text-gray-700 transition duration-200"
+                                className={`p-2 ${isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700'} transition duration-200`}
                             >
                                 <RefreshCw className="w-5 h-5" />
                             </button>
@@ -493,12 +502,12 @@ const WeatherPage = () => {
                                 <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
                                     {getWeatherIcon(currentWeather.icon)}
                                     <div>
-                                        <div className="text-5xl font-bold text-gray-800">{currentWeather.temperature}°C</div>
-                                        <div className="text-gray-600">{t('weather.feelsLike', { defaultValue: 'Feels like {{temp}}°C', temp: currentWeather.feelsLike })}</div>
+                                        <div className={`text-5xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>{currentWeather.temperature}°C</div>
+                                        <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{t('weather.feelsLike', { defaultValue: 'Feels like {{temp}}°C', temp: currentWeather.feelsLike })}</div>
                                     </div>
                                 </div>
-                                <div className="text-xl text-gray-700 mb-2">{currentWeather.condition}</div>
-                                <div className="text-gray-600 flex items-center gap-2 justify-center lg:justify-start">
+                                <div className={`text-xl ${isDarkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>{currentWeather.condition}</div>
+                                <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} flex items-center gap-2 justify-center lg:justify-start`}>
                                     <MapPin className="w-4 h-4" />
                                     {currentWeather.location}
                                 </div>
@@ -506,37 +515,37 @@ const WeatherPage = () => {
 
                             {/* Weather Details */}
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="bg-blue-50 p-4 rounded-lg">
-                                    <div className="flex items-center gap-2 text-blue-600 mb-2">
+                                <div className={`${isDarkMode ? 'bg-blue-900/30' : 'bg-blue-50'} p-4 rounded-lg`}>
+                                    <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 mb-2">
                                         <Droplets className="w-5 h-5" />
                                         <span className="font-medium">{t('weather.humidity')}</span>
                                     </div>
-                                    <div className="text-2xl font-bold text-gray-800">{currentWeather.humidity}%</div>
+                                    <div className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>{currentWeather.humidity}%</div>
                                 </div>
 
-                                <div className="bg-green-50 p-4 rounded-lg">
-                                    <div className="flex items-center gap-2 text-green-600 mb-2">
+                                <div className={`${isDarkMode ? 'bg-green-900/30' : 'bg-green-50'} p-4 rounded-lg`}>
+                                    <div className="flex items-center gap-2 text-green-600 dark:text-green-400 mb-2">
                                         <Wind className="w-5 h-5" />
                                         <span className="font-medium">{t('weather.windSpeed')}</span>
                                     </div>
-                                    <div className="text-2xl font-bold text-gray-800">{currentWeather.windSpeed} km/h</div>
-                                    <div className="text-sm text-gray-600">{currentWeather.windDirection}</div>
+                                    <div className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>{currentWeather.windSpeed} km/h</div>
+                                    <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{currentWeather.windDirection}</div>
                                 </div>
 
-                                <div className="bg-purple-50 p-4 rounded-lg">
-                                    <div className="flex items-center gap-2 text-purple-600 mb-2">
+                                <div className={`${isDarkMode ? 'bg-purple-900/30' : 'bg-purple-50'} p-4 rounded-lg`}>
+                                    <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400 mb-2">
                                         <Eye className="w-5 h-5" />
                                         <span className="font-medium">{t('weather.pressure', { defaultValue: 'Pressure' })}</span>
                                     </div>
-                                    <div className="text-2xl font-bold text-gray-800">{currentWeather.pressure} hPa</div>
+                                    <div className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>{currentWeather.pressure} hPa</div>
                                 </div>
 
-                                <div className="bg-orange-50 p-4 rounded-lg">
-                                    <div className="flex items-center gap-2 text-orange-600 mb-2">
+                                <div className={`${isDarkMode ? 'bg-orange-900/30' : 'bg-orange-50'} p-4 rounded-lg`}>
+                                    <div className="flex items-center gap-2 text-orange-600 dark:text-orange-400 mb-2">
                                         <Sunrise className="w-5 h-5" />
                                         <span className="font-medium">{t('weather.sun', { defaultValue: 'Sun' })}</span>
                                     </div>
-                                    <div className="text-sm text-gray-800">
+                                    <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-800'}`}>
                                         <div className="flex items-center gap-1">
                                             <Sunrise className="w-3 h-3" />
                                             {currentWeather.sunrise}
@@ -554,21 +563,21 @@ const WeatherPage = () => {
 
                 {/* Hourly Forecast */}
                 {forecast && (
-                    <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6 mb-8`}>
+                        <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'} mb-4 flex items-center gap-2`}>
                             <Clock className="w-5 h-5 text-blue-500" />
                             {t('weather.hourly', { defaultValue: 'Hourly Forecast' })}
                         </h2>
                         <div className="overflow-x-auto">
                             <div className="flex gap-4 min-w-max">
                                 {forecast.hourly.map((hour, index) => (
-                                    <div key={index} className="bg-gray-50 p-4 rounded-lg text-center min-w-24">
-                                        <div className="text-sm text-gray-600 mb-2">{hour.time}</div>
+                                    <div key={index} className={`${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'} p-4 rounded-lg text-center min-w-24`}>
+                                        <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>{hour.time}</div>
                                         <div className="flex justify-center mb-2">
                                             {getWeatherIcon(hour.icon)}
                                         </div>
-                                        <div className="font-bold text-gray-800 mb-1">{hour.temp}°C</div>
-                                        <div className="text-xs text-blue-600">{hour.precipitation}%</div>
+                                        <div className={`font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'} mb-1`}>{hour.temp}°C</div>
+                                        <div className="text-xs text-blue-600 dark:text-blue-400">{hour.precipitation}%</div>
                                     </div>
                                 ))}
                             </div>
@@ -578,26 +587,26 @@ const WeatherPage = () => {
 
                 {/* Daily Forecast */}
                 {forecast && (
-                    <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6 mb-8`}>
+                        <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'} mb-4 flex items-center gap-2`}>
                             <Calendar className="w-5 h-5 text-green-500" />
                             {t('weather.forecast')}
                         </h2>
                         <div className="space-y-3">
                             {forecast.daily.map((day, index) => (
-                                <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition duration-200">
+                                <div key={index} className={`flex items-center justify-between p-4 ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'} rounded-lg transition duration-200`}>
                                     <div className="flex items-center gap-4 flex-1">
-                                        <div className="w-20 text-gray-800 font-medium">{day.day}</div>
+                                        <div className={`w-20 ${isDarkMode ? 'text-white' : 'text-gray-800'} font-medium`}>{day.day}</div>
                                         <div className="flex items-center gap-2">
                                             {getWeatherIcon(day.icon)}
-                                            <span className="text-gray-700">{day.condition}</span>
+                                            <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{day.condition}</span>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <div className="text-blue-600 text-sm">{day.precipitation}%</div>
+                                        <div className="text-blue-600 dark:text-blue-400 text-sm">{day.precipitation}%</div>
                                         <div className="flex gap-2">
-                                            <span className="font-bold text-gray-800">{day.high}°</span>
-                                            <span className="text-gray-500">{day.low}°</span>
+                                            <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>{day.high}°</span>
+                                            <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{day.low}°</span>
                                         </div>
                                     </div>
                                 </div>
@@ -607,27 +616,27 @@ const WeatherPage = () => {
                 )}
 
                 {/* Farming Recommendations */}
-                <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6 mb-8`}>
+                    <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'} mb-4 flex items-center gap-2`}>
                         <Sprout className="w-5 h-5 text-green-500" />
                         {t('weather.advice.title', { defaultValue: 'Farming Recommendations' })}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {farmingAdvice.map((advice, index) => (
-                            <div key={index} className="bg-green-50 p-4 rounded-lg border border-green-200">
-                                <div className="flex items-center gap-2 text-green-600 mb-2">
+                            <div key={index} className={`${isDarkMode ? 'bg-green-900/30 border-green-700' : 'bg-green-50 border-green-200'} p-4 rounded-lg border`}>
+                                <div className="flex items-center gap-2 text-green-600 dark:text-green-400 mb-2">
                                     {advice.icon}
                                     <span className="font-medium">{advice.title}</span>
                                 </div>
-                                <p className="text-gray-700 mb-2">{advice.advice}</p>
-                                <p className="text-sm text-green-600 font-medium">{advice.timing}</p>
+                                <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>{advice.advice}</p>
+                                <p className="text-sm text-green-600 dark:text-green-400 font-medium">{advice.timing}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
                 {/* Data Source */}
-                <div className="text-center text-gray-500 text-sm">
+                <div className={`text-center text-sm ${isDarkMode ? 'text-gray-500' : 'text-gray-500'}`}>
                     {t('weather.dataSource', { defaultValue: 'Weather data provided by OpenWeatherMap API' })}
                 </div>
             </div>
