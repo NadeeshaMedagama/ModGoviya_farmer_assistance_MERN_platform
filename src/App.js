@@ -33,6 +33,7 @@ import ExpertConsultationPage from "./components/common/ExpertConsultationPage";
 import ResourcesHub from "./components/common/ResourcesHub";
 import ChatSupport from "./components/forum/ChatSupport";
 import TermsAndConditions from "./components/documentation/TermsAndConditions";
+import PrivacyPolicy from "./components/documentation/PrivacyPolicy";
 
 function App() {
   return (
@@ -80,6 +81,7 @@ function App() {
                     <Route path="/resourcehub" element={<ResourcesHub />} />
                     <Route path="/chatsupport" element={<ChatSupport />} />
                     <Route path="/terms" element={<TermsAndConditions />} />
+                    <Route path="/privacy" element={<PrivacyPolicy />} />
                   </Routes>
                 </CartProvider>
               </LanguageProvider>
