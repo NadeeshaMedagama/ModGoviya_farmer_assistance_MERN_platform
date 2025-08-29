@@ -145,7 +145,8 @@ const Footer = () => {
                         <h3 className="text-lg font-semibold mb-6 text-green-400">Resources</h3>
                         <ul className="space-y-3">
 
-                            <li><Link to="/resourcehub">
+                            <li>
+                                <Link to="/resourcehub">
                                 <button
                                     onClick={scrollToTop}
                                    className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200">Blog
