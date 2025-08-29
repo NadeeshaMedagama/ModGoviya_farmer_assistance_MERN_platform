@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
+import { useTheme } from '../contexts/ThemeContext'; // Adjust path as needed
 
 const WatchDemoPage = () => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -32,6 +33,7 @@ const WatchDemoPage = () => {
     const [selectedDemo, setSelectedDemo] = useState(0);
     const [activeFeature, setActiveFeature] = useState(0);
     const videoRef = useRef(null);
+    const { isDarkMode } = useTheme(); // Get theme context
 
     const demoVideos = [
         {
@@ -158,7 +160,7 @@ const WatchDemoPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50 to-blue-50">
+        <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-slate-50 via-green-50 to-blue-50'}`}>
             {/* Header */}
             <Header />
 
@@ -187,7 +189,7 @@ const WatchDemoPage = () => {
 
             {/* Main Video Player */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
-                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
+                <div className={`${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-3xl shadow-2xl overflow-hidden border`}>
                     <div className="relative aspect-video bg-gray-900">
                         <img
                             src={demoVideos[selectedDemo].thumbnail}
@@ -241,13 +243,13 @@ const WatchDemoPage = () => {
                     <div className="p-8">
                         <div className="flex flex-col md:flex-row md:items-center justify-between">
                             <div>
-                                <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                                <h2 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
                                     {demoVideos[selectedDemo].title}
                                 </h2>
-                                <p className="text-gray-600 text-lg mb-4">
+                                <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} text-lg mb-4`}>
                                     {demoVideos[selectedDemo].description}
                                 </p>
-                                <div className="flex items-center space-x-4 text-sm text-gray-500">
+                                <div className={`flex items-center space-x-4 text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                                     <div className="flex items-center">
                                         <Clock className="w-4 h-4 mr-1" />
                                         {demoVideos[selectedDemo].duration}
@@ -264,16 +266,16 @@ const WatchDemoPage = () => {
                             </div>
                             <div className="mt-6 md:mt-0 flex space-x-3">
                                 <Link to="/freetrial">
-                                <button className="flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-xl hover:bg-green-700 transition-colors">
-                                    <ArrowRight className="w-4 h-4 mr-2" />
-                                    Start Free Trial
-                                </button>
+                                    <button className="flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-xl hover:bg-green-700 transition-colors">
+                                        <ArrowRight className="w-4 h-4 mr-2" />
+                                        Start Free Trial
+                                    </button>
                                 </Link>
                                 <Link to="/contact">
-                                <button className="flex items-center px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors">
-                                    <MessageCircle className="w-4 h-4 mr-2" />
-                                    Contact Sales
-                                </button>
+                                    <button className={`flex items-center px-6 py-3 border ${isDarkMode ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'} font-medium rounded-xl transition-colors`}>
+                                        <MessageCircle className="w-4 h-4 mr-2" />
+                                        Contact Sales
+                                    </button>
                                 </Link>
                             </div>
                         </div>
@@ -284,10 +286,10 @@ const WatchDemoPage = () => {
             {/* Demo Video Grid */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                    <h2 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
                         Explore All Demo Videos
                     </h2>
-                    <p className="text-gray-600 text-lg">
+                    <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-lg`}>
                         Get a comprehensive understanding of ModGoviya's capabilities
                     </p>
                 </div>
@@ -297,7 +299,7 @@ const WatchDemoPage = () => {
                         <div
                             key={video.id}
                             onClick={() => setSelectedDemo(video.id)}
-                            className={`cursor-pointer group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
+                            className={`cursor-pointer group relative ${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
                                 selectedDemo === video.id ? 'ring-2 ring-green-500' : ''
                             }`}
                         >
@@ -324,10 +326,10 @@ const WatchDemoPage = () => {
                                 </div>
                             </div>
                             <div className="p-4">
-                                <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                                <h3 className={`font-semibold ${isDarkMode ? 'text-white group-hover:text-green-400' : 'text-gray-900 group-hover:text-green-600'} transition-colors mb-2`}>
                                     {video.title}
                                 </h3>
-                                <p className="text-gray-600 text-sm">
+                                <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                                     {video.description}
                                 </p>
                             </div>
@@ -387,20 +389,20 @@ const WatchDemoPage = () => {
 
                         <div className="relative">
                             <div className="bg-gradient-to-br from-green-400 to-blue-500 rounded-3xl p-1">
-                                <div className="bg-gray-900 rounded-3xl p-8 min-h-96">
+                                <div className={`${isDarkMode ? 'bg-gray-900' : 'bg-white'} rounded-3xl p-8 min-h-96`}>
                                     <div className="text-center">
                                         <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-r ${keyFeatures[activeFeature].color} mb-6`}>
                                             {React.createElement(keyFeatures[activeFeature].icon, {
                                                 className: "w-12 h-12 text-white"
                                             })}
                                         </div>
-                                        <h3 className="text-2xl font-bold text-white mb-4">
+                                        <h3 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
                                             {keyFeatures[activeFeature].title}
                                         </h3>
-                                        <p className="text-gray-300 mb-8">
+                                        <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-8`}>
                                             {keyFeatures[activeFeature].description}
                                         </p>
-                                        <button className="inline-flex items-center px-6 py-3 bg-white text-gray-900 font-medium rounded-xl hover:bg-gray-100 transition-colors">
+                                        <button className={`inline-flex items-center px-6 py-3 ${isDarkMode ? 'bg-white text-gray-900 hover:bg-gray-100' : 'bg-gray-900 text-white hover:bg-gray-800'} font-medium rounded-xl transition-colors`}>
                                             <Play className="w-4 h-4 mr-2" />
                                             Watch Feature Demo
                                         </button>
@@ -415,17 +417,17 @@ const WatchDemoPage = () => {
             {/* Success Stories */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl font-bold text-gray-900 mb-6">
+                    <h2 className={`text-4xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6`}>
                         Success Stories from Real Farmers
                     </h2>
-                    <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+                    <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-lg max-w-3xl mx-auto`}>
                         Hear from farmers who have transformed their operations with ModGoviya
                     </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {testimonials.map((testimonial, index) => (
-                        <div key={index} className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
+                        <div key={index} className={`${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-2xl p-8 shadow-lg border`}>
                             <div className="flex items-center mb-4">
                                 <img
                                     src={testimonial.avatar}
@@ -433,8 +435,8 @@ const WatchDemoPage = () => {
                                     className="w-12 h-12 rounded-full mr-4"
                                 />
                                 <div>
-                                    <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                                    <p className="text-gray-600 text-sm">{testimonial.role}</p>
+                                    <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{testimonial.name}</h4>
+                                    <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>{testimonial.role}</p>
                                 </div>
                             </div>
                             <div className="flex mb-4">
@@ -442,7 +444,7 @@ const WatchDemoPage = () => {
                                     <Star key={i} className="w-5 h-5 text-yellow-500 fill-current" />
                                 ))}
                             </div>
-                            <p className="text-gray-700 italic">"{testimonial.comment}"</p>
+                            <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-700'} italic`}>"{testimonial.comment}"</p>
                         </div>
                     ))}
                 </div>
@@ -479,16 +481,16 @@ const WatchDemoPage = () => {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                         <Link to="/freetrial">
-                        <button className="inline-flex items-center px-8 py-4 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-all duration-300 transform hover:scale-105">
-                            <Zap className="w-5 h-5 mr-2" />
-                            Start Free Trial
-                        </button>
+                            <button className="inline-flex items-center px-8 py-4 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-all duration-300 transform hover:scale-105">
+                                <Zap className="w-5 h-5 mr-2" />
+                                Start Free Trial
+                            </button>
                         </Link>
                         <Link to="/schedule">
-                        <button className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-gray-900 transition-all duration-300">
-                            <Phone className="w-5 h-5 mr-2" />
-                            Schedule Demo Call
-                        </button>
+                            <button className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-gray-900 transition-all duration-300">
+                                <Phone className="w-5 h-5 mr-2" />
+                                Schedule Demo Call
+                            </button>
                         </Link>
                     </div>
                     <div className="flex items-center justify-center space-x-8 text-sm text-gray-400">
