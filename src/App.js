@@ -32,6 +32,7 @@ import ReadModePage from "./components/common/ReadModePage";
 import ExpertConsultationPage from "./components/common/ExpertConsultationPage";
 import ResourcesHub from "./components/common/ResourcesHub";
 import ChatSupport from "./components/forum/ChatSupport";
+import TermsAndConditions from "./components/documentation/TermsAndConditions";
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function App() {
                     <Route path="/expertconsult" element={<ExpertConsultationPage />} />
                     <Route path="/resourcehub" element={<ResourcesHub />} />
                     <Route path="/chatsupport" element={<ChatSupport />} />
+                    <Route path="/terms" element={<TermsAndConditions />} />
                   </Routes>
                 </CartProvider>
               </LanguageProvider>
