@@ -35,6 +35,7 @@ import ChatSupport from "./components/forum/ChatSupport";
 import TermsAndConditions from "./components/documentation/TermsAndConditions";
 import PrivacyPolicy from "./components/documentation/PrivacyPolicy";
 import SupportPage from "./components/documentation/SupportPage";
+import SupportCategoriesPage from "./components/documentation/SupportCategoriesPage";
 
 function App() {
   return (
@@ -84,6 +85,7 @@ function App() {
                     <Route path="/terms" element={<TermsAndConditions />} />
                     <Route path="/privacy" element={<PrivacyPolicy />} />
                     <Route path="/support" element={<SupportPage />} />
+                    <Route path="/supportcategories" element={<SupportCategoriesPage />} />
                   </Routes>
                 </CartProvider>
               </LanguageProvider>
