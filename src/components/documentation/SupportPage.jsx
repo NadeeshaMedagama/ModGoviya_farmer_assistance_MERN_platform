@@ -217,9 +217,13 @@ const SupportPage = () => {
                                     </div>
                                     <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">{category.title}</h3>
                                     <p className="text-gray-600 dark:text-gray-400 text-sm">{category.description}</p>
+
+                                    <Link to="/supportcategories">
                                     <button className="mt-4 text-green-600 dark:text-green-400 font-medium hover:text-green-700 dark:hover:text-green-300 flex items-center">
                                         Learn More <ArrowRight className="w-4 h-4 ml-1" />
                                     </button>
+                                    </Link>
+
                                 </div>
                             );
                         })}
