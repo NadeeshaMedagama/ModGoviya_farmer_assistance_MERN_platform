@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
+import { useTheme } from '../contexts/ThemeContext';
 
 const ContactUs = () => {
     const [formData, setFormData] = useState({
@@ -27,6 +28,8 @@ const ContactUs = () => {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null);
+
+    const { isDarkMode } = useTheme();
 
     const subjectOptions = [
         'General Inquiry',
@@ -124,7 +127,7 @@ const ContactUs = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
+        <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-green-50 via-white to-blue-50'}`}>
             {/* Header Section */}
             <Header />
             <div className="bg-gradient-to-r from-green-600 to-green-700 text-white py-16 pt-28">
@@ -144,30 +147,30 @@ const ContactUs = () => {
 
                     {/* Contact Form */}
                     <div className="lg:col-span-2">
-                        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+                        <div className={`${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'} rounded-2xl shadow-xl p-8 border`}>
                             <div className="flex items-center mb-6">
                                 <MessageCircle className="h-6 w-6 text-green-600 mr-3" />
-                                <h2 className="text-2xl font-bold text-gray-900">Send us a Message</h2>
+                                <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Send us a Message</h2>
                             </div>
 
                             {submitStatus === 'success' && (
-                                <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 flex items-center">
+                                <div className={`mb-6 ${isDarkMode ? 'bg-green-900/30 border-green-700 text-green-300' : 'bg-green-50 border-green-200 text-green-800'} border rounded-lg p-4 flex items-center`}>
                                     <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
-                                    <span className="text-green-800">Thank you! Your message has been sent successfully.</span>
+                                    <span>Thank you! Your message has been sent successfully.</span>
                                 </div>
                             )}
 
                             {submitStatus === 'error' && (
-                                <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-center">
+                                <div className={`mb-6 ${isDarkMode ? 'bg-red-900/30 border-red-700 text-red-300' : 'bg-red-50 border-red-200 text-red-800'} border rounded-lg p-4 flex items-center`}>
                                     <AlertCircle className="h-5 w-5 text-red-600 mr-3" />
-                                    <span className="text-red-800">Sorry, there was an error sending your message. Please try again.</span>
+                                    <span>Sorry, there was an error sending your message. Please try again.</span>
                                 </div>
                             )}
 
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        <label htmlFor="fullName" className={`block text-sm font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
                                             Full Name *
                                         </label>
                                         <input
@@ -177,17 +180,19 @@ const ContactUs = () => {
                                             value={formData.fullName}
                                             onChange={handleInputChange}
                                             className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 ${
-                                                errors.fullName ? 'border-red-300 bg-red-50' : 'border-gray-200 focus:border-green-500'
+                                                errors.fullName
+                                                    ? 'border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700'
+                                                    : `${isDarkMode ? 'border-gray-600 bg-gray-700 text-white focus:border-green-500' : 'border-gray-200 focus:border-green-500'}`
                                             }`}
                                             placeholder="Enter your full name"
                                         />
                                         {errors.fullName && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.fullName}</p>
+                                            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.fullName}</p>
                                         )}
                                     </div>
 
                                     <div>
-                                        <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        <label htmlFor="email" className={`block text-sm font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
                                             Email Address *
                                         </label>
                                         <input
@@ -197,19 +202,21 @@ const ContactUs = () => {
                                             value={formData.email}
                                             onChange={handleInputChange}
                                             className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 ${
-                                                errors.email ? 'border-red-300 bg-red-50' : 'border-gray-200 focus:border-green-500'
+                                                errors.email
+                                                    ? 'border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700'
+                                                    : `${isDarkMode ? 'border-gray-600 bg-gray-700 text-white focus:border-green-500' : 'border-gray-200 focus:border-green-500'}`
                                             }`}
                                             placeholder="your@email.com"
                                         />
                                         {errors.email && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                                            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>
                                         )}
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        <label htmlFor="phone" className={`block text-sm font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
                                             Phone Number
                                         </label>
                                         <input
@@ -218,13 +225,17 @@ const ContactUs = () => {
                                             name="phone"
                                             value={formData.phone}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
+                                            className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                                                isDarkMode
+                                                    ? 'border-gray-600 bg-gray-700 text-white focus:border-green-500'
+                                                    : 'border-gray-200 focus:border-green-500'
+                                            }`}
                                             placeholder="+94 71 234 5678"
                                         />
                                     </div>
 
                                     <div>
-                                        <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
+                                        <label htmlFor="subject" className={`block text-sm font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
                                             Subject *
                                         </label>
                                         <select
@@ -233,7 +244,9 @@ const ContactUs = () => {
                                             value={formData.subject}
                                             onChange={handleInputChange}
                                             className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 ${
-                                                errors.subject ? 'border-red-300 bg-red-50' : 'border-gray-200 focus:border-green-500'
+                                                errors.subject
+                                                    ? 'border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700'
+                                                    : `${isDarkMode ? 'border-gray-600 bg-gray-700 text-white focus:border-green-500' : 'border-gray-200 focus:border-green-500'}`
                                             }`}
                                         >
                                             <option value="">Select a subject</option>
@@ -242,13 +255,13 @@ const ContactUs = () => {
                                             ))}
                                         </select>
                                         {errors.subject && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.subject}</p>
+                                            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.subject}</p>
                                         )}
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                                    <label htmlFor="message" className={`block text-sm font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
                                         Message *
                                     </label>
                                     <textarea
@@ -258,12 +271,14 @@ const ContactUs = () => {
                                         onChange={handleInputChange}
                                         rows={6}
                                         className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 resize-vertical ${
-                                            errors.message ? 'border-red-300 bg-red-50' : 'border-gray-200 focus:border-green-500'
+                                            errors.message
+                                                ? 'border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700'
+                                                : `${isDarkMode ? 'border-gray-600 bg-gray-700 text-white focus:border-green-500' : 'border-gray-200 focus:border-green-500'}`
                                         }`}
                                         placeholder="Tell us how we can help you..."
                                     />
                                     {errors.message && (
-                                        <p className="mt-1 text-sm text-red-600">{errors.message}</p>
+                                        <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.message}</p>
                                     )}
                                 </div>
 
@@ -291,37 +306,37 @@ const ContactUs = () => {
                     {/* Contact Information */}
                     <div className="space-y-8">
                         {/* Contact Details */}
-                        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-                            <h3 className="text-xl font-bold text-gray-900 mb-6">Get in Touch</h3>
+                        <div className={`${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'} rounded-2xl shadow-xl p-8 border`}>
+                            <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6`}>Get in Touch</h3>
 
                             <div className="space-y-6">
                                 <div className="flex items-start">
-                                    <div className="bg-green-100 rounded-lg p-3 mr-4">
-                                        <Phone className="h-6 w-6 text-green-600" />
+                                    <div className="bg-green-100 dark:bg-green-900/30 rounded-lg p-3 mr-4">
+                                        <Phone className="h-6 w-6 text-green-600 dark:text-green-400" />
                                     </div>
                                     <div>
-                                        <h4 className="font-semibold text-gray-900 mb-1">Phone</h4>
-                                        <p className="text-gray-600">+94 71 234 5678</p>
+                                        <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>Phone</h4>
+                                        <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>+94 71 234 5678</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-start">
-                                    <div className="bg-blue-100 rounded-lg p-3 mr-4">
-                                        <Mail className="h-6 w-6 text-blue-600" />
+                                    <div className="bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3 mr-4">
+                                        <Mail className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                                     </div>
                                     <div>
-                                        <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
-                                        <p className="text-gray-600">support@modgoviya.com</p>
+                                        <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>Email</h4>
+                                        <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>support@modgoviya.com</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-start">
-                                    <div className="bg-purple-100 rounded-lg p-3 mr-4">
-                                        <MapPin className="h-6 w-6 text-purple-600" />
+                                    <div className="bg-purple-100 dark:bg-purple-900/30 rounded-lg p-3 mr-4">
+                                        <MapPin className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                                     </div>
                                     <div>
-                                        <h4 className="font-semibold text-gray-900 mb-1">Office Address</h4>
-                                        <p className="text-gray-600">
+                                        <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>Office Address</h4>
+                                        <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                                             Mod Goviya Innovations<br />
                                             No. 45, Agritech Lane<br />
                                             Kotikawatta, Colombo, Sri Lanka
@@ -332,9 +347,9 @@ const ContactUs = () => {
                         </div>
 
                         {/* Map */}
-                        <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-                            <div className="p-6 border-b border-gray-100">
-                                <h3 className="text-xl font-bold text-gray-900">Visit Our Office</h3>
+                        <div className={`${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'} rounded-2xl shadow-xl overflow-hidden border`}>
+                            <div className={`p-6 border-b ${isDarkMode ? 'border-gray-700' : 'border-gray-100'}`}>
+                                <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Visit Our Office</h3>
                             </div>
                             <div className="h-64">
                                 <iframe
@@ -342,7 +357,7 @@ const ContactUs = () => {
                                     height="100%"
                                     frameBorder="0"
                                     style={{border: 0}}
-                                    src={`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.2871487030147!2d79.912978474101!3d6.975408517748765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2597c8dde7e47%3A0x341e7e820c46d3ed!2sUniversity%20of%20Kelaniya!5e0!3m2!1sen!2slk!4v1751313197404!5m2!1sen!2slk"></iframe>`}
+                                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.2871487030147!2d79.912978474101!3d6.975408517748765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2597c8dde7e47%3A0x341e7e820c46d3ed!2sUniversity%20of%20Kelaniya!5e0!3m2!1sen!2slk!4v1751313197404!5m2!1sen!2slk`}
                                     allowFullScreen
                                 >
                                 </iframe>
@@ -350,51 +365,59 @@ const ContactUs = () => {
                         </div>
 
                         {/* Social Media */}
-                        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-                            <h3 className="text-xl font-bold text-gray-900 mb-6">Connect With Us</h3>
+                        <div className={`${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'} rounded-2xl shadow-xl p-8 border`}>
+                            <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6`}>Connect With Us</h3>
 
                             <div className="grid grid-cols-2 gap-4">
-                            <a
+                                <a
                                     href="#"
-                                    className="flex items-center justify-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors group"
+                                    className={`flex items-center justify-center p-4 rounded-lg transition-colors group ${
+                                        isDarkMode ? 'bg-blue-900/20 hover:bg-blue-900/30' : 'bg-blue-50 hover:bg-blue-100'
+                                    }`}
                                 >
-                                    <Facebook className="h-6 w-6 text-blue-600 group-hover:scale-110 transition-transform" />
-                                    <span className="ml-2 font-medium text-blue-900">Facebook</span>
+                                    <Facebook className="h-6 w-6 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform" />
+                                    <span className={`ml-2 font-medium ${isDarkMode ? 'text-blue-300' : 'text-blue-900'}`}>Facebook</span>
                                 </a>
 
                                 <a
                                     href="#"
-                                    className="flex items-center justify-center p-4 bg-pink-50 rounded-lg hover:bg-pink-100 transition-colors group"
+                                    className={`flex items-center justify-center p-4 rounded-lg transition-colors group ${
+                                        isDarkMode ? 'bg-pink-900/20 hover:bg-pink-900/30' : 'bg-pink-50 hover:bg-pink-100'
+                                    }`}
                                 >
-                                    <Instagram className="h-6 w-6 text-pink-600 group-hover:scale-110 transition-transform" />
-                                    <span className="ml-2 font-medium text-pink-900">Instagram</span>
+                                    <Instagram className="h-6 w-6 text-pink-600 dark:text-pink-400 group-hover:scale-110 transition-transform" />
+                                    <span className={`ml-2 font-medium ${isDarkMode ? 'text-pink-300' : 'text-pink-900'}`}>Instagram</span>
                                 </a>
 
                                 <a
                                     href="#"
-                                    className="flex items-center justify-center p-4 bg-sky-50 rounded-lg hover:bg-sky-100 transition-colors group"
+                                    className={`flex items-center justify-center p-4 rounded-lg transition-colors group ${
+                                        isDarkMode ? 'bg-sky-900/20 hover:bg-sky-900/30' : 'bg-sky-50 hover:bg-sky-100'
+                                    }`}
                                 >
-                                    <Twitter className="h-6 w-6 text-sky-600 group-hover:scale-110 transition-transform" />
-                                    <span className="ml-2 font-medium text-sky-900">Twitter</span>
+                                    <Twitter className="h-6 w-6 text-sky-600 dark:text-sky-400 group-hover:scale-110 transition-transform" />
+                                    <span className={`ml-2 font-medium ${isDarkMode ? 'text-sky-300' : 'text-sky-900'}`}>Twitter</span>
                                 </a>
 
                                 <a
                                     href="#"
-                                    className="flex items-center justify-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors group"
+                                    className={`flex items-center justify-center p-4 rounded-lg transition-colors group ${
+                                        isDarkMode ? 'bg-green-900/20 hover:bg-green-900/30' : 'bg-green-50 hover:bg-green-100'
+                                    }`}
                                 >
-                                    <MessageSquare className="h-6 w-6 text-green-600 group-hover:scale-110 transition-transform" />
-                                    <span className="ml-2 font-medium text-green-900">WhatsApp</span>
+                                    <MessageSquare className="h-6 w-6 text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform" />
+                                    <span className={`ml-2 font-medium ${isDarkMode ? 'text-green-300' : 'text-green-900'}`}>WhatsApp</span>
                                 </a>
                             </div>
                         </div>
 
                         {/* Privacy Note */}
-                        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                        <div className={`${isDarkMode ? 'bg-gray-800 border-gray-700 text-gray-400' : 'bg-gray-50 border-gray-200 text-gray-600'} rounded-2xl p-6 border`}>
                             <div className="flex items-start">
-                                <Shield className="h-5 w-5 text-gray-600 mt-0.5 mr-3 flex-shrink-0" />
+                                <Shield className="h-5 w-5 text-gray-600 dark:text-gray-400 mt-0.5 mr-3 flex-shrink-0" />
                                 <div>
-                                    <h4 className="font-semibold text-gray-900 mb-2">Privacy & Security</h4>
-                                    <p className="text-sm text-gray-600">
+                                    <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-2`}>Privacy & Security</h4>
+                                    <p className="text-sm">
                                         Your information is safe with us. We will never share your personal data without your consent.
                                     </p>
                                 </div>
