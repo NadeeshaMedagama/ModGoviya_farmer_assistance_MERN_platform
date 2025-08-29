@@ -162,7 +162,9 @@ const SupportPage = () => {
                         </p>
                         <Link
                             to="/chatsupport">
-                        <button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 rounded-lg font-medium hover:from-green-600 hover:to-emerald-600 transition-all duration-200">
+                        <button
+                            onClick={scrollToTop}
+                            className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 rounded-lg font-medium hover:from-green-600 hover:to-emerald-600 transition-all duration-200">
                             Start Chat
                         </button>
                         </Link>
@@ -219,7 +221,9 @@ const SupportPage = () => {
                                     <p className="text-gray-600 dark:text-gray-400 text-sm">{category.description}</p>
 
                                     <Link to="/supportcategories">
-                                    <button className="mt-4 text-green-600 dark:text-green-400 font-medium hover:text-green-700 dark:hover:text-green-300 flex items-center">
+                                    <button
+                                        onClick={scrollToTop}
+                                        className="mt-4 text-green-600 dark:text-green-400 font-medium hover:text-green-700 dark:hover:text-green-300 flex items-center">
                                         Learn More <ArrowRight className="w-4 h-4 ml-1" />
                                     </button>
                                     </Link>
