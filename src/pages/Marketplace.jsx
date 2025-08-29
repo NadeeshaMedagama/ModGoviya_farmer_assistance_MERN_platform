@@ -198,7 +198,7 @@ const Marketplace = () => {
                             </div>
 
                             <div className="mb-6">
-                                <h3 className="font-semibold mb-2">{t('marketplace.description')}</h3>
+                                <h3 className="font-semibold mb-2 text-gray-900 dark:text-white">{t('marketplace.description')}</h3>
                                 <p className="text-gray-700 dark:text-gray-300">{product.description}</p>
                             </div>
 
@@ -223,11 +223,11 @@ const Marketplace = () => {
                                     Purchase Now
                                 </button>
                                 <div className="grid grid-cols-2 gap-2">
-                                    <button className="border border-gray-300 hover:bg-gray-50 py-2 px-4 rounded-lg flex items-center justify-center">
+                                    <button className="border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 py-2 px-4 rounded-lg flex items-center justify-center text-gray-700 dark:text-gray-300">
                                         <Phone className="w-4 h-4 mr-2" />
                                         {t('marketplace.email')}
                                     </button>
-                                    <button className="border border-gray-300 hover:bg-gray-50 py-2 px-4 rounded-lg flex items-center justify-center">
+                                    <button className="border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 py-2 px-4 rounded-lg flex items-center justify-center text-gray-700 dark:text-gray-300">
                                         <AlertTriangle className="w-4 h-4 mr-2" />
                                         {t('marketplace.report')}
                                     </button>
@@ -243,19 +243,6 @@ const Marketplace = () => {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             <Header />
-
-            {/* Hero Section */}
-            {/*<section className="relative bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 py-20 lg:py-32">*/}
-            {/*    <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-emerald-600/10 dark:from-gray-600/20 dark:to-gray-800/20"></div>*/}
-            {/*    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">*/}
-            {/*        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">*/}
-            {/*            {t('marketplace.hero.title', { defaultValue: 'Farm Marketplace' })}*/}
-            {/*        </h1>*/}
-            {/*        <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">*/}
-            {/*            {t('marketplace.hero.subtitle', { defaultValue: 'Buy and sell agricultural products, tools, and services directly with local farmers and suppliers.' })}*/}
-            {/*        </p>*/}
-            {/*    </div>*/}
-            {/*</section>*/}
 
             <div
                 className="relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-emerald-800 w-full mt-8">
@@ -339,14 +326,14 @@ const Marketplace = () => {
                                 className="group bg-white text-green-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-50 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
               <span className="flex items-center justify-center">
                 {t('marketplace.cta.startTrading')}
-                <TrendingUp className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300"/>
+                  <TrendingUp className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300"/>
               </span>
                             </Link>
                             <Link to="/learnmore"
                                   className="group bg-transparent text-white border-2 border-white/30 backdrop-blur-sm px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 hover:border-white/50 transform hover:scale-105 transition-all duration-300">
               <span className="flex items-center justify-center">
                 {t('marketplace.cta.learnMore')}
-                <Sprout className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform duration-300"/>
+                  <Sprout className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform duration-300"/>
               </span>
                             </Link>
                         </div>
@@ -377,7 +364,7 @@ const Marketplace = () => {
                 `}</style>
             </div>
 
-            <div className="bg-white shadow-sm border-b">
+            <div className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-24 w-full">
                     {/* Search and Filters */}
                     <div className="flex flex-col lg:flex-row gap-4 items-center">
@@ -389,14 +376,14 @@ const Marketplace = () => {
                                 placeholder={t('marketplace.searchPlaceholder')}
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                             />
                         </div>
 
                         <div className="flex gap-2">
                             <button
                                 onClick={() => setShowFilters(!showFilters)}
-                                className="flex items-center px-4 py-3 border border-gray-300 rounded-xl hover:bg-gray-50"
+                                className="flex items-center px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                             >
                                 <Filter className="w-5 h-5 mr-2"/>
                                 {t('marketplace.filters')}
@@ -419,8 +406,8 @@ const Marketplace = () => {
                     {/* Sidebar */}
                     <div className="lg:w-64 space-y-6">
                         {/* Categories */}
-                        <div className="bg-white rounded-xl shadow-sm p-6">
-                            <h3 className="font-semibold text-gray-900 mb-4">{t('marketplace.categories.title')}</h3>
+                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+                            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">{t('marketplace.categories.title')}</h3>
                             <div className="space-y-2">
                                 {categories.map(category => (
                                     <button
@@ -428,8 +415,8 @@ const Marketplace = () => {
                                         onClick={() => setSelectedCategory(category.id)}
                                         className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                                             selectedCategory === category.id
-                                                ? 'bg-green-100 text-green-800'
-                                                : 'hover:bg-gray-100'
+                                                ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300'
+                                                : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
                                         }`}
                                     >
                                         <span className="mr-2">{category.icon}</span>
@@ -440,8 +427,8 @@ const Marketplace = () => {
                         </div>
 
                         {/* Price Range */}
-                        <div className="bg-white rounded-xl shadow-sm p-6">
-                            <h3 className="font-semibold text-gray-900 mb-4">{t('marketplace.priceRange')}</h3>
+                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+                            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">{t('marketplace.priceRange')}</h3>
                             <div className="space-y-4">
                                 <div className="flex gap-2">
                                     <input
@@ -449,26 +436,26 @@ const Marketplace = () => {
                                         placeholder={t('marketplace.min')}
                                         value={priceRange[0]}
                                         onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])}
-                                        className="w-24 px-2 py-2 border border-gray-300 rounded-lg"
+                                        className="w-24 px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                                     />
                                     <input
                                         type="number"
                                         placeholder={t('marketplace.max')}
                                         value={priceRange[1]}
                                         onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 1000000])}
-                                        className="w-24 px-2 py-2 border border-gray-300 rounded-lg"
+                                        className="w-24 px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                                     />
                                 </div>
                             </div>
                         </div>
 
                         {/* Safety Tips */}
-                        <div className="bg-yellow-50 rounded-xl p-6 border border-yellow-200">
+                        <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-xl p-6 border border-yellow-200 dark:border-yellow-700">
                             <div className="flex items-center mb-3">
-                                <Shield className="w-5 h-5 text-yellow-600 mr-2"/>
-                                <h3 className="font-semibold text-yellow-800">{t('marketplace.safetyTips.title')}</h3>
+                                <Shield className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mr-2"/>
+                                <h3 className="font-semibold text-yellow-800 dark:text-yellow-300">{t('marketplace.safetyTips.title')}</h3>
                             </div>
-                            <ul className="text-sm text-yellow-700 space-y-2">
+                            <ul className="text-sm text-yellow-700 dark:text-yellow-300 space-y-2">
                                 <li>• {t('marketplace.safetyTips.meetPublic')}</li>
                                 <li>• {t('marketplace.safetyTips.noAdvance')}</li>
                                 <li>• {t('marketplace.safetyTips.verifySeller')}</li>
@@ -482,13 +469,13 @@ const Marketplace = () => {
                         {/* Toolbar */}
                         <div className="flex justify-between items-center mb-6">
                             <div className="flex items-center gap-4">
-                <span className="text-gray-600">
+                <span className="text-gray-600 dark:text-gray-400">
                   {t('marketplace.productsFound', { count: filteredProducts.length })}
                 </span>
                                 <select
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value)}
-                                    className="px-3 py-2 border border-gray-300 rounded-lg"
+                                    className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                                 >
                                     <option value="newest">{t('marketplace.sort.newest')}</option>
                                     <option value="price-low">{t('marketplace.sort.priceLow')}</option>
@@ -500,13 +487,13 @@ const Marketplace = () => {
                             <div className="flex items-center gap-2">
                                 <button
                                     onClick={() => setViewMode('grid')}
-                                    className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-green-100 text-green-600' : 'text-gray-400'}`}
+                                    className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500'}`}
                                 >
                                     <Grid className="w-5 h-5"/>
                                 </button>
                                 <button
                                     onClick={() => setViewMode('list')}
-                                    className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-green-100 text-green-600' : 'text-gray-400'}`}
+                                    className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500'}`}
                                 >
                                     <List className="w-5 h-5"/>
                                 </button>
@@ -527,8 +514,8 @@ const Marketplace = () => {
                         {filteredProducts.length === 0 && (
                             <div className="text-center py-12">
                                 <div className="text-gray-400 text-6xl mb-4">📦</div>
-                                <h3 className="text-xl font-semibold text-gray-600 mb-2">{t('marketplace.noProducts')}</h3>
-                                <p className="text-gray-500">{t('marketplace.tryAdjust')}</p>
+                                <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-2">{t('marketplace.noProducts')}</h3>
+                                <p className="text-gray-500 dark:text-gray-400">{t('marketplace.tryAdjust')}</p>
                             </div>
                         )}
                     </div>
