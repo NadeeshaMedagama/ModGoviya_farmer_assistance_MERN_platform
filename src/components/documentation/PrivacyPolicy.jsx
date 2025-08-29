@@ -21,6 +21,7 @@ import {
     MessageSquare
 } from 'lucide-react';
 import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const PrivacyPolicy = () => {
     const [activeSection, setActiveSection] = useState('');
@@ -662,6 +663,7 @@ const PrivacyPolicy = () => {
             >
                 ↑
             </button>
+            <Footer />
         </div>
     );
 };
