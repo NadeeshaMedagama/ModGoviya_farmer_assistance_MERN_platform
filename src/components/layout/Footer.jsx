@@ -11,7 +11,8 @@ import {
     Globe,
     Send,
     Check,
-    Leaf
+    Leaf,
+    MessageSquare
 }
     from 'lucide-react';
 import axios from 'axios';
@@ -212,6 +213,10 @@ const Footer = () => {
                                 <Globe size={16} className="mr-3 text-green-500"/>
                                 <span className="text-gray-300 dark:text-gray-400">www.modgoviya.lk</span>
                             </div>
+                            <Link to="/chatsupport" onClick={scrollToTop} className="flex items-center">
+                                <MessageSquare size={16} className="mr-3 text-green-500 hover:text-green-300"/>
+                                <span className="text-gray-300 dark:text-gray-400 hover:text-white">Live Chat</span>
+                            </Link>
                         </div>
                     </div>
                 </div>
